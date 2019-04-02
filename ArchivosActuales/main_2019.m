@@ -32,22 +32,6 @@ FrameLHS = round(Datos.eventos.Izquierdo_LHS(1)*fm);
 FrameLTO = round(Datos.eventos.Izquierdo_LTO*fm);
 
 
-%%
-
-figure1 = figure ('Color',[1 1 1]);
-
-Frame1 = FrameRHS;
-Frame2 = FrameLTO;
-Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.sacrum,Frame1,Frame2);
-Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.r_knee_1,Frame1,Frame2);
-Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.l_knee_1,Frame1,Frame2);
-Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.r_asis,Frame1,Frame2);
-Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.l_asis,Frame1,Frame2);
-
-grid on;
-xlabel('Eje X[m]')
-ylabel('Eje Y[m]')
-zlabel('Eje Z[m]')
 
 %%
 %%%%%%%%%%%%%%%%%%%%% Cálculos de Ejes PELVIS  %%%%%%%%%%%%%%%%%%%%%%%
@@ -60,40 +44,53 @@ P7 = Datos.Pasada.Marcadores.Crudos.r_asis;
 P14 = Datos.Pasada.Marcadores.Crudos.l_asis;
 %%%% Sacro
 P15 = Datos.Pasada.Marcadores.Crudos.sacrum;
-U_Pelvis = zeros(length(P7),3);
-V_Pelvis = zeros(length(P7),3);
-W_Pelvis = zeros(length(P7),3);
+Datos.Vectores.U_Pelvis = zeros(length(P7),3);
+Datos.Vectores.V_Pelvis = zeros(length(P7),3);
+Datos.Vectores.W_Pelvis = zeros(length(P7),3);
 PCaderaD = zeros(length(P7),3);
 PCaderaI = zeros(length(P7),3);
-A2 = 0;
+A2 = Datos.antropometria.children.LONGITUD_ASIS.info.values*0.01;
 
-for i=1:length(U_Pelvis)
+for i=1:length(Datos.Vectores.U_Pelvis)
     %%%%Versor en dirección Y
-    V_Pelvis(i,:) = P14(i,:)-P7(i,:);
-    V_Pelvis(i,:) = V_Pelvis(i,:)/norm(V_Pelvis(i,:));
+    Datos.Vectores.V_Pelvis(i,:) = P14(i,:)-P7(i,:);
+    Datos.Vectores.V_Pelvis(i,:) = Datos.Vectores.V_Pelvis(i,:)/norm(Datos.Vectores.V_Pelvis(i,:));
 
     %%%%Versor en dirección Z
-    W_Pelvis(i,:) = cross(P7(i,:)-P15(i,:),P14(i,:)-P15(i,:));
-    W_Pelvis(i,:) = W_Pelvis(i,:)/norm(W_Pelvis(i,:));
+    Datos.Vectores.W_Pelvis(i,:) = cross(P7(i,:)-P15(i,:),P14(i,:)-P15(i,:));
+    Datos.Vectores.W_Pelvis(i,:) = Datos.Vectores.W_Pelvis(i,:)/norm(Datos.Vectores.W_Pelvis(i,:));
 
     %%%%Versor en dirección X
-    U_Pelvis(i,:) = cross(V_Pelvis(i,:),W_Pelvis(i,:));
-    U_Pelvis(i,:) = U_Pelvis(i,:)/norm(U_Pelvis(i,:));
+    Datos.Vectores.U_Pelvis(i,:) = cross(Datos.Vectores.V_Pelvis(i,:),Datos.Vectores.W_Pelvis(i,:));
+    Datos.Vectores.U_Pelvis(i,:) = Datos.Vectores.U_Pelvis(i,:)/norm(Datos.Vectores.U_Pelvis(i,:));
 
     %%%Cálculo punto cadera derecha
-    %%%% El chico camina con una componente x decreciente, la componente u y v 
-    %%%% se modifican
 
-    A2 = norm(P14(i,:)-P7(i,:));
-    PCaderaD(i,:) = P15(i,:)+0.598*A2*U_Pelvis(i,:)-0.344*A2*V_Pelvis(i,:)-0.290*A2*W_Pelvis(i,:);
-    PCaderaI(i,:) = P15(i,:)+0.598*A2*U_Pelvis(i,:)+0.344*A2*V_Pelvis(i,:)-0.290*A2*W_Pelvis(i,:);
+    PCaderaD(i,:) = P15(i,:)+0.598*A2*Datos.Vectores.U_Pelvis(i,:)-0.344*A2*Datos.Vectores.V_Pelvis(i,:)-0.290*A2*Datos.Vectores.W_Pelvis(i,:);
+    PCaderaI(i,:) = P15(i,:)+0.598*A2*Datos.Vectores.U_Pelvis(i,:)+0.344*A2*Datos.Vectores.V_Pelvis(i,:)-0.290*A2*Datos.Vectores.W_Pelvis(i,:);
     
 end
 
+Frame1 = FrameRHS;
+Frame2 = FrameLTO;
+
+figure1 = figure ('Color',[1 1 1]);
 Paso = 18;
 Consecutivo = false;
-Plot_Vectores(Datos.Pasada.Marcadores.Crudos.sacrum,U_Pelvis,V_Pelvis,W_Pelvis,Paso,FrameRHS,FrameRTO,Consecutivo)
+Plot_Vectores(Datos.Pasada.Marcadores.Crudos.sacrum,Datos.Vectores.U_Pelvis/10,Datos.Vectores.V_Pelvis/40,Datos.Vectores.W_Pelvis/10,Paso,Frame1,Frame2,Consecutivo)
 
+Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.sacrum,Frame1,Frame2);
+Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.r_knee_1,Frame1,Frame2);
+Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.l_knee_1,Frame1,Frame2);
+Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.r_asis,Frame1,Frame2);
+Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.l_asis,Frame1,Frame2);
+Plot_Marcadores_Tiempo(PCaderaD,Frame1,Frame2);
+Plot_Marcadores_Tiempo(PCaderaI,Frame1,Frame2);
+
+grid on;
+xlabel('Eje X[m]')
+ylabel('Eje Y[m]')
+zlabel('Eje Z[m]')
 
 
 %%
@@ -146,7 +143,7 @@ for i=1:length(U_PieD)
     
 end
 
-figure3 = figure ('Color',[1 1 1]);
+figure2 = figure ('Color',[1 1 1]);
 xlabel('Eje X[m]')
 ylabel('Eje Y[m]')
 zlabel('Eje Z[m]')
