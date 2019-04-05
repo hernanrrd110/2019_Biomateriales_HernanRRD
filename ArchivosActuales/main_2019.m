@@ -31,24 +31,24 @@ FrameRTO = round(Datos.eventos.Derecho_RTO*fm);
 FrameLHS = round(Datos.eventos.Izquierdo_LHS(1)*fm);
 FrameLTO = round(Datos.eventos.Izquierdo_LTO*fm);
 
-
-
 %%
-%%%%%%%%%%%%%%%%%%%%% Cálculos de Ejes PELVIS  %%%%%%%%%%%%%%%%%%%%%%%
+%........................ Cálculos de Ejes PELVIS  ........................
 
 close all;
 clc;
+
 %%%% Asis derecha
 P7 = Datos.Pasada.Marcadores.Crudos.r_asis;
 %%%% Asis izquierda
 P14 = Datos.Pasada.Marcadores.Crudos.l_asis;
 %%%% Sacro
 P15 = Datos.Pasada.Marcadores.Crudos.sacrum;
+
 Datos.Vectores.U_Pelvis = zeros(length(P7),3);
 Datos.Vectores.V_Pelvis = zeros(length(P7),3);
 Datos.Vectores.W_Pelvis = zeros(length(P7),3);
-PCaderaD = zeros(length(P7),3);
-PCaderaI = zeros(length(P7),3);
+Datos.PArticulares.CaderaD = zeros(length(P7),3);
+Datos.PArticulares.CaderaI = zeros(length(P7),3);
 A2 = Datos.antropometria.children.LONGITUD_ASIS.info.values*0.01;
 
 for i=1:length(Datos.Vectores.U_Pelvis)
@@ -66,9 +66,8 @@ for i=1:length(Datos.Vectores.U_Pelvis)
 
     %%%Cálculo punto cadera derecha
 
-    PCaderaD(i,:) = P15(i,:)+0.598*A2*Datos.Vectores.U_Pelvis(i,:)-0.344*A2*Datos.Vectores.V_Pelvis(i,:)-0.290*A2*Datos.Vectores.W_Pelvis(i,:);
-    PCaderaI(i,:) = P15(i,:)+0.598*A2*Datos.Vectores.U_Pelvis(i,:)+0.344*A2*Datos.Vectores.V_Pelvis(i,:)-0.290*A2*Datos.Vectores.W_Pelvis(i,:);
-    
+    Datos.PArticulares.CaderaD(i,:) = P15(i,:)+0.598*A2*Datos.Vectores.U_Pelvis(i,:)-0.344*A2*Datos.Vectores.V_Pelvis(i,:)-0.290*A2*Datos.Vectores.W_Pelvis(i,:);
+    Datos.PArticulares.CaderaI(i,:) = P15(i,:)+0.598*A2*Datos.Vectores.U_Pelvis(i,:)+0.344*A2*Datos.Vectores.V_Pelvis(i,:)-0.290*A2*Datos.Vectores.W_Pelvis(i,:);
 end
 
 Frame1 = FrameRHS;
@@ -84,8 +83,8 @@ Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.r_knee_1,Frame1,Frame2);
 Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.l_knee_1,Frame1,Frame2);
 Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.r_asis,Frame1,Frame2);
 Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.l_asis,Frame1,Frame2);
-Plot_Marcadores_Tiempo(PCaderaD,Frame1,Frame2);
-Plot_Marcadores_Tiempo(PCaderaI,Frame1,Frame2);
+Plot_Marcadores_Tiempo(Datos.PArticulares.CaderaD,Frame1,Frame2);
+Plot_Marcadores_Tiempo(Datos.PArticulares.CaderaI,Frame1,Frame2);
 
 grid on;
 xlabel('Eje X[m]')
@@ -94,7 +93,7 @@ zlabel('Eje Z[m]')
 
 
 %%
-%%%%%%%%%%%%%%%%%%%%% Cálculos de Ejes PIE DERECHO   %%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% Cálculos de Ejes PIE DERECHO   %%%%%%%%%%%%%%%%%%%%%%
 
 close all;
 clc;
@@ -106,41 +105,37 @@ P2 = Datos.Pasada.Marcadores.Crudos.r_heel;
 P3 = Datos.Pasada.Marcadores.Crudos.r_mall;
 
 %%%%Inicialización de matrices
-U_PieD = zeros(length(P1),3);
-V_PieD = zeros(length(P1),3);
-W_PieD = zeros(length(P1),3);
-PPuntaD = zeros(length(P1),3);
-PTobilloD = zeros(length(P1),3);
-
+Datos.Vectores.U_PieD = zeros(length(P1),3);
+Datos.Vectores.V_PieD = zeros(length(P1),3);
+Datos.Vectores.W_PieD = zeros(length(P1),3);
+Datos.PArticulares.PuntaD = zeros(length(P1),3);
+Datos.PArticulares.TobilloD = zeros(length(P1),3);
 
 A13 = Datos.antropometria.children.LONGITUD_PIE_DERECHO.info.values*0.01;
 A15 = Datos.antropometria.children.ALTURA_MALEOLOS_DERECHO.info.values*0.01;
 A17 = Datos.antropometria.children.ANCHO_MALEOLOS_DERECHO.info.values*0.01;
 A19 = Datos.antropometria.children.ANCHO_PIE_DERECHO.info.values*0.01;
 
-
-for i=1:length(U_PieD)
+for i=1:length(Datos.Vectores.U_PieD)
+    
 %%%%Versor en dirección Y
-    U_PieD(i,:) = P1(i,:)-P2(i,:);
-    U_PieD(i,:) = U_PieD(i,:)/norm(U_PieD(i,:));
+    Datos.Vectores.U_PieD(i,:) = P1(i,:)-P2(i,:);
+    Datos.Vectores.U_PieD(i,:) = Datos.Vectores.U_PieD(i,:)/norm(Datos.Vectores.U_PieD(i,:));
 
     %%%%Versor en dirección Z
-    W_PieD(i,:) = cross((P1(i,:)-P3(i,:)),(P2(i,:)-P3(i,:)));
-    W_PieD(i,:) = W_PieD(i,:)/norm(W_PieD(i,:));
+    Datos.Vectores.W_PieD(i,:) = cross((P1(i,:)-P3(i,:)),(P2(i,:)-P3(i,:)));
+    Datos.Vectores.W_PieD(i,:) = Datos.Vectores.W_PieD(i,:)/norm(Datos.Vectores.W_PieD(i,:));
 
     %%%%Versor en dirección X
-    V_PieD(i,:) = cross(W_PieD(i,:),U_PieD(i,:));
-    V_PieD(i,:) = V_PieD(i,:)/norm(V_PieD(i,:));
+    Datos.Vectores.V_PieD(i,:) = cross(Datos.Vectores.W_PieD(i,:),Datos.Vectores.U_PieD(i,:));
+    Datos.Vectores.V_PieD(i,:) = Datos.Vectores.V_PieD(i,:)/norm(Datos.Vectores.V_PieD(i,:));
 
     %%% Cálculo punto cadera derecha
-    %%%% Si el chico camina con una componente x decreciente, la componente u y v 
-    %%%% se modifican
     
     %%% R.Ankle
-    PTobilloD(i,:) = P3(i,:)+0.016*A13*U_PieD(i,:)+0.392*A15*V_PieD(i,:)+0.478*A17*W_PieD(i,:);
+    Datos.PArticulares.TobilloD(i,:) = P3(i,:)+0.016*A13*Datos.Vectores.U_PieD(i,:)+0.392*A15*Datos.Vectores.V_PieD(i,:)+0.478*A17*Datos.Vectores.W_PieD(i,:);
     %%% R.Toe
-    PPuntaD(i,:) = P3(i,:)+0.752*A13*U_PieD(i,:)+1.074*A15*V_PieD(i,:)-0.187*A19*W_PieD(i,:);
-    
+    Datos.PArticulares.PuntaD(i,:) = P3(i,:)+0.752*A13*Datos.Vectores.U_PieD(i,:)+1.074*A15*Datos.Vectores.V_PieD(i,:)-0.187*A19*Datos.Vectores.W_PieD(i,:);
 end
 
 figure2 = figure ('Color',[1 1 1]);
@@ -150,7 +145,7 @@ zlabel('Eje Z[m]')
 
 Paso = 18;
 Consecutivo = false;
-Plot_Vectores(PTobilloD,U_PieD,V_PieD,W_PieD,Paso,FrameRHS,FrameRTO,Consecutivo)
+Plot_Vectores(Datos.PArticulares.TobilloD, Datos.Vectores.U_PieD/10,Datos.Vectores.V_PieD/40,Datos.Vectores.W_PieD/10, Paso, FrameRHS, FrameRTO, Consecutivo)
 
 
 %%
@@ -167,30 +162,28 @@ P4 = Datos.Pasada.Marcadores.Crudos.r_bar_2;
 P5 = Datos.Pasada.Marcadores.Crudos.r_knee_1;
 
 %%%%Inicialización de matrices
-U_PiernaD = zeros(length(P4),3);
-V_PiernaD = zeros(length(P4),3);
-W_PiernaD = zeros(length(P4),3);
-PRodillaD = zeros(length(P4),3);
+Datos.Vectores.U_PiernaD = zeros(length(P4),3);
+Datos.Vectores.V_PiernaD = zeros(length(P4),3);
+Datos.Vectores.W_PiernaD = zeros(length(P4),3);
+Datos.PArticulares.RodillaD = zeros(length(P4),3);
 
 A11 = Datos.antropometria.children.DIAMETRO_RODILLA_DERECHA.info.values*0.01;
 
 for i=FrameRHS:FrameRTO
 %%%%Versor en dirección Y
-    V_PiernaD(i,:) = P3(i,:)-P5(i,:);
-    V_PiernaD(i,:) = V_PiernaD(i,:)/norm(V_PiernaD(i,:));
+    Datos.Vectores.V_PiernaD(i,:) = P3(i,:)-P5(i,:);
+    Datos.Vectores.V_PiernaD(i,:) = Datos.Vectores.V_PiernaD(i,:)/norm(Datos.Vectores.V_PiernaD(i,:));
 
     %%%%Versor en dirección Z
-    U_PiernaD(i,:) = cross((P4(i,:)-P5(i,:)),(P3(i,:)-P5(i,:)));
-    U_PiernaD(i,:) = U_PiernaD(i,:)/norm(U_PiernaD(i,:));
+    Datos.Vectores.U_PiernaD(i,:) = cross((P4(i,:)-P5(i,:)),(P3(i,:)-P5(i,:)));
+    Datos.Vectores.U_PiernaD(i,:) = Datos.Vectores.U_PiernaD(i,:)/norm(Datos.Vectores.U_PiernaD(i,:));
 
     %%%%Versor en dirección X
-    W_PiernaD(i,:) = cross(U_PiernaD(i,:),V_PiernaD(i,:));
-    W_PiernaD(i,:) = W_PiernaD(i,:)/norm(W_PiernaD(i,:));
-
+    Datos.Vectores.W_PiernaD(i,:) = cross(Datos.Vectores.U_PiernaD(i,:),Datos.Vectores.V_PiernaD(i,:));
+    Datos.Vectores.W_PiernaD(i,:) = Datos.Vectores.W_PiernaD(i,:)/norm(Datos.Vectores.W_PiernaD(i,:));
     
-    %%% R.Ankle
-    PRodillaD(i,:) = P5(i,:)+0.500*A11*W_PiernaD(i,:);
-    %%% R.Toe
+    %%% Rodilla Derecha
+    Datos.PArticulares.RodillaD(i,:) = P5(i,:)+0.500*A11*Datos.Vectores.W_PiernaD(i,:);
     
 end
 
@@ -200,8 +193,8 @@ ylabel('Eje Y[m]')
 zlabel('Eje Z[m]')
 
 Paso = 18;
-Consecutivo = false;
-Plot_Vectores(P5,U_PiernaD,V_PiernaD,W_PiernaD,Paso,FrameRHS,FrameRTO,Consecutivo)
+Consecutivo = true;
+Plot_Vectores(Datos.PArticulares.RodillaD,Datos.Vectores.U_PiernaD,Datos.Vectores.V_PiernaD,Datos.Vectores.W_PiernaD,Paso,FrameRHS,FrameLTO,Consecutivo)
 
 
 %%
@@ -209,6 +202,7 @@ Plot_Vectores(P5,U_PiernaD,V_PiernaD,W_PiernaD,Paso,FrameRHS,FrameRTO,Consecutiv
 
 close all;
 clc;
+
 %%%% Metatarciano Izquierdo
 P8 = Datos.Pasada.Marcadores.Crudos.l_met;
 %%%% Tobillo Izquierdo
@@ -217,45 +211,43 @@ P9 = Datos.Pasada.Marcadores.Crudos.l_heel;
 P10 = Datos.Pasada.Marcadores.Crudos.l_mall;
 
 %%%%Inicialización de matrices
-U_PieI = zeros(length(P8),3);
-V_PieI = zeros(length(P8),3);
-W_PieI = zeros(length(P8),3);
-PPuntaI = zeros(length(P8),3);
-PTobilloI = zeros(length(P8),3);
+Datos.Vectores.U_PieIU_PieI = zeros(length(P8),3);
+Datos.Vectores.U_PieIV_PieI = zeros(length(P8),3);
+Datos.Vectores.U_PieIW_PieI = zeros(length(P8),3);
+Datos.PArticulares.PuntaI = zeros(length(P8),3);
+Datos.PArticulares.TobilloI = zeros(length(P8),3);
 
 A14 = Datos.antropometria.children.LONGITUD_PIE_IZQUIERDO.info.values*0.01;
 A16 = Datos.antropometria.children.ALTURA_MALEOLOS_IZQUIERDO.info.values*0.01;
 A18 = Datos.antropometria.children.ANCHO_MALEOLOS_IZQUIERDO.info.values*0.01;
 A20 = Datos.antropometria.children.ANCHO_PIE_IZQUIERDO.info.values*0.01;
 
-
 for i=FrameRHS:FrameRTO
-%%%%Versor en dirección Y
-    U_PieI(i,:) = P8(i,:)-P9(i,:);
-    U_PieI(i,:) = U_PieI(i,:)/norm(U_PieI(i,:));
+    %Versor en dirección Y
+    Datos.Vectores.U_PieI(i,:) = P8(i,:)-P9(i,:);
+    Datos.Vectores.U_PieI(i,:) = Datos.Vectores.U_PieI(i,:)/norm(Datos.Vectores.U_PieI(i,:));
 
     %%%%Versor en dirección Z
-    W_PieI(i,:) = cross((P8(i,:)-P10(i,:)),(P9(i,:)-P10(i,:)));
-    W_PieI(i,:) = W_PieI(i,:)/norm(W_PieI(i,:));
+    Datos.Vectores.W_PieI(i,:) = cross((P8(i,:)-P10(i,:)),(P9(i,:)-P10(i,:)));
+    Datos.Vectores.W_PieI(i,:) = Datos.Vectores.W_PieI(i,:)/norm(Datos.Vectores.W_PieI(i,:));
 
     %%%%Versor en dirección X
-    V_PieI(i,:) = cross(W_PieI(i,:),U_PieI(i,:));
-    V_PieI(i,:) = V_PieI(i,:)/norm(V_PieI(i,:));
+    Datos.Vectores.V_PieI(i,:) = cross(Datos.Vectores.W_PieI(i,:),Datos.Vectores.U_PieI(i,:));
+    Datos.Vectores.V_PieI(i,:) = Datos.Vectores.V_PieI(i,:)/norm(Datos.Vectores.V_PieI(i,:));
 
     %%% Cálculo punto cadera derecha
     %%%% Si el chico camina con una componente x decreciente, la componente u y v 
     %%%% se modifican
     
     %%% R.Ankle
-    PTobilloI(i,:) = P10(i,:)+0.016*A14*U_PieI(i,:)+0.392*A16*V_PieI(i,:)-0.478*A18*W_PieI(i,:);
+    Datos.PArticulares.TobilloI(i,:) = P10(i,:)+0.016*A14*Datos.Vectores.U_PieI(i,:)+0.392*A16*Datos.Vectores.V_PieI(i,:)-0.478*A18*Datos.Vectores.W_PieI(i,:);
     %%% R.Toe
-    PPuntaI(i,:) = P10(i,:)+0.752*A14*U_PieI(i,:)+1.074*A16*V_PieI(i,:)+0.187*A20*W_PieI(i,:);
-    
+    Datos.PArticulares.PuntaI(i,:) = P10(i,:)+0.752*A14*Datos.Vectores.U_PieI(i,:)+1.074*A16*Datos.Vectores.V_PieI(i,:)+0.187*A20*Datos.Vectores.W_PieI(i,:);
 end
 
 Paso = 18;
 Consecutivo = true;
-Plot_Vectores(P10,U_PieI,V_PieI,W_PieI,Paso,FrameRHS,FrameRTO,Consecutivo)
+Plot_Vectores(P10,Datos.Vectores.U_PieI,Datos.Vectores.V_PieI,Datos.Vectores.W_PieI,Paso,FrameRHS,FrameRTO,Consecutivo)
 
 
 
