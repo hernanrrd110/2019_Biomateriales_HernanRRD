@@ -1,8 +1,6 @@
 
-function [marcadores,informacionCine,Fuerzas,informacionFuerzas,Antropometria,Eventos,h] = lectura_c3d(Archivo);
+function [DatosMarcadores, infoCinematica,Plataformas,infoDinamica,Antropometria,Eventos,h,Datos] = lectura_c3d()
 
-[DatosMarcadores, infoCinematica,Plataformas,infoDinamica,Antropometria,Eventos,h]=leer_c3d(Archivo);
-%cd('/home/marco3407/marco3407@gmail.com/UNER/Biomec√°nica/Tp Laboratorio 2/2019/Archivos c3d')
 Ubact=cd;
 [Archivo, Ubc3d] = uigetfile('*.c3d');
 cd(Ubc3d)
@@ -19,15 +17,3 @@ Datos.info.Dinamica=infoDinamica;
 
 Datos.antropometria=Antropometria;
 Datos.eventos=Eventos;
-
-%%%%%%%%C·lculos Ciclo
-
-%%%%%%Frecuencia de muestreo de 340
-fm = 340;
-
-%%%Pie derecho (ciclo)
-FrameRHS = round(Eventos.Derecho_RHS(1)*fm);
-FrameRTO = round(Eventos.Derecho_RTO*fm);
-%%%Pie izquierdo (ciclo)
-FrameLHS = round(Eventos.Izquierdo_LHS(1)*fm);
-FrameLTO = round(Eventos.Izquierdo_LTO*fm);
