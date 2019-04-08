@@ -59,23 +59,23 @@ end
 Frame1 = FrameRHS;
 Frame2 = FrameLTO;
 
-% figure1 = figure ('Color',[1 1 1]);
-% Paso = 18;
-% Consecutivo = false;
-% Plot_Vectores(Puntos.P15,Vectores.U_Pelvis/10,Vectores.V_Pelvis/40,Vectores.W_Pelvis/10,Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Marcadores_Tiempo(Puntos.P15,Frame1,Frame2);
-% Plot_Marcadores_Tiempo(Puntos.P05,Frame1,Frame2);
-% Plot_Marcadores_Tiempo(Puntos.P12,Frame1,Frame2);
-% Plot_Marcadores_Tiempo(Puntos.P07,Frame1,Frame2);
-% Plot_Marcadores_Tiempo(Datos.Pasada.Marcadores.Crudos.l_asis,Frame1,Frame2);
-% Plot_Marcadores_Tiempo(Puntos.Articu.CaderaD,Frame1,Frame2);
-% Plot_Marcadores_Tiempo(Puntos.Articu.CaderaI,Frame1,Frame2);
-% 
-% grid on;
-% xlabel('Eje X[m]')
-% ylabel('Eje Y[m]')
-% zlabel('Eje Z[m]')
+figure1 = figure ('Color',[1 1 1]);
+Paso = 18;
+Consecutivo = false;
+Plot_Vectores(Puntos.P15,Vectores.U_Pelvis/10,Vectores.V_Pelvis/40,Vectores.W_Pelvis/10,Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Marcadores_Tiempo(Puntos.P15,Frame1,Frame2);%Sacro
+Plot_Marcadores_Tiempo(Puntos.P05,Frame1,Frame2);%RodillaD
+Plot_Marcadores_Tiempo(Puntos.P12,Frame1,Frame2);%RodillaI
+Plot_Marcadores_Tiempo(Puntos.P07,Frame1,Frame2);%AsisD
+Plot_Marcadores_Tiempo(Puntos.P14,Frame1,Frame2);%AsisI
+Plot_Marcadores_Tiempo(Puntos.Articu.CaderaD,Frame1,Frame2);
+Plot_Marcadores_Tiempo(Puntos.Articu.CaderaI,Frame1,Frame2);
+
+grid on;
+xlabel('Eje X[m]')
+ylabel('Eje Y[m]')
+zlabel('Eje Z[m]')
 
 %%
 %....................... CALCULOS PIERNA DERECHA ..........................
@@ -114,18 +114,22 @@ for i=1:length(Vectores.U_PiernaD)
     
 end
 
-% figure2 = figure ('Color',[1 1 1]);
-% xlabel('Eje X[m]')
-% ylabel('Eje Y[m]')
-% zlabel('Eje Z[m]')
-% 
-% Paso = 18;
-% Consecutivo = false;
-% Plot_Vectores(Puntos.Articu.RodillaD,...
-%     Vectores.U_PiernaD/100,Vectores.V_PiernaD/100,Vectores.W_PiernaD/100,...
-%     Paso,FrameRHS,FrameLTO,Consecutivo)
-% 
-% axis square;
+figure2 = figure ('Color',[1 1 1]);
+xlabel('Eje X[m]')
+ylabel('Eje Y[m]')
+zlabel('Eje Z[m]')
+
+Paso = 25;
+Consecutivo = true;
+Plot_Vectores(Puntos.Articu.RodillaD,...
+    Vectores.U_PiernaD/20,Vectores.V_PiernaD/20,Vectores.W_PiernaD/20,...
+    Paso,FrameRHS,FrameLTO,Consecutivo)
+
+Plot_Marcadores_Tiempo(Puntos.P03,Frame1,Frame2,[1 0 0]);%maleolo
+Plot_Marcadores_Tiempo(Puntos.P04,Frame1,Frame2,[0 1 0]);%barra2
+Plot_Marcadores_Tiempo(Puntos.P05,Frame1,Frame2,'b');%Epicondilo
+
+axis equal;
 
 %%
 %..................... Cálculos de Ejes PIE DERECHO   .....................
@@ -156,43 +160,24 @@ for i=1:length(Vectores.U_PieD)
         +0.752*Longitud.A13*Vectores.U_PieD(i,:)...
         +1.074*Longitud.A15*Vectores.V_PieD(i,:)...
         -0.187*Longitud.A19*Vectores.W_PieD(i,:);
-    
-    %...................SISTEMA LOCAL PIERNA DERECHO
-    
-    Vectores.I_PiernaD(i,:) = Puntos.Articu.RodillaD(i,:)-Puntos.Articu.TobilloD(i,:);
-    Vectores.I_PiernaD(i,:) = Vectores.I_PiernaD(i,:)/(norm(Vectores.I_PiernaD(i,:)));
-    
-    VectorAux1 = (Puntos.P05(i,:)-Puntos.Articu.RodillaD(i,:));
-    VectorAux2 = (Puntos.Articu.TobilloD(i,:)-Puntos.Articu.RodillaD(i,:));
-    Vectores.J_PiernaD(i,:) = cross(VectorAux1,VectorAux2);
-    Vectores.J_PiernaD(i,:) = Vectores.J_PiernaD(i,:)/(norm(Vectores.J_PiernaD(i,:)));
-    
-    Vectores.K_PiernaD(i,:) = cross (Vectores.I_PiernaD(i,:),Vectores.J_PiernaD(i,:));
-    
-    %...................SISTEMA LOCAL PIE DERECHO
-    
-    Vectores.I_PieD(i,:) = Puntos.P02(i,:)-Puntos.Articu.PuntaD(i,:);
-    Vectores.I_PieD(i,:) = Vectores.I_PieD(i,:)/(norm(Vectores.I_PieD(i,:)));
-    
-    VectorAux1 = (Puntos.Articu.TobilloD(i,:)-Puntos.P02(i,:));
-    VectorAux2 = (Puntos.Articu.PuntaD(i,:)-Puntos.P02(i,:));
-    Vectores.K_PieD(i,:) = cross(VectorAux1,VectorAux2);
-    Vectores.K_PieD(i,:) = Vectores.K_PieD(i,:)/(norm(Vectores.K_PieD(i,:)));
-    
-    Vectores.J_PieD(i,:) = cross (Vectores.W_PieD(i,:),Vectores.I_PieD(i,:));
-    
 end
 
-% figure3 = figure ('Color',[1 1 1]);
-% xlabel('Eje X[m]')
-% ylabel('Eje Y[m]')
-% zlabel('Eje Z[m]')
-% 
-% Paso = 18;
-% Consecutivo = false;
-% Plot_Vectores(Puntos.Articu.TobilloD,...
-%     Vectores.U_PieD/10,Vectores.V_PieD/40,Vectores.W_PieD/10,...
-%     Paso, FrameRHS, FrameRTO, Consecutivo)
+figure3 = figure ('Color',[1 1 1]);
+xlabel('Eje X[m]')
+ylabel('Eje Y[m]')
+zlabel('Eje Z[m]')
+
+Paso = 25;
+Consecutivo = false;
+Plot_Vectores(Puntos.Articu.TobilloD,...
+    Vectores.U_PieD/10,Vectores.V_PieD/10,Vectores.W_PieD/10,...
+    Paso, Frame1, Frame2, Consecutivo)
+
+Plot_Marcadores_Tiempo(Puntos.P01,Frame1,Frame2,'r');%metatarciano
+Plot_Marcadores_Tiempo(Puntos.P02,Frame1,Frame2,'g');%talon
+Plot_Marcadores_Tiempo(Puntos.P03,Frame1,Frame2,'b');%maleolo
+
+axis equal;
 
 
 %%
@@ -211,20 +196,26 @@ for i=1:length(Vectores.U_PiernaI)
     Vectores.W_PiernaI(i,:) = Vectores.W_PiernaI(i,:)/norm(Vectores.W_PiernaI(i,:));
     
     %%% Rodilla Izquierda
-    Puntos.Articu.RodillaI(i,:) = Puntos.P12(i,:)+0.500*Longitud.A11*Vectores.W_PiernaI(i,:);
+    Puntos.Articu.RodillaI(i,:) = Puntos.P12(i,:)-0.500*Longitud.A11*Vectores.W_PiernaI(i,:);
     
 end
 
-% figure4 = figure ('Color',[1 1 1]);
-% xlabel('Eje X[m]')
-% ylabel('Eje Y[m]')
-% zlabel('Eje Z[m]')
-% 
-% Paso = 18;
-% Consecutivo = false;
-% Plot_Vectores(Puntos.Articu.RodillaI,...
-%     Vectores.U_PiernaI,Vectores.V_PiernaI,Vectores.W_PiernaI,...
-%     Paso,FrameRHS,FrameLTO,Consecutivo)
+figure4 = figure ('Color',[1 1 1]);
+xlabel('Eje X[m]')
+ylabel('Eje Y[m]')
+zlabel('Eje Z[m]')
+
+Paso = 18;
+Consecutivo = false;
+Plot_Vectores(Puntos.Articu.RodillaI,...
+    Vectores.U_PiernaI/20,Vectores.V_PiernaI/20,Vectores.W_PiernaI/20,...
+    Paso,FrameRHS,FrameLTO,Consecutivo)
+
+Plot_Marcadores_Tiempo(Puntos.P10,Frame1,Frame2,'r');%maleolo
+Plot_Marcadores_Tiempo(Puntos.P11,Frame1,Frame2,'g');%bar2
+Plot_Marcadores_Tiempo(Puntos.P12,Frame1,Frame2,'b');%rodilla
+
+axis equal;
 
 %%
 %........................ CALCULOS PIE IZQUIERDO .........................
@@ -255,18 +246,22 @@ for i=1:length(Vectores.U_PieI)
         +0.187*Longitud.A20*Vectores.W_PieI(i,:);
 end
 
-% figure5 = figure ('Color',[1 1 1]);
-% xlabel('Eje X[m]')
-% ylabel('Eje Y[m]')
-% zlabel('Eje Z[m]')
-% 
-% Paso = 18;
-% Consecutivo = true;
-% Plot_Vectores(Puntos.P08,...
-%     Vectores.U_PieI/50,Vectores.V_PieI/50,Vectores.W_PieI/50,...
-%     Paso,FrameRHS,FrameLTO,Consecutivo)
+figure5 = figure ('Color',[1 1 1]);
+xlabel('Eje X[m]')
+ylabel('Eje Y[m]')
+zlabel('Eje Z[m]')
 
+Paso = 25;
+Consecutivo = false;
+Plot_Vectores(Puntos.P08,...
+    Vectores.U_PieI/15,Vectores.V_PieI/15,Vectores.W_PieI/15,...
+    Paso,FrameRHS,FrameLTO,Consecutivo)
 
+Plot_Marcadores_Tiempo(Puntos.P08,Frame1,Frame2,'r');%metatarciano
+Plot_Marcadores_Tiempo(Puntos.P09,Frame1,Frame2,'g');%talon
+Plot_Marcadores_Tiempo(Puntos.P10,Frame1,Frame2,'b');%maleolo
+
+axis equal;
 %%
 %........................ CALCULOS SISTEMAS LOCALES .......................
 
@@ -366,38 +361,61 @@ Puntos.CM.PieD = Puntos.P02 + 0.44*(Puntos.Articu.PuntaD-Puntos.P02);
 %...................PIE IZQUIERDO
 Puntos.CM.PieI = Puntos.P09 + 0.44*(Puntos.Articu.PuntaI-Puntos.P09);
 
-% Frame1 = FrameRHS;
-% Frame2 = FrameLTO;
-% Paso = 100;
-% Consecutivo = false;
-% Escala = 1/100;
-% 
-% Plot_Vectores(Puntos.CM.MusloD,...
-%     Vectores.I_MusloD*Escala,Vectores.J_MusloD*Escala,Vectores.K_MusloD*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.CM.MusloI,...
-%     Vectores.I_MusloI*Escala,Vectores.J_MusloI*Escala,Vectores.K_MusloI*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.CM.PantorrillaD,...
-%     Vectores.I_PiernaD*Escala,Vectores.J_PiernaD*Escala,Vectores.K_PiernaD*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.CM.PantorrillaI,...
-%     Vectores.I_PiernaI*Escala,Vectores.J_PiernaI*Escala,Vectores.K_PiernaI*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.CM.PieD,...
-%     Vectores.I_PieD*Escala,Vectores.J_PieD*Escala,Vectores.K_PieD*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.CM.PieI,...
-%     Vectores.I_PieI*Escala,Vectores.J_PieI*Escala,Vectores.K_PieI*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
+Frame1 = FrameRHS;
+Frame2 = FrameLTO;
+Paso = 35;
+Consecutivo = false;
+Escala = 1/10;
 
 
+%%%%%%%%PARTE DERECHA
+Plot_Vectores(Puntos.CM.MusloD,...
+    Vectores.I_MusloD*Escala,Vectores.J_MusloD*Escala,Vectores.K_MusloD*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
 
+Plot_Vectores(Puntos.CM.PantorrillaD,...
+    Vectores.I_PiernaD*Escala,Vectores.J_PiernaD*Escala,Vectores.K_PiernaD*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Vectores(Puntos.CM.PieD,...
+    Vectores.I_PieD*Escala,Vectores.J_PieD*Escala,Vectores.K_PieD*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Marcadores_Tiempo(Puntos.P15,Frame1,Frame2,'r');%Sacro
+Plot_Marcadores_Tiempo(Puntos.P07,Frame1,Frame2,'r');%AsisD
+Plot_Marcadores_Tiempo(Puntos.Articu.CaderaD,Frame1,Frame2,'r');
+
+Plot_Marcadores_Tiempo(Puntos.Articu.RodillaD,Frame1,Frame2,'g');%Epicondilo
+
+% Plot_Marcadores_Tiempo(Puntos.P03,Frame1,Frame2,'b');%maleolo
+Plot_Marcadores_Tiempo(Puntos.P01,Frame1,Frame2,'b');%metatarciano
+Plot_Marcadores_Tiempo(Puntos.P02,Frame1,Frame2,'b');%talon
+
+axis equal;
+%%%%%%%%PARTE IZQUIERDA
+
+Plot_Vectores(Puntos.CM.MusloI,...
+    Vectores.I_MusloI*Escala,Vectores.J_MusloI*Escala,Vectores.K_MusloI*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Vectores(Puntos.CM.PantorrillaI,...
+    Vectores.I_PiernaI*Escala,Vectores.J_PiernaI*Escala,Vectores.K_PiernaI*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Vectores(Puntos.CM.PieI,...
+    Vectores.I_PieI*Escala,Vectores.J_PieI*Escala,Vectores.K_PieI*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Marcadores_Tiempo(Puntos.P14,Frame1,Frame2,'r');%AsisI
+Plot_Marcadores_Tiempo(Puntos.Articu.CaderaI,Frame1,Frame2);
+
+Plot_Marcadores_Tiempo(Puntos.Articu.RodillaI,Frame1,Frame2,'g');
+
+% Plot_Marcadores_Tiempo(Puntos.P10,Frame1,Frame2,'b');%maleolo
+Plot_Marcadores_Tiempo(Puntos.P08,Frame1,Frame2,'b');%metatarciano
+Plot_Marcadores_Tiempo(Puntos.P09,Frame1,Frame2,'b');%talon
+
+axis equal;
 
 
 
