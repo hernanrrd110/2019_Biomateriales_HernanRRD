@@ -1,61 +1,78 @@
 
-function [Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,Vectores)
+function [Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,Vectores,Frame1,Frame2)
 
 %.......................... PUNTOS MARCADORES .............................
 
 %..... PELVIS
 %%%% Asis derecha
-Puntos.P07 = Datos.Pasada.Marcadores.Crudos.r_asis;
+Puntos.P07 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_asis,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Asis izquierda
-Puntos.P14 = Datos.Pasada.Marcadores.Crudos.l_asis;
+Puntos.P14 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_asis,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Sacro
-Puntos.P15 = Datos.Pasada.Marcadores.Crudos.sacrum;
+Puntos.P15 = FiltroPB(Datos.Pasada.Marcadores.Crudos.sacrum,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Caderas
 Puntos.Articu.CaderaD = zeros(length(Puntos.P07),3);
 Puntos.Articu.CaderaI = zeros(length(Puntos.P07),3);
 
 %..... PIERNA DERECHA
 %%%% Maleolo Derecho
-Puntos.P03 = Datos.Pasada.Marcadores.Crudos.r_mall;
+Puntos.P03 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_mall,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Barra Tibial 2 Derecha
-Puntos.P04 = Datos.Pasada.Marcadores.Crudos.r_bar_2;
+Puntos.P04 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_bar_2,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Epicondilo Derecho
-Puntos.P05 = Datos.Pasada.Marcadores.Crudos.r_knee_1;
+Puntos.P05 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_knee_1,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Barra 1 Muslo
-Puntos.P06 = Datos.Pasada.Marcadores.Crudos.r_bar_1;
+Puntos.P06 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_bar_1,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Rodilla Derecha
 Puntos.Articu.RodillaD = zeros(length(Puntos.P04),3);
 
 %..... PIE DERECHO
 %%%% Metatarciano Derecho
-Puntos.P01 = Datos.Pasada.Marcadores.Crudos.r_met;
+Puntos.P01 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_met,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Tobillo Derecho
-Puntos.P02 = Datos.Pasada.Marcadores.Crudos.r_heel;
+Puntos.P02 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_heel,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Maleolo Derecho
-Puntos.P03 = Datos.Pasada.Marcadores.Crudos.r_mall;
+Puntos.P03 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_mall,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Punta y Tobillo Derecho
 Puntos.Articu.PuntaD = zeros(length(Puntos.P01),3);
 Puntos.Articu.TobilloD = zeros(length(Puntos.P01),3);
 
 %..... PIERNA IZQUIERDA
 %%%% Maleolo Izquierdo
-Puntos.P10 = Datos.Pasada.Marcadores.Crudos.l_mall;
+Puntos.P10 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_mall,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Barra 2 Tibial Izquierdo
-Puntos.P11 = Datos.Pasada.Marcadores.Crudos.l_bar_2;
+Puntos.P11 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_bar_2,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Epicondilo Izquierdo
-Puntos.P12 = Datos.Pasada.Marcadores.Crudos.l_knee_1;
+Puntos.P12 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_knee_1,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
+
 %%%% Barra 1 Muslo
-Puntos.P13 = Datos.Pasada.Marcadores.Crudos.l_bar_1;
+Puntos.P13 = Datos.Pasada.Marcadores.Crudos.l_bar_1(Frame1:Frame2,:);
 %%%% Rodilla Izquierda
 Puntos.Articu.RodillaI = zeros(length(Puntos.P11),3);
 
 %..... PIE IZQUIERDO
 %%%% Metatarciano Izquierdo
-Puntos.P08 = Datos.Pasada.Marcadores.Crudos.l_met;
+Puntos.P08 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_met,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Tobillo Izquierdo
-Puntos.P09 = Datos.Pasada.Marcadores.Crudos.l_heel;
+Puntos.P09 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_heel,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Maleolo Izquierdo
-Puntos.P10 = Datos.Pasada.Marcadores.Crudos.l_mall;
+Puntos.P10 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_mall,...
+    Datos.info.Cinematica.frequency,Frame1,Frame2);
 %%%% Punta y Tobillo Izquierdo
 Puntos.Articu.PuntaI = zeros(length(Puntos.P08),3);
 Puntos.Articu.TobilloI = zeros(length(Puntos.P08),3);
@@ -143,6 +160,31 @@ Puntos.CM.PieD = zeros(length(Puntos.P04),3);
 
 %...................PIE IZQUIERDO
 Puntos.CM.PieI = zeros(length(Puntos.P04),3);
+
+%............................. ANGULOS ............................
+
+%............... Muslo y Pelvis  
+Angulos.Alfa_HJC_D = zeros(length(Puntos.P04),3);
+Angulos.Beta_HJC_D = zeros(length(Puntos.P04),3);
+Angulos.Gamma_HJC_D = zeros(length(Puntos.P04),3);
+Angulos.Alfa_HJC_I = zeros(length(Puntos.P04),3);
+Angulos.Beta_HJC_I = zeros(length(Puntos.P04),3);
+Angulos.Gamma_HJC_I = zeros(length(Puntos.P04),3);
+
+%................ Piernas
+Angulos.Alfa_KJC_D = zeros(length(Puntos.P04),3);
+Angulos.Gamma_KJC_D = zeros(length(Puntos.P04),3);
+Angulos.Alfa_KJC_I = zeros(length(Puntos.P04),3);
+Angulos.Beta_KJC_I = zeros(length(Puntos.P04),3);
+Angulos.Gamma_KJC_I = zeros(length(Puntos.P04),3);
+
+%................ Pies
+Angulos.Alfa_AJC_D = zeros(length(Puntos.P04),3);
+Angulos.Beta_AJC_D = zeros(length(Puntos.P04),3);
+Angulos.Gamma_AJC_D = zeros(length(Puntos.P04),3);
+Angulos.Alfa_AJC_I = zeros(length(Puntos.P04),3);
+Angulos.Beta_AJC_I = zeros(length(Puntos.P04),3);
+Angulos.Gamma_AJC_I = zeros(length(Puntos.P04),3);
 
 end
 
