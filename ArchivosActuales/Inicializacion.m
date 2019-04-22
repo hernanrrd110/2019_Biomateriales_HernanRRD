@@ -164,27 +164,27 @@ Puntos.CM.PieI = zeros(length(Puntos.P04),3);
 %............................. ANGULOS ............................
 
 %............... Muslo y Pelvis  
-Angulos.Alfa_HJC_D = zeros(length(Puntos.P04),3);
-Angulos.Beta_HJC_D = zeros(length(Puntos.P04),3);
-Angulos.Gamma_HJC_D = zeros(length(Puntos.P04),3);
-Angulos.Alfa_HJC_I = zeros(length(Puntos.P04),3);
-Angulos.Beta_HJC_I = zeros(length(Puntos.P04),3);
-Angulos.Gamma_HJC_I = zeros(length(Puntos.P04),3);
+Angulos.Alfa_HJC_D = zeros(length(Puntos.P04),1);
+Angulos.Beta_HJC_D = zeros(length(Puntos.P04),1);
+Angulos.Gamma_HJC_D = zeros(length(Puntos.P04),1);
+Angulos.Alfa_HJC_I = zeros(length(Puntos.P04),1);
+Angulos.Beta_HJC_I = zeros(length(Puntos.P04),1);
+Angulos.Gamma_HJC_I = zeros(length(Puntos.P04),1);
 
 %................ Piernas
-Angulos.Alfa_KJC_D = zeros(length(Puntos.P04),3);
-Angulos.Gamma_KJC_D = zeros(length(Puntos.P04),3);
-Angulos.Alfa_KJC_I = zeros(length(Puntos.P04),3);
-Angulos.Beta_KJC_I = zeros(length(Puntos.P04),3);
-Angulos.Gamma_KJC_I = zeros(length(Puntos.P04),3);
+Angulos.Alfa_KJC_D = zeros(length(Puntos.P04),1);
+Angulos.Gamma_KJC_D = zeros(length(Puntos.P04),1);
+Angulos.Alfa_KJC_I = zeros(length(Puntos.P04),1);
+Angulos.Beta_KJC_I = zeros(length(Puntos.P04),1);
+Angulos.Gamma_KJC_I = zeros(length(Puntos.P04),1);
 
 %................ Pies
-Angulos.Alfa_AJC_D = zeros(length(Puntos.P04),3);
-Angulos.Beta_AJC_D = zeros(length(Puntos.P04),3);
-Angulos.Gamma_AJC_D = zeros(length(Puntos.P04),3);
-Angulos.Alfa_AJC_I = zeros(length(Puntos.P04),3);
-Angulos.Beta_AJC_I = zeros(length(Puntos.P04),3);
-Angulos.Gamma_AJC_I = zeros(length(Puntos.P04),3);
+Angulos.Alfa_AJC_D = zeros(length(Puntos.P04),1);
+Angulos.Beta_AJC_D = zeros(length(Puntos.P04),1);
+Angulos.Gamma_AJC_D = zeros(length(Puntos.P04),1);
+Angulos.Alfa_AJC_I = zeros(length(Puntos.P04),1);
+Angulos.Beta_AJC_I = zeros(length(Puntos.P04),1);
+Angulos.Gamma_AJC_I = zeros(length(Puntos.P04),1);
 
 end
 
