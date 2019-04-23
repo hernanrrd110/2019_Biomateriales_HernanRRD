@@ -13,7 +13,7 @@ Longitud.P07 = 0;
 Vectores.U_Pelvis = 0;
 
 Frame1 = 1;
-Frame2 = 800;
+Frame2 = 100;
 
 [Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,Vectores,Frame1,Frame2);
 

@@ -360,40 +360,40 @@ Paso = 44;
 Consecutivo = false;
 Escala = 1/10;
 
-figure6 = figure ('Color',[1 1 1]);
-xlabel('Eje X[m]')
-ylabel('Eje Y[m]')
-zlabel('Eje Z[m]')
-
-%%%%%%PARTE DERECHA
-Frame1 = 1;
-Frame2 = length(Puntos.CM.MusloD);
-Plot_Vectores(Puntos.CM.MusloD,...
-    Vectores.I_MusloD*Escala,Vectores.J_MusloD*Escala,Vectores.K_MusloD*Escala,...
-    Paso,Frame1,Frame2,Consecutivo)
-
-Plot_Vectores(Puntos.CM.PantorrillaD,...
-    Vectores.I_PiernaD*Escala,Vectores.J_PiernaD*Escala,Vectores.K_PiernaD*Escala,...
-    Paso,Frame1,Frame2,Consecutivo)
-
-Plot_Vectores(Puntos.CM.PieD,...
-    Vectores.I_PieD*Escala,Vectores.J_PieD*Escala,Vectores.K_PieD*Escala,...
-    Paso,Frame1,Frame2,Consecutivo)
-
-Plot_Vectores(Puntos.P15,...
-    Vectores.I_Pelvis*Escala,Vectores.J_Pelvis*Escala,Vectores.K_Pelvis*Escala,...
-    Paso,Frame1,Frame2,Consecutivo)
-
-Plot_Marcadores_Tiempo(Puntos.P15,Frame1,Frame2,'r');%Sacro
-Plot_Marcadores_Tiempo(Puntos.P07,Frame1,Frame2,'r');%AsisD
-Plot_Marcadores_Tiempo(Puntos.Articu.CaderaD,Frame1,Frame2,'r');
-
-Plot_Marcadores_Tiempo(Puntos.Articu.RodillaD,Frame1,Frame2,'g');%Rodilla
-
-Plot_Marcadores_Tiempo(Puntos.Articu.PuntaD,Frame1,Frame2,'b');%metatarciano
-Plot_Marcadores_Tiempo(Puntos.P02,Frame1,Frame2,'b');%talon
-
-axis equal;
+% figure6 = figure ('Color',[1 1 1]);
+% xlabel('Eje X[m]')
+% ylabel('Eje Y[m]')
+% zlabel('Eje Z[m]')
+% 
+% %%%%%%PARTE DERECHA
+% Frame1 = 1;
+% Frame2 = length(Puntos.CM.MusloD);
+% Plot_Vectores(Puntos.CM.MusloD,...
+%     Vectores.I_MusloD*Escala,Vectores.J_MusloD*Escala,Vectores.K_MusloD*Escala,...
+%     Paso,Frame1,Frame2,Consecutivo)
+% 
+% Plot_Vectores(Puntos.CM.PantorrillaD,...
+%     Vectores.I_PiernaD*Escala,Vectores.J_PiernaD*Escala,Vectores.K_PiernaD*Escala,...
+%     Paso,Frame1,Frame2,Consecutivo)
+% 
+% Plot_Vectores(Puntos.CM.PieD,...
+%     Vectores.I_PieD*Escala,Vectores.J_PieD*Escala,Vectores.K_PieD*Escala,...
+%     Paso,Frame1,Frame2,Consecutivo)
+% 
+% Plot_Vectores(Puntos.P15,...
+%     Vectores.I_Pelvis*Escala,Vectores.J_Pelvis*Escala,Vectores.K_Pelvis*Escala,...
+%     Paso,Frame1,Frame2,Consecutivo)
+% 
+% Plot_Marcadores_Tiempo(Puntos.P15,Frame1,Frame2,'r');%Sacro
+% Plot_Marcadores_Tiempo(Puntos.P07,Frame1,Frame2,'r');%AsisD
+% Plot_Marcadores_Tiempo(Puntos.Articu.CaderaD,Frame1,Frame2,'r');
+% 
+% Plot_Marcadores_Tiempo(Puntos.Articu.RodillaD,Frame1,Frame2,'g');%Rodilla
+% 
+% Plot_Marcadores_Tiempo(Puntos.Articu.PuntaD,Frame1,Frame2,'b');%metatarciano
+% Plot_Marcadores_Tiempo(Puntos.P02,Frame1,Frame2,'b');%talon
+% 
+% axis equal;
 
 %%
 %%%%%%%%PARTE IZQUIERDA
@@ -507,83 +507,19 @@ end
 close all;
 figure8 = figure ('Color',[1 1 1]);
 
-[Angulos.Alfa_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_HJC_D);
-subplot(3,1,1)
-plot(abscisa_nueva,Angulos.Alfa_HJC_D_Normalizada)
+Plot_Angulos_Cadera(Angulos);
 
-title('Alfa HJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
-
-[Angulos.Beta_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_HJC_D);
-subplot(3,1,2)
-plot(abscisa_nueva,Angulos.Beta_HJC_D_Normalizada)
-
-title('Beta HJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
-
-[Angulos.Gamma_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_HJC_D);
-subplot(3,1,3)
-plot(abscisa_nueva,Angulos.Gamma_HJC_D_Normalizada)
-
-title('Gamma HJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
 %%
 
-close all;
 figure9 = figure ('Color',[1 1 1]);
 
-[Angulos.Alfa_KJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_KJC_D);
-subplot(3,1,1)
-plot(abscisa_nueva,Angulos.Alfa_KJC_D_Normalizada)
+Plot_Angulos_Rodilla(Angulos) 
 
-title('Alfa KJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
-
-[Angulos.Beta_KJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_KJC_D);
-subplot(3,1,2)
-plot(abscisa_nueva,Angulos.Beta_KJC_D_Normalizada)
-
-title('Beta KJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
-
-[Angulos.Gamma_KJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_KJC_D);
-subplot(3,1,3)
-plot(abscisa_nueva,Angulos.Gamma_KJC_D_Normalizada)
-
-title('Gamma KJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
 %%
-close all;
+
 figure10 = figure ('Color',[1 1 1]);
 
-[Angulos.Alfa_AJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_AJC_D);
-subplot(3,1,1)
-plot(abscisa_nueva,Angulos.Alfa_AJC_D_Normalizada)
+Plot_Angulos_Pie(Angulos) 
 
-title('Alfa AJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
-
-[Angulos.Beta_AJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_AJC_D);
-subplot(3,1,2)
-plot(abscisa_nueva,Angulos.Beta_AJC_D_Normalizada)
-
-title('Beta AJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
-
-[Angulos.Gamma_AJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_AJC_D);
-subplot(3,1,3)
-plot(abscisa_nueva,Angulos.Gamma_AJC_D_Normalizada)
-
-title('Gamma AJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
