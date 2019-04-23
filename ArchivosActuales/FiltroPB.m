@@ -5,7 +5,10 @@ frec_corte = 6;
 fe = fm/2;
 wn = frec_corte/fe;
 [b,a] = butter(Orden,wn);
-Punto_Filtrado = filtfilt(b,a,Punto_SinFiltrar(Frame1:Frame2,:));
+
+Punto_Filtrado = Punto_SinFiltrar;
+Punto_Filtrado(Frame1-10:Frame2+10,:) = filtfilt(b,a,Punto_SinFiltrar(Frame1-10:Frame2+10,:));
+
 end
 
 

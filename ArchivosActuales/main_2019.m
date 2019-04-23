@@ -2,7 +2,8 @@ clear all;
 close all;
 clc;
 
-[DatosMarcadores,infoCinematica,Plataformas,infoDinamica,Antropometria,Eventos,h,Datos] = lectura_c3d();
+[DatosMarcadores,infoCinematica,Plataformas,...
+    infoDinamica,Antropometria,Eventos,h,Datos] = lectura_c3d();
 
 %%%%%%%%Cálculos Ciclo
 %%%%%%Frecuencia de muestreo de 340
@@ -18,8 +19,6 @@ FrameLHS2 = round(Datos.eventos.Izquierdo_LHS(2)*fm);
 FrameLTO = round(Datos.eventos.Izquierdo_LTO*fm);
 
 
-PrimerFrame = 1760;
-SegundoFrame = 2356;
 
 Puntos.Articu.CaderaD = 0;
 Puntos.P05 = 0;
@@ -27,8 +26,8 @@ Longitud.P07 = 0;
 Vectores.U_Pelvis = 0;
 
 
-% Frame2 = FrameLHS2;
-[Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,Vectores,FrameRHS,FrameRHS2);
+[Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,...
+    Vectores,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2);
 
 Frame1 = 1;
 Frame2 = FrameRHS2-FrameRHS;
@@ -89,7 +88,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PiernaD)
+for i=1:length(Vectores.U_Pelvis)
     
     Vectores.V_PiernaD(i,:) = Puntos.P03(i,:)-Puntos.P05(i,:);
     Vectores.V_PiernaD(i,:) = Vectores.V_PiernaD(i,:)/norm(Vectores.V_PiernaD(i,:));
@@ -143,7 +142,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PieD)
+for i=1:length(Vectores.U_Pelvis)
     
     Vectores.U_PieD(i,:) = Puntos.P01(i,:)-Puntos.P02(i,:);
     Vectores.U_PieD(i,:) = Vectores.U_PieD(i,:)/norm(Vectores.U_PieD(i,:));
@@ -191,7 +190,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PiernaI)
+for i=1:length(Vectores.U_Pelvis)
     Vectores.V_PiernaI(i,:) = Puntos.P10(i,:)-Puntos.P12(i,:);
     Vectores.V_PiernaI(i,:) = Vectores.V_PiernaI(i,:)/norm(Vectores.V_PiernaI(i,:));
 
@@ -229,7 +228,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PieI)
+for i=1:length(Vectores.U_Pelvis)
     Vectores.U_PieI(i,:) = Puntos.P08(i,:)-Puntos.P09(i,:);
     Vectores.U_PieI(i,:) = Vectores.U_PieI(i,:)/norm(Vectores.U_PieI(i,:));
 
@@ -277,7 +276,7 @@ Vectores.I_Pelvis = Vectores.W_Pelvis;
 Vectores.J_Pelvis = Vectores.U_Pelvis;
 Vectores.K_Pelvis = Vectores.V_Pelvis;
 
-for i=1:length(Vectores.U_PieD)
+for i=1:length(Vectores.U_Pelvis)
     
     %...................SISTEMA LOCAL MUSLO DERECHO
     
@@ -397,36 +396,38 @@ Escala = 1/10;
 
 %%
 %%%%%%%%PARTE IZQUIERDA
+Frame1 = FrameLHS;
+Frame2 = FrameLHS2;
 
-% Plot_Vectores(Puntos.CM.MusloI,...
-%     Vectores.I_MusloI*Escala,Vectores.J_MusloI*Escala,Vectores.K_MusloI*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.CM.PantorrillaI,...
-%     Vectores.I_PiernaI*Escala,Vectores.J_PiernaI*Escala,Vectores.K_PiernaI*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.CM.PieI,...
-%     Vectores.I_PieI*Escala,Vectores.J_PieI*Escala,Vectores.K_PieI*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Vectores(Puntos.P15,...
-%     Vectores.U_Pelvis*Escala,Vectores.V_Pelvis*Escala,Vectores.W_Pelvis*Escala,...
-%     Paso,Frame1,Frame2,Consecutivo)
-% 
-% Plot_Marcadores_Tiempo(Puntos.P14,Frame1,Frame2,'r');%AsisI
-% Plot_Marcadores_Tiempo(Puntos.Articu.CaderaI,Frame1,Frame2,'r');
-% 
-% Plot_Marcadores_Tiempo(Puntos.Articu.RodillaI,Frame1,Frame2,'g');%Rodilla
-% 
-% Plot_Marcadores_Tiempo(Puntos.Articu.PuntaI,Frame1,Frame2,'b');%Punta
-% Plot_Marcadores_Tiempo(Puntos.P09,Frame1,Frame2,'b');%talon
-% 
-% axis equal;
+Plot_Vectores(Puntos.CM.MusloI,...
+    Vectores.I_MusloI*Escala,Vectores.J_MusloI*Escala,Vectores.K_MusloI*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Vectores(Puntos.CM.PantorrillaI,...
+    Vectores.I_PiernaI*Escala,Vectores.J_PiernaI*Escala,Vectores.K_PiernaI*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Vectores(Puntos.CM.PieI,...
+    Vectores.I_PieI*Escala,Vectores.J_PieI*Escala,Vectores.K_PieI*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Vectores(Puntos.P15,...
+    Vectores.U_Pelvis*Escala,Vectores.V_Pelvis*Escala,Vectores.W_Pelvis*Escala,...
+    Paso,Frame1,Frame2,Consecutivo)
+
+Plot_Marcadores_Tiempo(Puntos.P14,Frame1,Frame2,'r');%AsisI
+Plot_Marcadores_Tiempo(Puntos.Articu.CaderaI,Frame1,Frame2,'r');
+
+Plot_Marcadores_Tiempo(Puntos.Articu.RodillaI,Frame1,Frame2,'g');%Rodilla
+
+Plot_Marcadores_Tiempo(Puntos.Articu.PuntaI,Frame1,Frame2,'b');%Punta
+Plot_Marcadores_Tiempo(Puntos.P09,Frame1,Frame2,'b');%talon
+
+axis equal;
 
 %%
 
-for i=1:length(Vectores.U_PieD)
+for i=1:length(Vectores.U_Pelvis)
 %%%% Para la cadera
 Vectores.L_HJC_D(i,:) = cross(Vectores.K_Pelvis(i,:),Vectores.I_MusloD(i,:));
 Vectores.L_HJC_D(i,:) = Vectores.L_HJC_D(i,:)/norm(Vectores.L_HJC_D(i,:));
@@ -446,7 +447,7 @@ Vectores.L_AJC_I(i,:) = cross(Vectores.K_PiernaI(i,:),Vectores.I_PieI(i,:));
 Vectores.L_AJC_I(i,:) = Vectores.L_AJC_I(i,:)/norm(Vectores.L_AJC_I(i,:));
 end
 
-for i=1:length(Vectores.U_PieD)
+for i=1:length(Vectores.U_Pelvis)
 %............................... Muslo y Pelvis  
 Angulos.Alfa_HJC_D(i) = acosd(dot(Vectores.L_HJC_D(i,:),Vectores.J_Pelvis(i,:)))*...
     dot(Vectores.L_HJC_D(i,:),Vectores.I_Pelvis(i,:))/abs(dot(Vectores.L_HJC_D(i,:),Vectores.I_Pelvis(i,:)));
@@ -507,19 +508,19 @@ end
 close all;
 figure8 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Cadera(Angulos);
+Plot_Angulos_Cadera(Angulos,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2);
 
 
 %%
 
 figure9 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Rodilla(Angulos) 
+Plot_Angulos_Rodilla(Angulos,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2) 
 
 
 %%
 
 figure10 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Pie(Angulos) 
+Plot_Angulos_Pie(Angulos,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2) 
 
