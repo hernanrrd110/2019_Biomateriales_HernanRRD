@@ -15,7 +15,8 @@ Vectores.U_Pelvis = 0;
 Frame1 = 1;
 Frame2 = 100;
 
-[Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,Vectores,Frame1,Frame2);
+[Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,...
+    Vectores,Frame1,Frame2,Frame1,Frame2);
 
 
 %%
@@ -251,7 +252,7 @@ for i=1:length(Vectores.U_PieD)
     Vectores.K_PieI(i,:) = cross(VectorAux1,VectorAux2);
     Vectores.K_PieI(i,:) = Vectores.K_PieI(i,:)/(norm(Vectores.K_PieI(i,:)));
     
-    Vectores.J_PieI(i,:) = cross(Vectores.K_PieD(i,:),Vectores.I_PieI(i,:));
+    Vectores.J_PieI(i,:) = cross(Vectores.K_PieI(i,:),Vectores.I_PieI(i,:));
     
 end
 
@@ -267,12 +268,12 @@ Escala = 1/10;
 
 %%
 
-for i=1:length(Vectores.U_PieD)
+for i=1:length(Vectores.U_Pelvis)
 %%%% Para la cadera
 Vectores.L_HJC_D(i,:) = cross(Vectores.K_Pelvis(i,:),Vectores.I_MusloD(i,:));
 Vectores.L_HJC_D(i,:) = Vectores.L_HJC_D(i,:)/norm(Vectores.L_HJC_D(i,:));
 Vectores.L_HJC_I(i,:) = cross(Vectores.K_Pelvis(i,:),Vectores.I_MusloI(i,:));
-Vectores.L_HJC_I(i,:) = norm(Vectores.L_HJC_I(i,:));
+Vectores.L_HJC_I(i,:) = Vectores.L_HJC_I(i,:)/norm(Vectores.L_HJC_I(i,:));
 
 %%%% Para las piernas
 Vectores.L_KJC_D(i,:) = cross(Vectores.K_MusloD(i,:),Vectores.I_PiernaD(i,:));
@@ -287,8 +288,9 @@ Vectores.L_AJC_I(i,:) = cross(Vectores.K_PiernaI(i,:),Vectores.I_PieI(i,:));
 Vectores.L_AJC_I(i,:) = Vectores.L_AJC_I(i,:)/norm(Vectores.L_AJC_I(i,:));
 end
 
-for i=1:length(Vectores.U_PieD)
-%............................... Muslo y Pelvis  
+for i=1:length(Vectores.U_Pelvis)
+%............................... Muslo y Pelvis
+
 Angulos.Alfa_HJC_D(i) = acosd(dot(Vectores.L_HJC_D(i,:),Vectores.J_Pelvis(i,:)))*...
     dot(Vectores.L_HJC_D(i,:),Vectores.I_Pelvis(i,:))/abs(dot(Vectores.L_HJC_D(i,:),Vectores.I_Pelvis(i,:)));
 
@@ -340,36 +342,28 @@ Angulos.Gamma_AJC_I(i) = -acosd(dot(Vectores.L_AJC_I(i,:),Vectores.K_PieI(i,:)))
     dot(Vectores.L_AJC_I(i,:),Vectores.J_PieI(i,:))/abs(dot(Vectores.L_AJC_I(i,:),Vectores.J_PieI(i,:)));
 end
 
+
 [Promedios_Standing] = Promedio_Angulos(Angulos,1,100);
 
 %%
 close all;
 figure8 = figure ('Color',[1 1 1]);
 
-[Angulos.Alfa_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_HJC_D);
-subplot(3,1,1)
-plot(abscisa_nueva,Angulos.Alfa_HJC_D_Normalizada)
-
-title('Alfa HJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
-
-[Angulos.Beta_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_HJC_D);
-subplot(3,1,2)
-plot(abscisa_nueva,Angulos.Beta_HJC_D_Normalizada)
-
-title('Beta HJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+Plot_Angulos_Cadera(Angulos,Frame1,Frame2,Frame1,Frame2);
 
 
-[Angulos.Gamma_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_HJC_D);
-subplot(3,1,3)
-plot(abscisa_nueva,Angulos.Gamma_HJC_D_Normalizada)
+%%
 
-title('Gamma HJC Derecho Normalizada')
-xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
-ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+figure9 = figure ('Color',[1 1 1]);
+
+Plot_Angulos_Rodilla(Angulos,Frame1,Frame2,Frame1,Frame2) 
+
+
+%%
+
+figure10 = figure ('Color',[1 1 1]);
+
+Plot_Angulos_Pie(Angulos,Frame1,Frame2,Frame1,Frame2) 
 
 
 
