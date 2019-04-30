@@ -12,7 +12,7 @@ Puntos.P05 = 0;
 Longitud.P07 = 0;
 Vectores.U_Pelvis = 0;
 
-Frame1 = 1;
+Frame1 = 15;
 Frame2 = 100;
 
 [Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,...
@@ -57,7 +57,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PiernaD)
+for i=1:length(Vectores.U_Pelvis)
     
     Vectores.V_PiernaD(i,:) = Puntos.P03(i,:)-Puntos.P05(i,:);
     Vectores.V_PiernaD(i,:) = Vectores.V_PiernaD(i,:)/norm(Vectores.V_PiernaD(i,:));
@@ -95,7 +95,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PieD)
+for i=1:length(Vectores.U_Pelvis)
     
     Vectores.U_PieD(i,:) = Puntos.P01(i,:)-Puntos.P02(i,:);
     Vectores.U_PieD(i,:) = Vectores.U_PieD(i,:)/norm(Vectores.U_PieD(i,:));
@@ -127,7 +127,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PiernaI)
+for i=1:length(Vectores.U_Pelvis)
     Vectores.V_PiernaI(i,:) = Puntos.P10(i,:)-Puntos.P12(i,:);
     Vectores.V_PiernaI(i,:) = Vectores.V_PiernaI(i,:)/norm(Vectores.V_PiernaI(i,:));
 
@@ -149,7 +149,7 @@ end
 close all;
 clc;
 
-for i=1:length(Vectores.U_PieI)
+for i=1:length(Vectores.U_Pelvis)
     Vectores.U_PieI(i,:) = Puntos.P08(i,:)-Puntos.P09(i,:);
     Vectores.U_PieI(i,:) = Vectores.U_PieI(i,:)/norm(Vectores.U_PieI(i,:));
 
@@ -180,7 +180,7 @@ Vectores.I_Pelvis = Vectores.W_Pelvis;
 Vectores.J_Pelvis = Vectores.U_Pelvis;
 Vectores.K_Pelvis = Vectores.V_Pelvis;
 
-for i=1:length(Vectores.U_PieD)
+for i=1:length(Vectores.U_Pelvis)
     
     %...................SISTEMA LOCAL MUSLO DERECHO
     
@@ -269,6 +269,7 @@ Escala = 1/10;
 %%
 
 for i=1:length(Vectores.U_Pelvis)
+    
 %%%% Para la cadera
 Vectores.L_HJC_D(i,:) = cross(Vectores.K_Pelvis(i,:),Vectores.I_MusloD(i,:));
 Vectores.L_HJC_D(i,:) = Vectores.L_HJC_D(i,:)/norm(Vectores.L_HJC_D(i,:));
@@ -330,40 +331,40 @@ Angulos.Alfa_AJC_D(i) = acosd(dot(Vectores.L_AJC_D(i,:),Vectores.I_PiernaD(i,:))
 
 Angulos.Beta_AJC_D(i) = asind(dot(Vectores.K_PiernaD(i,:),Vectores.I_PieD(i,:)));
 
-Angulos.Gamma_AJC_D(i) = acosd(dot(Vectores.L_AJC_D(i,:),Vectores.K_PieD(i,:)))*...
-    dot(Vectores.L_AJC_D(i,:),Vectores.J_PieD(i,:))/abs(dot(Vectores.L_AJC_D(i,:),Vectores.J_PieD(i,:)));
+Angulos.Gamma_AJC_D(i) = acosd(dot(Vectores.L_AJC_D(i,:),Vectores.J_PieD(i,:)))*...
+    dot(Vectores.L_AJC_D(i,:),Vectores.K_PieD(i,:))/abs(dot(Vectores.L_AJC_D(i,:),Vectores.K_PieD(i,:)));
 
 Angulos.Alfa_AJC_I(i) = acosd(dot(Vectores.L_AJC_I(i,:),Vectores.I_PiernaI(i,:)))*...
     dot(Vectores.L_AJC_I(i,:),Vectores.J_PiernaI(i,:))/abs(dot(Vectores.L_AJC_I(i,:),Vectores.J_PiernaI(i,:)));
 
 Angulos.Beta_AJC_I(i) = -asind(dot(Vectores.K_PiernaI(i,:),Vectores.I_PieI(i,:)));
 
-Angulos.Gamma_AJC_I(i) = -acosd(dot(Vectores.L_AJC_I(i,:),Vectores.K_PieI(i,:)))*...
-    dot(Vectores.L_AJC_I(i,:),Vectores.J_PieI(i,:))/abs(dot(Vectores.L_AJC_I(i,:),Vectores.J_PieI(i,:)));
+Angulos.Gamma_AJC_I(i) = -acosd(dot(Vectores.L_AJC_I(i,:),Vectores.J_PieI(i,:)))*...
+    dot(Vectores.L_AJC_I(i,:),Vectores.K_PieI(i,:))/abs(dot(Vectores.L_AJC_I(i,:),Vectores.K_PieI(i,:)));
 end
 
-
-[Promedios_Standing] = Promedio_Angulos(Angulos,1,100);
+[Promedios_Standing] = Promedio_Angulos(Angulos,15,100);
 
 %%
 close all;
 figure8 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Cadera(Angulos,Frame1,Frame2,Frame1,Frame2);
+Plot_Angulos_Cadera(Angulos,Frame1,Frame2,Frame1,Frame1,Frame2,Frame1);
 
 
 %%
 
 figure9 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Rodilla(Angulos,Frame1,Frame2,Frame1,Frame2) 
+Plot_Angulos_Rodilla(Angulos,Frame1,Frame2,Frame1,Frame1,Frame2,Frame1) 
 
 
 %%
 
 figure10 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Pie(Angulos,Frame1,Frame2,Frame1,Frame2) 
+Plot_Angulos_Pie(Angulos,Frame1,Frame2,Frame1,Frame1,Frame2,Frame1) 
+
 
 
 

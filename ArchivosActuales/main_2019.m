@@ -364,16 +364,19 @@ Puntos = Centros_de_Masa(Puntos);
 Frame1 = FrameRHS;
 Frame2 = FrameRHS2;
 
-figure6 = figure ('Color',[1 1 1]);
-xlabel('Eje X[m]')
-ylabel('Eje Y[m]')
-zlabel('Eje Z[m]')
 Paso = 44;
 Consecutivo = false;
 Escala = 1/10;
 
-Frame1 = 1;
-Frame2 = length(Puntos.CM.MusloD);
+Frame1 = FrameRHS;
+Frame2 = FrameRHS2;
+
+
+% figure6 = figure ('Color',[1 1 1]);
+% xlabel('Eje X[m]')
+% ylabel('Eje Y[m]')
+% zlabel('Eje Z[m]')
+
 % Plot_Vectores(Puntos.CM.MusloD,...
 %     Vectores.I_MusloD*Escala,Vectores.J_MusloD*Escala,Vectores.K_MusloD*Escala,...
 %     Paso,Frame1,Frame2,Consecutivo)
@@ -382,22 +385,22 @@ Frame2 = length(Puntos.CM.MusloD);
 %     Vectores.I_PiernaD*Escala,Vectores.J_PiernaD*Escala,Vectores.K_PiernaD*Escala,...
 %     Paso,Frame1,Frame2,Consecutivo)
 
-Plot_Vectores(Puntos.CM.PieD,...
-    Vectores.I_PieD*Escala,Vectores.J_PieD*Escala,Vectores.K_PieD*Escala,...
-    Paso,Frame1,Frame2,Consecutivo)
-
-Plot_Vectores(Puntos.P15,...
-    Vectores.I_Pelvis*Escala,Vectores.J_Pelvis*Escala,Vectores.K_Pelvis*Escala,...
-    Paso,Frame1,Frame2,Consecutivo)
+% Plot_Vectores(Puntos.CM.PieD,...
+%     Vectores.I_PieD*Escala,Vectores.J_PieD*Escala,Vectores.K_PieD*Escala,...
+%     Paso,Frame1,Frame2,Consecutivo)
+% 
+% Plot_Vectores(Puntos.P15,...
+%     Vectores.I_Pelvis*Escala,Vectores.J_Pelvis*Escala,Vectores.K_Pelvis*Escala,...
+%     Paso,Frame1,Frame2,Consecutivo)
 
 % Plot_Marcadores_Tiempo(Puntos.P15,Frame1,Frame2,'r');%Sacro
 % Plot_Marcadores_Tiempo(Puntos.P07,Frame1,Frame2,'r');%AsisD
 % Plot_Marcadores_Tiempo(Puntos.Articu.CaderaD,Frame1,Frame2,'r');
 
-Plot_Marcadores_Tiempo(Puntos.Articu.RodillaD,Frame1,Frame2,'g');%Rodilla
-
-Plot_Marcadores_Tiempo(Puntos.Articu.PuntaD,Frame1,Frame2,'b');%metatarciano
-Plot_Marcadores_Tiempo(Puntos.P02,Frame1,Frame2,'b');%talon
+% Plot_Marcadores_Tiempo(Puntos.Articu.RodillaD,Frame1,Frame2,'g');%Rodilla
+% 
+% Plot_Marcadores_Tiempo(Puntos.Articu.PuntaD,Frame1,Frame2,'b');%metatarciano
+% Plot_Marcadores_Tiempo(Puntos.P02,Frame1,Frame2,'b');%talon
 
 axis equal;
 
@@ -435,7 +438,7 @@ Escala = 1/10;
 % Plot_Marcadores_Tiempo(Puntos.Articu.PuntaI,Frame1,Frame2,'b');%Punta
 % Plot_Marcadores_Tiempo(Puntos.P09,Frame1,Frame2,'b');%talon
 
-axis equal;
+% axis equal;
 
 %%
 
@@ -521,19 +524,23 @@ end
 close all;
 figure8 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Cadera(Angulos,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2);
+Plot_Angulos_Cadera(Angulos,FrameRHS,FrameRHS2,FrameRTO,...
+    FrameLHS,FrameLHS2,FrameLTO)
 
 
 %%
 
 figure9 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Rodilla(Angulos,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2) 
+Plot_Angulos_Rodilla(Angulos,FrameRHS,FrameRHS2,FrameRTO,...
+    FrameLHS,FrameLHS2,FrameLTO)
 
 
 %%
 
 figure10 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Pie(Angulos,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2) 
+Plot_Angulos_Pie(Angulos,FrameRHS,FrameRHS2,FrameRTO,...
+    FrameLHS,FrameLHS2,FrameLTO)
+
 
