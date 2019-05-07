@@ -20,7 +20,7 @@ hold on;
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Alfa HJC Normalizada')
+title('Alfa HJC Normalizada, flexión(+) / extensión (-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
@@ -40,7 +40,7 @@ plot(abscisa_nueva,Angulos.Beta_HJC_I_Normalizada,'r')
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Beta HJC Normalizada')
+title('Beta HJC Normalizada, Abducción(+) / Aducción (-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
@@ -60,7 +60,7 @@ plot(abscisa_nueva,Angulos.Gamma_HJC_I_Normalizada,'r')
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Gamma HJC Normalizada')
+title('Gamma HJC Normalizada, rotación int.(+) / rotación ext.(-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 

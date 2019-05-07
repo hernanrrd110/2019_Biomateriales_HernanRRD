@@ -21,7 +21,7 @@ plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
 
-title('Alfa KJC Normalizada')
+title('Alfa KJC Normalizada, flexión(+) / extensión (-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
@@ -42,7 +42,7 @@ hold on;
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Beta KJC Normalizada')
+title('Beta KJC Normalizada, Abducción(+) / Aducción(-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
@@ -63,7 +63,7 @@ hold on;
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Gamma KJC Normalizada')
+title('Gamma KJC Normalizada, rotación int.(+) / rotación ext.(-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 

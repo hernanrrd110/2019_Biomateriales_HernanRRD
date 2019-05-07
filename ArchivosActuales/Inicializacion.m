@@ -121,22 +121,14 @@ Vectores.K_PieD = zeros(length(Puntos.P07),3);
 
 %...................... LONGITUDES ANTROPOMETRICAS ........................
 
-%..... PELVIS
+Longitud.A01 = Datos.antropometria.children.PESO.info.values;
 Longitud.A02 = Datos.antropometria.children.LONGITUD_ASIS.info.values*0.01;
-
-%..... PIERNA DERECHA
 Longitud.A11 = Datos.antropometria.children.DIAMETRO_RODILLA_DERECHA.info.values*0.01;
-
-%..... PIE DERECHO
 Longitud.A13 = Datos.antropometria.children.LONGITUD_PIE_DERECHO.info.values*0.01;
 Longitud.A15 = Datos.antropometria.children.ALTURA_MALEOLOS_DERECHO.info.values*0.01;
 Longitud.A17 = Datos.antropometria.children.ANCHO_MALEOLOS_DERECHO.info.values*0.01;
 Longitud.A19 = Datos.antropometria.children.ANCHO_PIE_DERECHO.info.values*0.01;
-
-%..... PIERNA IZQUIERDA
 Longitud.A12 = Datos.antropometria.children.DIAMETRO_RODILLA_IZQUIERDA.info.values*0.01;
-
-%..... PIE IZQUIERDO
 Longitud.A14 = Datos.antropometria.children.LONGITUD_PIE_IZQUIERDO.info.values*0.01;
 Longitud.A16 = Datos.antropometria.children.ALTURA_MALEOLOS_IZQUIERDO.info.values*0.01;
 Longitud.A18 = Datos.antropometria.children.ANCHO_MALEOLOS_IZQUIERDO.info.values*0.01;

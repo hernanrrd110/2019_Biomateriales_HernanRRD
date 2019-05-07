@@ -21,7 +21,7 @@ hold on;
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Alfa AJC Normalizada')
+title('Alfa AJC Normalizada, Plantarflexión(+) / Dorsiflexion (-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
@@ -42,7 +42,7 @@ hold on;
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Beta AJC Normalizada')
+title('Beta AJC Normalizada, Abducción(+) / Aducción (-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
@@ -63,7 +63,7 @@ hold on;
 plot(t_porcentaje,vector_Porcentaje,'r')
 hold on;
 
-title('Gamma AJC Normalizada')
+title('Gamma AJC Normalizada, Inversión supinación(+) / Eversión pronación(-)')
 xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
 ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
