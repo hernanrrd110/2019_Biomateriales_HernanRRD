@@ -13,6 +13,39 @@ clear Datos_PrimeraParte;
 
 % ........................Momentos de inercia........................
 
+Altura = Datos.antropometria.children.ALTURA.info.values; % en Cm
+Masa = Datos.antropometria.children.PESO.info.values;% en Kg
+
+%%% en Kg*m^2
+Inercia.Flex_Ext_Muslo = (-3557 + 31.7*Masa + 18.61*Altura)/10000;
+Inercia.Aduc_Abduc_Muslo = (3690 + 32.02*Masa+ 19.24*Altura)/10000;
+Inercia.Rotacion_Muslo = (-13.5 + 11.3*Masa - 2.28*Altura)/10000;
+
+Inercia.Flex_Ext_Pierna = (-1105 + 4.59*Masa + 6.63*Altura)/10000;
+Inercia.Aduc_Abduc_Pierna = (-1152 + 4.594*Masa + 6.815*Altura)/10000;
+Inercia.Rotacion_Pierna = (70.5 + 1.134*Masa + 0.3*Altura)/10000;
+
+Inercia.Flex_Ext_Pie = (-100 + 0.480*Masa + 0.626*Altura)/10000;
+Inercia.Aduc_Abduc_Pie = (-97.09 + 0.414*Masa + 0.614*Altura)/10000;
+Inercia.Rotacion_Pie = (-15.48 + 0.144*Masa + 0.088*Altura)/10000;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %%%% ------ Muslos
 
 % % Flexion Extension
