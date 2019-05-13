@@ -2,11 +2,11 @@ clear all;
 close all;
 clc;
 
-[DatosMarcadores,infoCinematica,Plataformas,infoDinamica,Antropometria,Eventos,h,Datos] = lectura_c3d();
+[DatosMarcadores,infoCinematica,Plataformas,...
+    infoDinamica,Antropometria,Eventos,h,Datos] = lectura_c3d();
 
-%%%%%%%%Cálculos Ciclo
-%%%%%%Frecuencia de muestreo de 340
 fm = Datos.info.Cinematica.frequency;
+
 Puntos.Articu.CaderaD = 0;
 Puntos.P05 = 0;
 Longitud.P07 = 0;
@@ -18,9 +18,7 @@ Frame2 = 100;
 [Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,...
     Vectores,Frame1,Frame2,Frame1,Frame2);
 
-
-%%
-%........................ Cálculos de Ejes PELVIS  ........................
+%% %........................ Cálculos de Ejes UVW PELVIS  ........................
 
 close all;
 clc;
@@ -51,8 +49,8 @@ for i=1:length(Vectores.U_Pelvis)
         -0.290*Longitud.A02*Vectores.W_Pelvis(i,:);
 end
 
-%%
-%....................... CALCULOS PIERNA DERECHA ..........................
+
+%% %....................... CALCULOS Ejes UVW PIERNA DERECHA ..........................
 
 close all;
 clc;
@@ -72,25 +70,9 @@ for i=1:length(Vectores.U_Pelvis)
     
     %%% Rodilla Derecha
     Puntos.Articu.RodillaD(i,:) = Puntos.P05(i,:)+0.500*Longitud.A11*Vectores.W_PiernaD(i,:);
-    
-    %...................SISTEMA LOCAL MUSLO DERECHO
-    
-    Vectores.I_MusloD(i,:) = Puntos.Articu.CaderaD(i,:)-Puntos.Articu.RodillaD(i,:);
-    Vectores.I_MusloD(i,:) = Vectores.I_MusloD(i,:)/(norm(Vectores.I_MusloD(i,:)));
-    
-    VectorAux1 = (Puntos.P06(i,:)-Puntos.Articu.CaderaD(i,:));
-    VectorAux2 = (Puntos.Articu.RodillaD(i,:)-Puntos.Articu.CaderaD(i,:));
-    Vectores.J_MusloD(i,:) = cross(VectorAux1,VectorAux2);
-    Vectores.J_MusloD(i,:) = Vectores.J_MusloD(i,:)/(norm(Vectores.J_MusloD(i,:)));
-    
-    Vectores.K_MusloD(i,:) = cross (Vectores.I_MusloD(i,:),Vectores.J_MusloD(i,:));
-    
-    
 end
-
-
-%%
-%..................... Cálculos de Ejes PIE DERECHO   .....................
+ 
+%% %..................... Cálculos de Ejes UVW PIE DERECHO   .....................
 
 close all;
 clc;
@@ -121,9 +103,7 @@ for i=1:length(Vectores.U_Pelvis)
 end
 
 
-
-%%
-%..................... CALCULO EJES PIERNA IZQUIERDA  .....................
+%% %..................... CALCULO EJES UVW PIERNA IZQUIERDA  .....................
 close all;
 clc;
 
@@ -142,9 +122,7 @@ for i=1:length(Vectores.U_Pelvis)
     
 end
 
-
-%%
-%........................ CALCULOS PIE IZQUIERDO .........................
+%% %........................ CALCULOS PIE IZQUIERDO .........................
 
 close all;
 clc;
@@ -172,8 +150,8 @@ for i=1:length(Vectores.U_Pelvis)
         +0.187*Longitud.A20*Vectores.W_PieI(i,:);
 end
 
-%%
-%........................ CALCULOS SISTEMAS LOCALES .......................
+
+%% %........................ CALCULOS SISTEMAS LOCALES .......................
 
 %...................SISTEMA LOCAL PELVIS
 Vectores.I_Pelvis = Vectores.W_Pelvis;
@@ -256,20 +234,10 @@ for i=1:length(Vectores.U_Pelvis)
     
 end
 
-%............................. CENTROS DE MASA ............................
-Puntos = Centros_de_Masa(Puntos);
-
-Paso = 44;
-Consecutivo = false;
-Escala = 1/10;
-
-
-
 
 %%
 
 for i=1:length(Vectores.U_Pelvis)
-    
 %%%% Para la cadera
 Vectores.L_HJC_D(i,:) = cross(Vectores.K_Pelvis(i,:),Vectores.I_MusloD(i,:));
 Vectores.L_HJC_D(i,:) = Vectores.L_HJC_D(i,:)/norm(Vectores.L_HJC_D(i,:));
@@ -343,29 +311,151 @@ Angulos.Gamma_AJC_I(i) = -acosd(dot(Vectores.L_AJC_I(i,:),Vectores.J_PieI(i,:)))
     dot(Vectores.L_AJC_I(i,:),Vectores.K_PieI(i,:))/abs(dot(Vectores.L_AJC_I(i,:),Vectores.K_PieI(i,:)));
 end
 
-[Promedios_Standing] = Promedio_Angulos(Angulos,15,100);
+[Promedios_Standing] = Promedio_Angulos(Angulos,Frame1,Frame2);
+save Promedios_Standing.mat Promedios_Standing;
 
 %%
 close all;
-figure8 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Cadera(Angulos,Frame1,Frame2,Frame1,Frame1,Frame2,Frame1);
+%%%%Derecha
+[Angulos.Alfa_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_HJC_D(Frame1:Frame2));
+subplot(3,1,1)
+plot(abscisa_nueva,Angulos.Alfa_HJC_D_Normalizada,'b')
+hold on;
 
+%%%Izquierda
+[Angulos.Alfa_HJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_HJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Alfa_HJC_I_Normalizada,'r')
+hold on;
+
+title('Alfa HJC Normalizada, flexión(+) / extensión (-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+
+%%%%Derecha
+[Angulos.Beta_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_HJC_D(Frame1:Frame2));
+subplot(3,1,2)
+plot(abscisa_nueva,Angulos.Beta_HJC_D_Normalizada,'b')
+hold on;
+
+%%%Izquierda
+[Angulos.Beta_HJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_HJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Beta_HJC_I_Normalizada,'r')
+
+title('Beta HJC Normalizada, Abducción(+) / Aducción (-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+
+%%%%Derecha
+[Angulos.Gamma_HJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_HJC_D(Frame1:Frame2));
+subplot(3,1,3)
+plot(abscisa_nueva,Angulos.Gamma_HJC_D_Normalizada,'b')
+hold on;
+
+%%%Izquierda
+[Angulos.Gamma_HJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_HJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Gamma_HJC_I_Normalizada,'r')
+
+title('Gamma HJC Normalizada, rotación int.(+) / rotación ext.(-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
 %%
 
 figure9 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Rodilla(Angulos,Frame1,Frame2,Frame1,Frame1,Frame2,Frame1) 
+%%%%Derecha
+[Angulos.Alfa_KJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_KJC_D(Frame1:Frame2));
+subplot(3,1,1)
+plot(abscisa_nueva,Angulos.Alfa_KJC_D_Normalizada,'b')
+hold on;
+
+%%%Izquierda
+[Angulos.Alfa_KJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_KJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Alfa_KJC_I_Normalizada,'r')
+
+title('Alfa KJC Normalizada, flexión(+) / extensión (-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+
+%%%%Derecha
+[Angulos.Beta_KJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_KJC_D(Frame1:Frame2));
+subplot(3,1,2)
+plot(abscisa_nueva,Angulos.Beta_KJC_D_Normalizada,'b')
+hold on;
+
+%%%Izquierda
+[Angulos.Beta_KJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_KJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Beta_KJC_I_Normalizada,'r')
+hold on;
+
+title('Beta KJC Normalizada, Abducción(+) / Aducción(-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+
+%%%%Derecha
+[Angulos.Gamma_KJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_KJC_D(Frame1:Frame2));
+subplot(3,1,3)
+plot(abscisa_nueva,Angulos.Gamma_KJC_D_Normalizada,'b')
+hold on;
+
+%%%Izquierda
+[Angulos.Gamma_KJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_KJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Gamma_KJC_I_Normalizada,'r')
+hold on;
+
+title('Gamma KJC Normalizada, rotación int.(+) / rotación ext.(-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+
 
 
 %%
 
 figure10 = figure ('Color',[1 1 1]);
 
-Plot_Angulos_Pie(Angulos,Frame1,Frame2,Frame1,Frame1,Frame2,Frame1) 
+%%%%Derecha
+[Angulos.Alfa_AJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_AJC_D(Frame1:Frame2));
+subplot(3,1,1)
+plot(abscisa_nueva,Angulos.Alfa_AJC_D_Normalizada,'b')
+hold on;
 
+%%%Izquierda
+[Angulos.Alfa_AJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Alfa_AJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Alfa_AJC_I_Normalizada,'r');
+hold on;
 
+title('Alfa AJC Normalizada, Plantarflexión(+) / Dorsiflexion (-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 
+%%%%Derecha
+[Angulos.Beta_AJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_AJC_D(Frame1:Frame2));
+subplot(3,1,2)
+plot(abscisa_nueva,Angulos.Beta_AJC_D_Normalizada,'b')
+hold on;
 
+%%%Izquierda
+[Angulos.Beta_AJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Beta_AJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Beta_AJC_I_Normalizada,'r');
+hold on;
+
+title('Beta AJC Normalizada, Abducción(+) / Aducción (-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
+
+%%%%Derecha
+[Angulos.Gamma_AJC_D_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_AJC_D(Frame1:Frame2));
+subplot(3,1,3)
+plot(abscisa_nueva,Angulos.Gamma_AJC_D_Normalizada,'b')
+hold on;
+
+%%%Izquierda
+[Angulos.Gamma_AJC_I_Normalizada,abscisa_nueva] = MostrarCiclos(Angulos.Gamma_AJC_I(Frame1:Frame2));
+plot(abscisa_nueva,Angulos.Gamma_AJC_I_Normalizada,'r');
+hold on;
+
+title('Gamma AJC Normalizada, Inversión supinación(+) / Eversión pronación(-)')
+xlabel('Porcentaje (%)','FontSize',11,'FontName','Arial')
+ylabel('Angulo [°]','FontSize',11,'FontName','Arial')
 

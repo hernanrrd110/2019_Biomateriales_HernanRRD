@@ -1,6 +1,6 @@
 
-function [Puntos,Longitud,Datos,Vectores] = Inicializacion(Puntos,Longitud,Datos,...
-    Vectores,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2)
+function [Puntos,Longitud,Vectores,Angulos] = Inicializacion(Datos,...
+    FrameRHS,FrameRHS2,FrameLHS,FrameLHS2)
 
 %.......................... PUNTOS MARCADORES .............................
 
@@ -123,15 +123,17 @@ Vectores.K_PieD = zeros(length(Puntos.P07),3);
 
 Longitud.A01 = Datos.antropometria.children.PESO.info.values;
 Longitud.A02 = Datos.antropometria.children.LONGITUD_ASIS.info.values*0.01;
+Longitud.A07 = Datos.antropometria.children.LONGITUD_PIERNA_DERECHA.info.values*0.01;
+Longitud.A08 = Datos.antropometria.children.LONGITUD_PIERNA_IZQUIERDA.info.values*0.01;
 Longitud.A11 = Datos.antropometria.children.DIAMETRO_RODILLA_DERECHA.info.values*0.01;
-Longitud.A13 = Datos.antropometria.children.LONGITUD_PIE_DERECHO.info.values*0.01;
-Longitud.A15 = Datos.antropometria.children.ALTURA_MALEOLOS_DERECHO.info.values*0.01;
-Longitud.A17 = Datos.antropometria.children.ANCHO_MALEOLOS_DERECHO.info.values*0.01;
-Longitud.A19 = Datos.antropometria.children.ANCHO_PIE_DERECHO.info.values*0.01;
 Longitud.A12 = Datos.antropometria.children.DIAMETRO_RODILLA_IZQUIERDA.info.values*0.01;
+Longitud.A13 = Datos.antropometria.children.LONGITUD_PIE_DERECHO.info.values*0.01;
 Longitud.A14 = Datos.antropometria.children.LONGITUD_PIE_IZQUIERDO.info.values*0.01;
+Longitud.A15 = Datos.antropometria.children.ALTURA_MALEOLOS_DERECHO.info.values*0.01;
 Longitud.A16 = Datos.antropometria.children.ALTURA_MALEOLOS_IZQUIERDO.info.values*0.01;
+Longitud.A17 = Datos.antropometria.children.ANCHO_MALEOLOS_DERECHO.info.values*0.01;
 Longitud.A18 = Datos.antropometria.children.ANCHO_MALEOLOS_IZQUIERDO.info.values*0.01;
+Longitud.A19 = Datos.antropometria.children.ANCHO_PIE_DERECHO.info.values*0.01;
 Longitud.A20 = Datos.antropometria.children.ANCHO_PIE_IZQUIERDO.info.values*0.01;
 
 %............................. CENTROS DE MASA ............................
