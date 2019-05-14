@@ -638,19 +638,19 @@ end
 %%
 % CosasNan = isnan(Vectores.U_Pelvis);
 
-FrameEventos.FrameRHS = FrameRHS;
-FrameEventos.FrameRHS2 = FrameRHS2;
-FrameEventos.FrameRTO = FrameRTO;
-FrameEventos.FrameLHS = FrameLHS;
-FrameEventos.FrameLHS2 = FrameLHS2;
-FrameEventos.FrameLTO = FrameLTO;
-
-Datos_PrimeraParte.Puntos = Puntos;
-Datos_PrimeraParte.Longitud = Longitud;
-Datos_PrimeraParte.Vectores = Vectores;
-Datos_PrimeraParte.Angulos = Angulos;
-Datos_PrimeraParte.FramesEventos = FrameEventos;
-
-save Datos_PrimeraParte.mat Datos_PrimeraParte Datos;
+% FrameEventos.FrameRHS = FrameRHS;
+% FrameEventos.FrameRHS2 = FrameRHS2;
+% FrameEventos.FrameRTO = FrameRTO;
+% FrameEventos.FrameLHS = FrameLHS;
+% FrameEventos.FrameLHS2 = FrameLHS2;
+% FrameEventos.FrameLTO = FrameLTO;
+% 
+% Datos_PrimeraParte.Puntos = Puntos;
+% Datos_PrimeraParte.Longitud = Longitud;
+% Datos_PrimeraParte.Vectores = Vectores;
+% Datos_PrimeraParte.Angulos = Angulos;
+% Datos_PrimeraParte.FramesEventos = FrameEventos;
+% 
+% save Datos_PrimeraParte.mat Datos_PrimeraParte Datos;
 
 

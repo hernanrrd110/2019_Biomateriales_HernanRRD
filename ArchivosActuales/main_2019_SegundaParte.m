@@ -2,12 +2,14 @@
 %% -------------------------- Carga de datos -----------------------------
 clear all; close all; clc;
 
+
 load('Datos_PrimeraParte.mat');
 Puntos = Datos_PrimeraParte.Puntos;
 Longitud = Datos_PrimeraParte.Longitud;
 Vectores = Datos_PrimeraParte.Vectores;
 Angulos = Datos_PrimeraParte.Angulos;
 FrameEventos = Datos_PrimeraParte.FramesEventos;
+fm = Datos.info.Cinematica.frequency;
 
 clear Datos_PrimeraParte;
 
@@ -29,6 +31,64 @@ Inercia.Flex_Ext_Pie = (-100 + 0.480*Masa + 0.626*Altura)/10000;
 Inercia.Aduc_Abduc_Pie = (-97.09 + 0.414*Masa + 0.614*Altura)/10000;
 Inercia.Rotacion_Pie = (-15.48 + 0.144*Masa + 0.088*Altura)/10000;
 
+%% .................. Calculo de Velocidades y Aceleraciones lineales
+
+Cinematica.MusloD.V = zeros(size(Puntos.CM.MusloD));
+Cinematica.MusloI.V = zeros(size(Puntos.CM.MusloI));
+tm = 1/fm;
+for i=2:(length(Cinematica.MusloD.V)-1)
+    
+    Cinematica.MusloD.V(i,1) = (Puntos.CM.MusloD(i+1,1) - Puntos.CM.MusloD(i-1,1))/(2*tm);
+    Cinematica.MusloD.V(i,2) = (Puntos.CM.MusloD(i+1,2) - Puntos.CM.MusloD(i-1,2))/(2*tm);
+    Cinematica.MusloD.V(i,3) = (Puntos.CM.MusloD(i+1,3) - Puntos.CM.MusloD(i-1,3))/(2*tm);
+    
+    Cinematica.MusloI.V(i,1) = (Puntos.CM.MusloI(i+1,1) - Puntos.CM.MusloI(i-1,1))/(2*tm);
+    Cinematica.MusloI.V(i,2) = (Puntos.CM.MusloI(i+1,2) - Puntos.CM.MusloI(i-1,2))/(2*tm);
+    Cinematica.MusloI.V(i,3) = (Puntos.CM.MusloI(i+1,3) - Puntos.CM.MusloI(i-1,3))/(2*tm);
+end
+
+%% ..................Calculos de Angulos Euler
+Vectores.I_Global = [1 0 0];
+Vectores.J_Global = [0 1 0];
+Vectores.K_Global = [0 0 1];
+
+Vectores.LN_MusloD = zeros(size(Vectores.I_MusloD));
+Vectores.LN_MusloI = zeros(size(Vectores.I_MusloI));
+
+for i=1:length(Vectores.LN_MusloD)
+    
+    %.................... Calculos Muslos
+    Vectores.LN_MusloD(i,:) = cross(Vectores.K_Global,Vectores.K_MusloD(i,:));
+    Vectores.LN_MusloD(i,:) = Vectores.LN_MusloD(i,:)/norm(Vectores.LN_MusloD(i,:));
+    Vectores.LN_MusloI(i,:) = cross(Vectores.K_Global,Vectores.K_MusloI(i,:));
+    Vectores.LN_MusloD(i,:) = Vectores.LN_MusloI(i,:)/norm(Vectores.LN_MusloI(i,:));
+    % Alfas
+    
+    Polaridad = dot(Vectores.J_Global,Vectores.LN_MusloD(i,:))/...
+        abs(dot(Vectores.J_Global,Vectores.LN_MusloD(i,:)));
+    
+    Angulos.AlfaMusloD(i,:) = acosd(dot(Vectores.I_Global,Vectores.LN_MusloD(i,:)))*Polaridad;
+    
+    Polaridad = dot(Vectores.J_Global,Vectores.LN_MusloI(i,:))/...
+        abs(dot(Vectores.J_Global,Vectores.LN_MusloI(i,:)));
+    Angulos.AlfaMusloI(i,:) = acosd(dot(Vectores.I_Global,Vectores.LN_MusloI(i,:)))*Polaridad;
+    
+    % Betas
+    
+    Angulos.BetaMusloD(i,:) = acosd(dot(Vectores.K_Global,Vectores.K_MusloD(i,:)));
+    Angulos.BetaMusloI(i,:) = acosd(dot(Vectores.K_Global,Vectores.K_MusloI(i,:)));
+    
+    % Gammas
+    
+    Polaridad = dot(Vectores.J_MusloD(i,:),Vectores.LN_MusloD(i,:))/...
+        abs(dot(Vectores.J_MusloD(i,:),Vectores.LN_MusloD(i,:)));
+    Angulos.GammaMusloD(i,:) = acosd(dot(Vectores.I_MusloD(i,:),Vectores.LN_MusloD(i,:)))*Polaridad;
+    
+    Polaridad = dot(Vectores.J_MusloI(i,:),Vectores.LN_MusloI(i,:))/...
+        abs(dot(Vectores.J_MusloI(i,:),Vectores.LN_MusloI(i,:)));
+    Angulos.GammaMusloI(i,:) = acosd(dot(Vectores.I_MusloI(i,:),Vectores.LN_MusloI(i,:)))*Polaridad;
+
+end
 
 
 
@@ -41,54 +101,3 @@ Inercia.Rotacion_Pie = (-15.48 + 0.144*Masa + 0.088*Altura)/10000;
 
 
 
-
-
-
-
-
-%%%% ------ Muslos
-
-% % Flexion Extension
-% Inercia.Flex_Ext_MusloD = 0.00762*Longitud.A1*Longitud.A3^2 ...
-%     + 0.076*Longitud.A5^2 + 0.01153;
-% Inercia.Flex_Ext_MusloI = 0.00762*Longitud.A1*Longitud.A4^2 ...
-%     + 0.076*Longitud.A6^2 + 0.01153;
-% % Aduccion Abduccion
-% Inercia.Aduc_Abduc_MusloD = 0.00762*Longitud.A1*Longitud.A3^2 ...
-%     + 0.076*Longitud.A5^2 + 0.01186;
-% Inercia.Aduc_Abduc_MusloI = 0.00762*Longitud.A1*Longitud.A4^2 ...
-%     + 0.076*Longitud.A6^2 + 0.01186;
-% %Rotacion interna externa
-% Inercia.Rotacion_MusloD = 0.00151*Longitud.A1*Longitud.A5^2 + 0.00305;
-% Inercia.Rotacion_MusloI = 0.00151*Longitud.A1*Longitud.A6^2 + 0.00305;
-% 
-% %%%% ------ Piernas
-% 
-% % Flexion Extension
-% Inercia.Flex_Ext_PiernaD = 0.00347*Longitud.A1*Longitud.A7^2 ...
-%     + 0.076*Longitud.A9^2 + 0.00511;
-% Inercia.Flex_Ext_PiernaI = 0.00347*Longitud.A1*Longitud.A8^2 ...
-%     + 0.076*Longitud.A10^2 + 0.00511;
-% % Aduccion Abduccion
-% Inercia.Aduc_Abduc_PiernaD = 0.00387*Longitud.A1*Longitud.A7^2 ...
-%     + 0.076*Longitud.A9^2 + 0.00138;
-% Inercia.Aduc_Abduc_PiernaI = 0.00387*Longitud.A1*Longitud.A8^2 ...
-%     + 0.076*Longitud.A10^2 + 0.00138;
-% % Rotacion Interna Externa
-% Inercia.Rotacion_PiernaD = 0.00041*Longitud.A1*Longitud*A9^2 + 0.00012;
-% Inercia.Rotacion_PiernaI = 0.00041*Longitud.A1*Longitud*A10^2 + 0.00012;
-% 
-% %%%% ------ Pie
-% % Flexion Extension
-% Inercia.Flex_Ext_PieD = 0.00023*4*Longitud.A1*Longitud.A15^2 ...
-%     + 3*Longitud.A13^2 + 0.00022;
-% Inercia.Flex_Ext_PieI = 0.00023*4*Longitud.A1*Longitud.A16^2 ...
-%     + 3*Longitud.A14^2 + 0.00022;
-% Inercia.Aduc_Abduc_PieD = 0.00021*4*Longitud.A1*Longitud.A19^2 ...
-%     + 3*Longitud.A13^2 + 0.00067;
-% Inercia.Aduc_Abduc_PieI = 0.00021*4*Longitud.A1*Longitud.A20^2 ...
-%     + 3*Longitud.A13^2 + 0.00067;
-% Inercia.Rotacion_PieD = 0.00141*Longitud.A1*Longitud*A15^2 ...
-%     + Longitud.A19^2 - 0.00008;
-% Inercia.Rotacion_PieI = 0.00141*Longitud.A1*Longitud*A16^2 ...
-%     + Longitud.A20^2 - 0.00008;
