@@ -63,8 +63,8 @@ Angulos.GammaMusloI = zeros(length(Vectores.LN_MusloD),1);
 
 %............................. Cinematica .................................
 
-Cinematica.MusloD.V = zeros(size(Puntos.CM.MusloD));
-Cinematica.MusloI.V = zeros(size(Puntos.CM.MusloI));
+Cinematica.MusloD.V_lineal = zeros(size(Puntos.CM.MusloD));
+Cinematica.MusloI.V_lineal = zeros(size(Puntos.CM.MusloI));
 
 
 end

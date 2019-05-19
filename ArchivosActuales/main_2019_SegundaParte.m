@@ -153,11 +153,12 @@ end
 %% .................. Calculo de Velocidades y Aceleraciones lineales
 
 Cinematica.MusloD.V_lineal = Derivada_Vector(Puntos.CM.MusloD, fm);
-Cinematica.MusloD.A_lineal = Derivada_Vector(Cinematica.MusloD.V, fm);
+Cinematica.MusloD.A_lineal = Derivada_Vector(Cinematica.MusloD.V_lineal, fm);
 
-plot(Cinematica.MusloD.V_lineal(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Cinematica.MusloD.V_lineal(FrameRHS:FrameRHS2,1)); grid on; hold on;
 
-plot(Cinematica.MusloD.A_lineal(FrameRHS:FrameRHS2)); grid on; hold on;
+
+plot(Cinematica.MusloD.A_lineal(FrameRHS:FrameRHS2,1)/5); grid on; hold on;
 
 
 
