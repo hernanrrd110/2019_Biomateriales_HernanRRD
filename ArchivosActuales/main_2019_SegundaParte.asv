@@ -23,7 +23,6 @@ fm = Datos.info.Cinematica.frequency;
 for i=1:length(Vectores.LN_MusloD)
     
     %-------------------------- Calculo Muslo
-    
     Vectores.LN_MusloD(i,:) = cross(Vectores.K_MusloD(i,:),Vectores.K_Global);
     Vectores.LN_MusloD(i,:) = Vectores.LN_MusloD(i,:)/norm(Vectores.LN_MusloD(i,:));
     Vectores.LN_MusloI(i,:) = cross(Vectores.K_MusloI(i,:),Vectores.K_Global);
@@ -85,7 +84,7 @@ for i=1:length(Vectores.LN_MusloD)
     Vectores.LN_PieI(i,:) = cross(Vectores.K_PieI(i,:),Vectores.K_Global);
     Vectores.LN_PieI(i,:) = Vectores.LN_PieI(i,:)/norm(Vectores.LN_PieI(i,:));
     
-    % Alfas
+        % Alfas
     
     [Angulos.AlfaPieD(i)]  = Angulos_Coseno(Vectores.I_Global,...
         Vectores.LN_PieD(i,:),Vectores.J_Global);
@@ -152,12 +151,13 @@ end
 
 %% .................. Calculo de Velocidades y Aceleraciones lineales
 
-Cinematica.MusloD.V_lineal = Derivada_Vector(Puntos.CM.MusloD, fm);
-Cinematica.MusloD.A_lineal = Derivada_Vector(Cinematica.MusloD.V, fm);
+Cinematica.MusloD.V = Derivada_Vector(Puntos.CM.MusloD, fm);
+Cinematica.MusloD.A = Derivada_Vector(Cinematica.MusloD.V, fm);
 
-plot(Cinematica.MusloD.V_lineal(FrameRHS:FrameRHS2)); grid on; hold on;
+norma = (normasVectores(Cinematica.MusloD.V));
+plot(norma(FrameRHS:FrameRHS2)); grid on; hold on;
 
-plot(Cinematica.MusloD.A_lineal(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(normasVectores(Cinematica.MusloD.A(FrameRHS:FrameRHS2))); grid on; hold on;
 
 
 
