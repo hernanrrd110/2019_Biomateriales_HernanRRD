@@ -2,40 +2,157 @@
 %% -------------------------- Carga de datos -----------------------------
 clear all; close all; clc;
 
+[Puntos,Angulos,Vectores,Datos,FramesEventos,...
+    Inercia,Antropometria,Cinematica]  = Inicializacion_SegundaParte();
 
-load('Datos_PrimeraParte.mat');
-Puntos = Datos_PrimeraParte.Puntos;
-Longitud = Datos_PrimeraParte.Longitud;
-Vectores = Datos_PrimeraParte.Vectores;
-Angulos = Datos_PrimeraParte.Angulos;
-FrameEventos = Datos_PrimeraParte.FramesEventos;
+FrameRHS = FramesEventos.FrameRHS;
+FrameRHS2 = FramesEventos.FrameRHS2;
+FrameRTO = FramesEventos.FrameRTO;
+
+FrameLHS = FramesEventos.FrameLHS;
+FrameLHS2 = FramesEventos.FrameLHS2;
+FrameLTO = FramesEventos.FrameLTO;
+
 fm = Datos.info.Cinematica.frequency;
 
-clear Datos_PrimeraParte;
+%% .................. Calculos de Angulos Euler ...........................
 
-% ........................Momentos de inercia........................
+% Inicializaciones
 
-Altura = Datos.antropometria.children.ALTURA.info.values; % en Cm
-Masa = Datos.antropometria.children.PESO.info.values;% en Kg
 
-%%% en Kg*m^2
-Inercia.Flex_Ext_Muslo = (-3557 + 31.7*Masa + 18.61*Altura)/10000;
-Inercia.Aduc_Abduc_Muslo = (3690 + 32.02*Masa+ 19.24*Altura)/10000;
-Inercia.Rotacion_Muslo = (-13.5 + 11.3*Masa - 2.28*Altura)/10000;
+for i=1:length(Vectores.LN_MusloD)
+    
+    %-------------------------- Calculo Muslo
+    Vectores.LN_MusloD(i,:) = cross(Vectores.K_MusloD(i,:),Vectores.K_Global);
+    Vectores.LN_MusloD(i,:) = Vectores.LN_MusloD(i,:)/norm(Vectores.LN_MusloD(i,:));
+    Vectores.LN_MusloI(i,:) = cross(Vectores.K_MusloI(i,:),Vectores.K_Global);
+    Vectores.LN_MusloI(i,:) = Vectores.LN_MusloI(i,:)/norm(Vectores.LN_MusloI(i,:));
+    
+    % Alfas
+    
+    [Angulos.AlfaMusloD(i)]  = Angulos_Coseno(Vectores.I_Global,...
+        Vectores.LN_MusloD(i,:),Vectores.J_Global);
+    
+    [Angulos.AlfaMusloI(i)]  = Angulos_Coseno(Vectores.I_Global,...
+        Vectores.LN_MusloI(i,:),Vectores.J_Global);
+    
+    % Betas
+    
+    Angulos.BetaMusloD(i) = acosd(dot(Vectores.K_Global,Vectores.K_MusloD(i,:)));
+    Angulos.BetaMusloI(i) = acosd(dot(Vectores.K_Global,Vectores.K_MusloI(i,:)));
+    
+    % Gammas
+    
+    [Angulos.GammaMusloD(i)]  = Angulos_Coseno(Vectores.I_MusloD(i,:),...
+        Vectores.LN_MusloD(i,:),Vectores.J_MusloD(i,:));
+   
+    [Angulos.GammaMusloI(i)]  = Angulos_Coseno(Vectores.I_MusloI(i,:),...
+        Vectores.LN_MusloI(i,:),Vectores.J_MusloI(i,:));
+    
+    %-------------------------- Calculo Pierna
+    
+    Vectores.LN_PiernaD(i,:) = cross(Vectores.K_PiernaD(i,:),Vectores.K_Global);
+    Vectores.LN_PiernaD(i,:) = Vectores.LN_PiernaD(i,:)/norm(Vectores.LN_PiernaD(i,:));
+    Vectores.LN_PiernaI(i,:) = cross(Vectores.K_PiernaI(i,:),Vectores.K_Global);
+    Vectores.LN_PiernaI(i,:) = Vectores.LN_PiernaI(i,:)/norm(Vectores.LN_PiernaI(i,:));
+    
+        % Alfas
+    
+    [Angulos.AlfaPiernaD(i)]  = Angulos_Coseno(Vectores.I_Global,...
+        Vectores.LN_PiernaD(i,:),Vectores.J_Global);
+    
+    [Angulos.AlfaPiernaI(i)]  = Angulos_Coseno(Vectores.I_Global,...
+        Vectores.LN_PiernaI(i,:),Vectores.J_Global);
+    
+    % Betas
+    
+    Angulos.BetaPiernaD(i) = acosd(dot(Vectores.K_Global,Vectores.K_PiernaD(i,:)));
+    Angulos.BetaPiernaI(i) = acosd(dot(Vectores.K_Global,Vectores.K_PiernaI(i,:)));
+    
+    % Gammas
+    
+    [Angulos.GammaPiernaD(i)]  = Angulos_Coseno(Vectores.I_PiernaD(i,:),...
+        Vectores.LN_PiernaD(i,:),Vectores.J_PiernaD(i,:));
+   
+    [Angulos.GammaPiernaI(i)]  = Angulos_Coseno(Vectores.I_PiernaI(i,:),...
+        Vectores.LN_PiernaI(i,:),Vectores.J_PiernaI(i,:));
+    
+    %-------------------------- Calculo Pie
+    
+    Vectores.LN_PieD(i,:) = cross(Vectores.K_PieD(i,:),Vectores.K_Global);
+    Vectores.LN_PieD(i,:) = Vectores.LN_PieD(i,:)/norm(Vectores.LN_PieD(i,:));
+    Vectores.LN_PieI(i,:) = cross(Vectores.K_PieI(i,:),Vectores.K_Global);
+    Vectores.LN_PieI(i,:) = Vectores.LN_PieI(i,:)/norm(Vectores.LN_PieI(i,:));
+    
+        % Alfas
+    
+    [Angulos.AlfaPieD(i)]  = Angulos_Coseno(Vectores.I_Global,...
+        Vectores.LN_PieD(i,:),Vectores.J_Global);
+    
+    [Angulos.AlfaPieI(i)]  = Angulos_Coseno(Vectores.I_Global,...
+        Vectores.LN_PieI(i,:),Vectores.J_Global);
+    
+    % Betas
+    
+    Angulos.BetaPieD(i) = acosd(dot(Vectores.K_Global,Vectores.K_PieD(i,:)));
+    Angulos.BetaPieI(i) = acosd(dot(Vectores.K_Global,Vectores.K_PieI(i,:)));
+    
+    % Gammas
+    
+    Angulos.GammaPieD(i) = asind(dot(cross(Vectores.LN_PieD(i,:),Vectores.I_PieD(i,:)),...
+        Vectores.K_PieD(i,:)));
+    
+    Angulos.GammaPieI(i)  = asind(dot(cross(Vectores.LN_PieI(i,:),Vectores.I_PieI(i,:)),...
+        Vectores.K_PieI(i,:)));
+end
 
-Inercia.Flex_Ext_Pierna = (-1105 + 4.59*Masa + 6.63*Altura)/10000;
-Inercia.Aduc_Abduc_Pierna = (-1152 + 4.594*Masa + 6.815*Altura)/10000;
-Inercia.Rotacion_Pierna = (70.5 + 1.134*Masa + 0.3*Altura)/10000;
+%% .......................... GRAFICAS EULER
+%................ Graficas Muslo
 
-Inercia.Flex_Ext_Pie = (-100 + 0.480*Masa + 0.626*Altura)/10000;
-Inercia.Aduc_Abduc_Pie = (-97.09 + 0.414*Masa + 0.614*Altura)/10000;
-Inercia.Rotacion_Pie = (-15.48 + 0.144*Masa + 0.088*Altura)/10000;
+subplot(3,1,1);
+plot(Angulos.AlfaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.AlfaMusloI(FrameLHS:FrameLHS2)); hold on;
+
+subplot(3,1,2);
+plot(Angulos.BetaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.BetaMusloI(FrameLHS:FrameLHS2)); hold on;
+
+subplot(3,1,3);
+plot(Angulos.GammaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.GammaMusloI(FrameLHS:FrameLHS2)); 
+
+%% ................ Graficas Pierna
+
+subplot(3,1,1);
+plot(Angulos.AlfaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.AlfaPiernaI(FrameLHS:FrameLHS2)); hold on;
+
+subplot(3,1,2);
+plot(Angulos.BetaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.BetaPiernaI(FrameLHS:FrameLHS2)); hold on;
+
+subplot(3,1,3);
+plot(Angulos.GammaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.GammaPiernaI(FrameLHS:FrameLHS2));
+
+%% ................ Graficas Pie
+
+subplot(3,1,1);
+plot(Angulos.AlfaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.AlfaPieI(FrameLHS:FrameLHS2)); hold on;
+
+subplot(3,1,2);
+plot(Angulos.BetaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.BetaPieI(FrameLHS:FrameLHS2)); hold on;
+
+subplot(3,1,3);
+plot(Angulos.GammaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.GammaPieI(FrameLHS:FrameLHS2));
 
 %% .................. Calculo de Velocidades y Aceleraciones lineales
 
-Cinematica.MusloD.V = zeros(size(Puntos.CM.MusloD));
-Cinematica.MusloI.V = zeros(size(Puntos.CM.MusloI));
 tm = 1/fm;
+
 for i=2:(length(Cinematica.MusloD.V)-1)
     
     Cinematica.MusloD.V(i,1) = (Puntos.CM.MusloD(i+1,1) - Puntos.CM.MusloD(i-1,1))/(2*tm);
@@ -45,53 +162,10 @@ for i=2:(length(Cinematica.MusloD.V)-1)
     Cinematica.MusloI.V(i,1) = (Puntos.CM.MusloI(i+1,1) - Puntos.CM.MusloI(i-1,1))/(2*tm);
     Cinematica.MusloI.V(i,2) = (Puntos.CM.MusloI(i+1,2) - Puntos.CM.MusloI(i-1,2))/(2*tm);
     Cinematica.MusloI.V(i,3) = (Puntos.CM.MusloI(i+1,3) - Puntos.CM.MusloI(i-1,3))/(2*tm);
-end
-
-%% ..................Calculos de Angulos Euler
-Vectores.I_Global = [1 0 0];
-Vectores.J_Global = [0 1 0];
-Vectores.K_Global = [0 0 1];
-
-Vectores.LN_MusloD = zeros(size(Vectores.I_MusloD));
-Vectores.LN_MusloI = zeros(size(Vectores.I_MusloI));
-
-for i=1:length(Vectores.LN_MusloD)
-    
-    %.................... Calculos Muslos
-    Vectores.LN_MusloD(i,:) = cross(Vectores.K_Global,Vectores.K_MusloD(i,:));
-    Vectores.LN_MusloD(i,:) = Vectores.LN_MusloD(i,:)/norm(Vectores.LN_MusloD(i,:));
-    Vectores.LN_MusloI(i,:) = cross(Vectores.K_Global,Vectores.K_MusloI(i,:));
-    Vectores.LN_MusloD(i,:) = Vectores.LN_MusloI(i,:)/norm(Vectores.LN_MusloI(i,:));
-    % Alfas
-    
-    Polaridad = dot(Vectores.J_Global,Vectores.LN_MusloD(i,:))/...
-        abs(dot(Vectores.J_Global,Vectores.LN_MusloD(i,:)));
-    
-    Angulos.AlfaMusloD(i,:) = acosd(dot(Vectores.I_Global,Vectores.LN_MusloD(i,:)))*Polaridad;
-    
-    Polaridad = dot(Vectores.J_Global,Vectores.LN_MusloI(i,:))/...
-        abs(dot(Vectores.J_Global,Vectores.LN_MusloI(i,:)));
-    Angulos.AlfaMusloI(i,:) = acosd(dot(Vectores.I_Global,Vectores.LN_MusloI(i,:)))*Polaridad;
-    
-    % Betas
-    
-    Angulos.BetaMusloD(i,:) = acosd(dot(Vectores.K_Global,Vectores.K_MusloD(i,:)));
-    Angulos.BetaMusloI(i,:) = acosd(dot(Vectores.K_Global,Vectores.K_MusloI(i,:)));
-    
-    % Gammas
-    
-    Polaridad = dot(Vectores.J_MusloD(i,:),Vectores.LN_MusloD(i,:))/...
-        abs(dot(Vectores.J_MusloD(i,:),Vectores.LN_MusloD(i,:)));
-    Angulos.GammaMusloD(i,:) = acosd(dot(Vectores.I_MusloD(i,:),Vectores.LN_MusloD(i,:)))*Polaridad;
-    
-    Polaridad = dot(Vectores.J_MusloI(i,:),Vectores.LN_MusloI(i,:))/...
-        abs(dot(Vectores.J_MusloI(i,:),Vectores.LN_MusloI(i,:)));
-    Angulos.GammaMusloI(i,:) = acosd(dot(Vectores.I_MusloI(i,:),Vectores.LN_MusloI(i,:)))*Polaridad;
 
 end
 
-
-
+plot(Cinematica.MusloD.V(FrameRHS:FrameRHS2)); grid on; hold on;
 
 
 

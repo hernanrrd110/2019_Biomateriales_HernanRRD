@@ -1,5 +1,6 @@
 
 function [Punto_Filtrado] = FiltroPB(Punto_SinFiltrar,fm,Frame1,Frame2)
+
 Orden = 2;
 frec_corte = 6;
 fe = fm/2;
