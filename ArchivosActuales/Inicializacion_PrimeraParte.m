@@ -1,6 +1,6 @@
 
-function [Puntos,Longitud,Vectores,Angulos] = Inicializacion(Datos,...
-    FrameRHS,FrameRHS2,FrameLHS,FrameLHS2)
+function [Puntos,Longitud,Vectores,Angulos,PrimerFrame,UltimoFrame] = ...
+    Inicializacion_PrimeraParte(Datos,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2)
 
 %.......................... PUNTOS MARCADORES .............................
 
@@ -8,12 +8,16 @@ function [Puntos,Longitud,Vectores,Angulos] = Inicializacion(Datos,...
 %%%% Asis derecha
 Puntos.P07 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_asis,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameLHS2);
+[Puntos.P07,PrimerFrame,UltimoFrame] = QuitarNaN(Puntos.P07);
+
 %%%% Asis izquierda
 Puntos.P14 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_asis,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameLHS2);
+[Puntos.P14] = QuitarNaN(Puntos.P14);
 %%%% Sacro
 Puntos.P15 = FiltroPB(Datos.Pasada.Marcadores.Crudos.sacrum,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameLHS2);
+[Puntos.P15] = QuitarNaN(Puntos.P15);
 %%%% Caderas
 Puntos.Articu.CaderaD = zeros(length(Puntos.P07),3);
 Puntos.Articu.CaderaI = zeros(length(Puntos.P07),3);
@@ -22,61 +26,67 @@ Puntos.Articu.CaderaI = zeros(length(Puntos.P07),3);
 %%%% Maleolo Derecho
 Puntos.P03 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_mall,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameRHS2);
+[Puntos.P03] = QuitarNaN(Puntos.P03);
 %%%% Barra Tibial 2 Derecha
 Puntos.P04 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_bar_2,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameRHS2);
+[Puntos.P04] = QuitarNaN(Puntos.P04);
 %%%% Epicondilo Derecho
 Puntos.P05 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_knee_1,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameRHS2);
+[Puntos.P05] = QuitarNaN(Puntos.P05);
 %%%% Barra 1 Muslo
 Puntos.P06 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_bar_1,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameRHS2);
+[Puntos.P06] = QuitarNaN(Puntos.P06);
 %%%% Rodilla Derecha
-Puntos.Articu.RodillaD = zeros(length(Puntos.P04),3);
+Puntos.Articu.RodillaD = zeros(length(Puntos.P07),3);
 
 %..... PIE DERECHO
 %%%% Metatarciano Derecho
 Puntos.P01 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_met,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameRHS2);
+[Puntos.P01] = QuitarNaN(Puntos.P01);
 %%%% Tobillo Derecho
 Puntos.P02 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_heel,...
     Datos.info.Cinematica.frequency,FrameRHS,FrameRHS2);
-%%%% Maleolo Derecho
-Puntos.P03 = FiltroPB(Datos.Pasada.Marcadores.Crudos.r_mall,...
-    Datos.info.Cinematica.frequency,FrameRHS,FrameRHS2);
+Puntos.P02 = Puntos.P02(PrimerFrame:UltimoFrame,:);
 %%%% Punta y Tobillo Derecho
-Puntos.Articu.PuntaD = zeros(length(Puntos.P01),3);
-Puntos.Articu.TobilloD = zeros(length(Puntos.P01),3);
+Puntos.Articu.PuntaD = zeros(length(Puntos.P07),3);
+Puntos.Articu.TobilloD = zeros(length(Puntos.P07),3);
 
 %..... PIERNA IZQUIERDA
 %%%% Maleolo Izquierdo
 Puntos.P10 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_mall,...
     Datos.info.Cinematica.frequency,FrameLHS,FrameLHS2);
+[Puntos.P10] = QuitarNaN(Puntos.P10);
 %%%% Barra 2 Tibial Izquierdo
 Puntos.P11 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_bar_2,...
     Datos.info.Cinematica.frequency,FrameLHS,FrameLHS2);
+[Puntos.P11] = QuitarNaN(Puntos.P11);
 %%%% Epicondilo Izquierdo
 Puntos.P12 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_knee_1,...
     Datos.info.Cinematica.frequency,FrameLHS,FrameLHS2);
+[Puntos.P12] = QuitarNaN(Puntos.P12);
 %%%% Barra 1 Muslo
 Puntos.P13 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_bar_1,...
     Datos.info.Cinematica.frequency,FrameLHS,FrameLHS2);
+[Puntos.P13] = QuitarNaN(Puntos.P13);
 %%%% Rodilla Izquierda
-Puntos.Articu.RodillaI = zeros(length(Puntos.P11),3);
+Puntos.Articu.RodillaI = zeros(length(Puntos.P07),3);
 
 %..... PIE IZQUIERDO
 %%%% Metatarciano Izquierdo
 Puntos.P08 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_met,...
     Datos.info.Cinematica.frequency,FrameLHS,FrameLHS2);
+[Puntos.P08] = QuitarNaN(Puntos.P08);
 %%%% Tobillo Izquierdo
 Puntos.P09 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_heel,...
     Datos.info.Cinematica.frequency,FrameLHS,FrameLHS2);
-%%%% Maleolo Izquierdo
-Puntos.P10 = FiltroPB(Datos.Pasada.Marcadores.Crudos.l_mall,...
-    Datos.info.Cinematica.frequency,FrameLHS,FrameLHS2);
+[Puntos.P09] = QuitarNaN(Puntos.P09);
 %%%% Punta y Tobillo Izquierdo
-Puntos.Articu.PuntaI = zeros(length(Puntos.P08),3);
-Puntos.Articu.TobilloI = zeros(length(Puntos.P08),3);
+Puntos.Articu.PuntaI = zeros(length(Puntos.P07),3);
+Puntos.Articu.TobilloI = zeros(length(Puntos.P07),3);
 
 %........................... VECTORES UVW .................................
 

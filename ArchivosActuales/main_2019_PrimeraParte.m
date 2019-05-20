@@ -6,7 +6,6 @@ clc;
     infoDinamica,Antropometria,Eventos,h,Datos] = lectura_c3d();
 
 %%%%%%%%Cálculos Ciclo
-%%%%%%Frecuencia de muestreo de 340
 fm = Datos.info.Cinematica.frequency;
 
 %%%Pie derecho (ciclo)
@@ -18,11 +17,16 @@ FrameLHS = round(Datos.eventos.Izquierdo_LHS(1)*fm);
 FrameLHS2 = round(Datos.eventos.Izquierdo_LHS(2)*fm);
 FrameLTO = round(Datos.eventos.Izquierdo_LTO*fm);
 
-[Puntos,Longitud,Vectores,Angulos] = Inicializacion(Datos,...
+[Puntos,Longitud,Vectores,Angulos,PrimerFrame,UltimoFrame] = Inicializacion_PrimeraParte(Datos,...
     FrameRHS,FrameRHS2,FrameLHS,FrameLHS2);
 
-% [Puntos,Longitud,Datos,Vectores,Angulos] = Inicializacion(Puntos,Longitud,Datos,...
-%     Vectores,FrameRHS,FrameRHS2,FrameLHS,FrameLHS2);
+FrameRHS = FrameRHS - PrimerFrame;
+FrameRHS2 = FrameRHS2 - PrimerFrame;
+FrameRTO = FrameRTO - PrimerFrame;
+
+FrameLHS = FrameLHS - PrimerFrame;
+FrameLHS2 = FrameLHS2 - PrimerFrame;
+FrameLTO = FrameLTO - PrimerFrame;
 
 %% %........................ Cálculos de Ejes UVW PELVIS  ........................
 
@@ -612,6 +616,7 @@ end
 
 
 %%
+
 % close all;
 % figure8 = figure ('Color',[1 1 1]);
 % 
@@ -636,7 +641,6 @@ end
 
 
 %%
-% CosasNan = isnan(Vectores.U_Pelvis);
 
 % FrameEventos.FrameRHS = FrameRHS;
 % FrameEventos.FrameRHS2 = FrameRHS2;

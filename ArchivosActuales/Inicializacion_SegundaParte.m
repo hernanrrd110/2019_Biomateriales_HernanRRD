@@ -50,9 +50,15 @@ Vectores.K_Global = [0 0 1];
 Vectores.LN_MusloD = zeros(size(Vectores.I_MusloD));
 Vectores.LN_MusloI = zeros(size(Vectores.I_MusloI));
 
+Vectores.LN_PiernaD = zeros(size(Vectores.I_PiernaD));
+Vectores.LN_PiernaI = zeros(size(Vectores.I_PiernaI));
+
+Vectores.LN_PieD = zeros(size(Vectores.I_PieD));
+Vectores.LN_PieI = zeros(size(Vectores.I_PieI));
+
 %............................. Angulos ....................................
 
-% -------------- Muslo
+% ------------------------ Muslo
 Angulos.AlfaMusloD = zeros(length(Vectores.LN_MusloD),1);
 Angulos.BetaMusloD = zeros(length(Vectores.LN_MusloD),1);
 Angulos.GammaMusloD = zeros(length(Vectores.LN_MusloD),1);
@@ -60,6 +66,26 @@ Angulos.GammaMusloD = zeros(length(Vectores.LN_MusloD),1);
 Angulos.AlfaMusloI = zeros(length(Vectores.LN_MusloD),1);
 Angulos.BetaMusloI = zeros(length(Vectores.LN_MusloD),1);
 Angulos.GammaMusloI = zeros(length(Vectores.LN_MusloD),1);
+
+% ------------------------ Pierna
+
+Angulos.AlfaPiernaD = zeros(length(Vectores.LN_PiernaD),1);
+Angulos.BetaPiernaD = zeros(length(Vectores.LN_PiernaD),1);
+Angulos.GammaPiernaD = zeros(length(Vectores.LN_PiernaD),1);
+
+Angulos.AlfaPiernaI = zeros(length(Vectores.LN_PiernaD),1);
+Angulos.BetaPiernaI = zeros(length(Vectores.LN_PiernaD),1);
+Angulos.GammaPiernaI = zeros(length(Vectores.LN_PiernaD),1);
+
+% ------------------------ Pie
+
+Angulos.AlfaPieD = zeros(length(Vectores.LN_PieD),1);
+Angulos.BetaPieD = zeros(length(Vectores.LN_PieD),1);
+Angulos.GammaPieD = zeros(length(Vectores.LN_PieD),1);
+
+Angulos.AlfaPieI = zeros(length(Vectores.LN_PieD),1);
+Angulos.BetaPieI = zeros(length(Vectores.LN_PieD),1);
+Angulos.GammaPieI = zeros(length(Vectores.LN_PieD),1);
 
 %............................. Cinematica .................................
 
