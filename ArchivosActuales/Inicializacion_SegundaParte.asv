@@ -14,14 +14,13 @@ Altura = Datos.antropometria.children.ALTURA.info.values; % en Cm
 MasaTotal = Datos.antropometria.children.PESO.info.values;% en Kg
 
 %%% Masa de Segmentos
-Inercia.Masa.Muslo = -2.649 + 0.1463*MasaTotal + 0.0137*Altura;
-Inercia.Masa.Pierna = -1.592 + 0.0362*MasaTotal + 0.0121*Altura;
-Inercia.Masa.Pie = -0.829 + 0.0077*MasaTotal + 0.0073*Altura;
+Inercia.Masa.Muslo = -2.649 + 0.1463*M;a
+
 %%% en Kg*m^2
 
 Inercia.Momento.XX_Muslo = (-13.5 + 11.3*MasaTotal - 2.28*Altura)/10000;
 Inercia.Momento.YY_Muslo = (-3557 + 31.7*MasaTotal + 18.61*Altura)/10000;
-Inercia.Momento.ZZ_Muslo = (-3690 + 32.02*MasaTotal+ 19.24*Altura)/10000;
+Inercia.Momento.ZZ = (-3690 + 32.02*MasaTotal+ 19.24*Altura)/10000;
 
 Inercia.Momento.XX_Pierna = (70.5 + 1.134*MasaTotal + 0.3*Altura)/10000;
 Inercia.Momento.YY_Pierna = (-1105 + 4.59*MasaTotal + 6.63*Altura)/10000;
