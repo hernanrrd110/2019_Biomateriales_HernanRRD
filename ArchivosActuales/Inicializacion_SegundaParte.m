@@ -31,9 +31,9 @@ Inercia.Momento.XX_Pie = (-15.48 + 0.144*MasaTotal + 0.088*Altura)/10000;
 Inercia.Momento.YY_Pie = (-100 + 0.480*MasaTotal + 0.626*Altura)/10000;
 Inercia.Momento.ZZ_Pie = (-97.09 + 0.414*MasaTotal + 0.614*Altura)/10000;
 
-Matrices.Inercia_Muslo = [Inercia.Momento.XX_Muslo 0 0,0 Inercia.Momento.YY_Muslo 0,0 0 Inercia.Momento.ZZ_Muslo];
-Matrices.Inercia_Pierna = [Inercia.Momento.XX_Pierna 0 0,0 Inercia.Momento.YY_Pierna 0,0 0 Inercia.Momento.ZZ_Pierna];
-Matrices.Inercia_Pie = [Inercia.Momento.XX_Pie 0 0,0 Inercia.Momento.YY_Pie 0,0 0 Inercia.Momento.ZZ_Pie];
+Matrices.Inercia_Muslo = [Inercia.Momento.XX_Muslo 0 0;0 Inercia.Momento.YY_Muslo 0;0 0 Inercia.Momento.ZZ_Muslo];
+Matrices.Inercia_Pierna = [Inercia.Momento.XX_Pierna 0 0;0 Inercia.Momento.YY_Pierna 0;0 0 Inercia.Momento.ZZ_Pierna];
+Matrices.Inercia_Pie = [Inercia.Momento.XX_Pie 0 0;0 Inercia.Momento.YY_Pie 0;0 0 Inercia.Momento.ZZ_Pie];
 
 %............................... Puntos ...................................
 

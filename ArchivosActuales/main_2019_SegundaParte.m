@@ -143,42 +143,6 @@ Angulos.BetaPieI_Derivada = Derivada_Vector(Angulos.BetaPieI,fm);
 Angulos.GammaPieD_Derivada = Derivada_Vector(Angulos.GammaPieD,fm);
 Angulos.GammaPieI_Derivada = Derivada_Vector(Angulos.GammaPieI,fm);
 
-%%%% ........... Derivadas Segundas
-
-% Muslo
-
-Angulos.AlfaMusloD_Derivada2da = Derivada_Vector(Angulos.AlfaMusloD_Derivada, fm);
-Angulos.AlfaMusloI_Derivada2da = Derivada_Vector(Angulos.AlfaMusloI_Derivada,fm);
-
-Angulos.BetaMusloD_Derivada2da = Derivada_Vector(Angulos.BetaMusloD_Derivada,fm);
-Angulos.BetaMusloI_Derivada2da = Derivada_Vector(Angulos.BetaMusloI_Derivada,fm);
-
-Angulos.GammaMusloD_Derivada2da = Derivada_Vector(Angulos.GammaMusloD_Derivada,fm);
-Angulos.GammaMusloI_Derivada2da = Derivada_Vector(Angulos.GammaMusloI_Derivada,fm);
-
-% Pierna
-
-Angulos.AlfaPiernaD_Derivada2da = Derivada_Vector(Angulos.AlfaPiernaD_Derivada, fm);
-Angulos.AlfaPiernaI_Derivada2da = Derivada_Vector(Angulos.AlfaPiernaI_Derivada,fm);
-
-Angulos.BetaPiernaD_Derivada2da = Derivada_Vector(Angulos.BetaPiernaD_Derivada,fm);
-Angulos.BetaPiernaI_Derivada2da = Derivada_Vector(Angulos.BetaPiernaI_Derivada,fm);
-
-Angulos.GammaPiernaD_Derivada2da = Derivada_Vector(Angulos.GammaPiernaD_Derivada,fm);
-Angulos.GammaPiernaI_Derivada2da = Derivada_Vector(Angulos.GammaPiernaI_Derivada,fm);
-
-% Pie
-
-Angulos.AlfaPieD_Derivada2da = Derivada_Vector(Angulos.AlfaPieD_Derivada, fm);
-Angulos.AlfaPieI_Derivada2da = Derivada_Vector(Angulos.AlfaPieI_Derivada,fm);
-
-Angulos.BetaPieD_Derivada2da = Derivada_Vector(Angulos.BetaPieD_Derivada,fm);
-Angulos.BetaPieI_Derivada2da = Derivada_Vector(Angulos.BetaPieI_Derivada,fm);
-
-Angulos.GammaPieD_Derivada2da = Derivada_Vector(Angulos.GammaPieD_Derivada,fm);
-Angulos.GammaPieI_Derivada2da = Derivada_Vector(Angulos.GammaPieI_Derivada,fm);
-
-
 %% ................... Calculos Velocidades Angulares .....................
 % Muslo
 Matrices.Alfa_MusloD = zeros(3,3,length(Angulos.AlfaMusloD_Derivada));
@@ -235,6 +199,7 @@ for i = 1:length(Angulos.AlfaMusloD_Derivada)
 end
 
 Cinematica.MusloD.V_angular = zeros(length(Angulos.AlfaMusloD_Derivada),3);
+Cinematica.MusloI.V_angular = zeros(length(Angulos.AlfaMusloI_Derivada),3);
 
 for i = 1:length(Angulos.AlfaMusloD_Derivada)
     
@@ -251,6 +216,21 @@ for i = 1:length(Angulos.AlfaMusloD_Derivada)
     
 end
 
+for i = 1:length(Angulos.AlfaMusloI_Derivada)
+    
+    VectorAlfa = [0 0 Angulos.AlfaMusloI_Derivada(i)];
+    VectorBeta = [Angulos.BetaMusloI_Derivada(i) 0 0];
+    VectorGamma = [0 0 Angulos.GammaMusloI_Derivada(i)];
+    
+    VectorAlfa = Matrices.Beta_MusloI(:,:,i) * (VectorAlfa');
+    VectorAlfa = ( Matrices.Gamma_MusloI(:,:,i) * (VectorAlfa) )';
+    
+    VectorBeta = ( Matrices.Gamma_MusloI(:,:,i) *(VectorBeta') )';
+    
+    Cinematica.MusloI.V_angular(i,:) = VectorAlfa + VectorBeta + VectorGamma;
+    
+end
+
 % subplot(3,1,1);
 % plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,1)); grid on;
 % title('Velocidad Angular en i MusloD');
@@ -264,8 +244,8 @@ end
 % plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,3));
 
 
-%% Calculos Matrices Pierna
-
+%% ..................... Calculos Matrices Pierna .........................
+ 
 Matrices.Alfa_PiernaD = zeros(3,3,length(Angulos.AlfaPiernaD_Derivada));
 Matrices.Beta_PiernaD = zeros(3,3,length(Angulos.BetaPiernaD_Derivada));
 Matrices.Gamma_PiernaD = zeros(3,3,length(Angulos.GammaPiernaD_Derivada));
@@ -320,6 +300,7 @@ for i = 1:length(Angulos.AlfaPiernaD_Derivada)
 end
 
 Cinematica.PiernaD.V_angular = zeros(length(Angulos.AlfaPiernaD_Derivada),3);
+Cinematica.PiernaI.V_angular = zeros(length(Angulos.AlfaPiernaI_Derivada),3);
 
 for i = 1:length(Angulos.AlfaPiernaD_Derivada)
     
@@ -336,6 +317,21 @@ for i = 1:length(Angulos.AlfaPiernaD_Derivada)
     
 end
 
+for i = 1:length(Angulos.AlfaPiernaI_Derivada)
+    
+    VectorAlfa = [0 0 Angulos.AlfaPiernaI_Derivada(i)];
+    VectorBeta = [Angulos.BetaPiernaI_Derivada(i) 0 0];
+    VectorGamma = [0 0 Angulos.GammaPiernaI_Derivada(i)];
+    
+    VectorAlfa = Matrices.Beta_PiernaI(:,:,i) * (VectorAlfa');
+    VectorAlfa = ( Matrices.Gamma_PiernaI(:,:,i) * (VectorAlfa) )';
+    
+    VectorBeta = ( Matrices.Gamma_PiernaI(:,:,i) *(VectorBeta') )';
+    
+    Cinematica.PiernaI.V_angular(i,:) = VectorAlfa + VectorBeta + VectorGamma;
+    
+end
+
 % subplot(3,1,1);
 % plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,1)); grid on;
 % subplot(3,1,2);
@@ -345,7 +341,7 @@ end
 % plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3));
 % plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3));
 
-%% Calculos Matrices Pie
+%% ..................... Calculos Matrices Pie ............................
 
 Matrices.Alfa_PieD = zeros(3,3,length(Angulos.AlfaPieD_Derivada));
 Matrices.Beta_PieD = zeros(3,3,length(Angulos.BetaPieD_Derivada));
@@ -402,6 +398,7 @@ for i = 1:length(Angulos.AlfaPieD_Derivada)
 end
 
 Cinematica.PieD.V_angular = zeros(length(Angulos.AlfaPieD_Derivada),3);
+Cinematica.PieI.V_angular = zeros(length(Angulos.AlfaPieI_Derivada),3);
 
 for i = 1:length(Angulos.AlfaPieD_Derivada)
     
@@ -418,14 +415,87 @@ for i = 1:length(Angulos.AlfaPieD_Derivada)
     
 end
 
+for i = 1:length(Angulos.AlfaPieI_Derivada)
+    
+    VectorAlfa = [0 0 Angulos.AlfaPieI_Derivada(i)];
+    VectorBeta = [Angulos.BetaPieI_Derivada(i) 0 0];
+    VectorGamma = [0 0 Angulos.GammaPieI_Derivada(i)];
+    
+    VectorAlfa = Matrices.Beta_PieI(:,:,i) * (VectorAlfa');
+    VectorAlfa = ( Matrices.Gamma_PieI(:,:,i) * (VectorAlfa) )';
+    
+    VectorBeta = ( Matrices.Gamma_PieI(:,:,i) *(VectorBeta') )';
+    
+    Cinematica.PieI.V_angular(i,:) = VectorAlfa + VectorBeta + VectorGamma;
+    
+end
+
 % subplot(3,1,1);
 % plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,1)); grid on;
 % subplot(3,1,2);
-% plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,2)); grid on;
+% plot(Cinematica.PieD.V_angular(FrmeRHS:FrameRHS2,2)); grid on;
 % subplot(3,1,3);
 % plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,3)); grid on; hold on;
 % plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,3));
 
+%% ........................ Momentos Angulares ............................
+
+Dinamica.MusloD.H = zeros(size(Cinematica.MusloD.V_angular));
+Dinamica.MusloI.H = zeros(size(Cinematica.MusloI.V_angular));
+Dinamica.PiernaD.H = zeros(size(Cinematica.PiernaD.V_angular));
+Dinamica.PiernaI.H = zeros(size(Cinematica.PiernaI.V_angular));
+Dinamica.PieD.H = zeros(size(Cinematica.PieD.V_angular));
+Dinamica.PieI.H = zeros(size(Cinematica.PieI.V_angular));
+
+for i = 1:length(Dinamica.MusloD.H)
+    
+    Dinamica.MusloD.H(i,:) = (Matrices.Inercia_Muslo*(Cinematica.MusloD.V_angular(i,:))')';
+    Dinamica.MusloI.H(i,:) = (Matrices.Inercia_Muslo*(Cinematica.MusloI.V_angular(i,:))')';
+
+    Dinamica.PiernaD.H(i,:) = (Matrices.Inercia_Pierna*(Cinematica.PiernaD.V_angular(i,:))')';
+    Dinamica.PiernaI.H(i,:) = (Matrices.Inercia_Pierna*(Cinematica.PiernaI.V_angular(i,:))')';
+
+    Dinamica.PieD.H(i,:) = (Matrices.Inercia_Pie*(Cinematica.PieD.V_angular(i,:))')';
+    Dinamica.PieI.H(i,:) = (Matrices.Inercia_Pie*(Cinematica.PieI.V_angular(i,:))')';
+    
+end
+
+Dinamica.MusloD.M_neto = Derivada_Vector(Dinamica.MusloD.H, fm);
+Dinamica.MusloI.M_neto = Derivada_Vector(Dinamica.MusloI.H, fm);
+
+Dinamica.PiernaD.M_neto = Derivada_Vector(Dinamica.PiernaD.H, fm);
+Dinamica.PiernaI.M_neto = Derivada_Vector(Dinamica.PiernaI.H, fm);
+
+Dinamica.PieD.M_neto = Derivada_Vector(Dinamica.PieD.H, fm);
+Dinamica.PieI.M_neto = Derivada_Vector(Dinamica.PieI.H, fm);
+
+
+%% .................. Calculo de Velocidades y Aceleraciones lineales
+
+% Velocidades Lineales 
+Cinematica.MusloD.V_lineal = Derivada_Vector(Puntos.CM.MusloD, fm);
+Cinematica.MusloI.V_lineal = Derivada_Vector(Puntos.CM.MusloI, fm);
+
+Cinematica.PiernaD.V_lineal = Derivada_Vector(Puntos.CM.PantorrillaD, fm);
+Cinematica.PiernaI.V_lineal = Derivada_Vector(Puntos.CM.PantorrillaI, fm);
+
+Cinematica.PieD.V_lineal = Derivada_Vector(Puntos.CM.PieD, fm);
+Cinematica.PieI.V_lineal = Derivada_Vector(Puntos.CM.PieI, fm);
+
+% Aceleraciones Lineales
+
+Cinematica.MusloD.A_lineal = Derivada_Vector(Cinematica.MusloD.V_lineal, fm);
+Cinematica.MusloI.A_lineal = Derivada_Vector(Cinematica.MusloI.V_lineal, fm);
+
+Cinematica.PiernaD.A_lineal = Derivada_Vector(Cinematica.PantorrillaD.V_lineal, fm);
+Cinematica.PiernaI.A_lineal = Derivada_Vector(Cinematica.PantorrillaI.V_lineal, fm);
+
+Cinematica.PieD.A_lineal = Derivada_Vector(Cinematica.PieD.V_lineal, fm);
+Cinematica.PieI.A_lineal = Derivada_Vector(Cinematica.PieI.V_lineal, fm);
+
+plot(Cinematica.MusloD.V_lineal(FrameRHS:FrameRHS2,1)); grid on; hold on;
+
+plot(Cinematica.MusloD.A_lineal(FrameRHS:FrameRHS2,1)/5); grid on; hold on;
 
 
 %% .......................... GRAFICAS EULER
@@ -483,32 +553,15 @@ end
 % plot(Angulos.GammaPieI(FrameLHS:FrameLHS2));
 % title('Angulo Gamma/psi Pie');
 
-%% .................. Calculo de Velocidades y Aceleraciones lineales
 
-% Velocidades Lineales 
-Cinematica.MusloD.V_lineal = Derivada_Vector(Puntos.CM.MusloD, fm);
-Cinematica.MusloI.V_lineal = Derivada_Vector(Puntos.CM.MusloI, fm);
 
-Cinematica.PiernaD.V_lineal = Derivada_Vector(Puntos.CM.PantorrillaD, fm);
-Cinematica.PiernaI.V_lineal = Derivada_Vector(Puntos.CM.PantorrillaI, fm);
 
-Cinematica.PieD.V_lineal = Derivada_Vector(Puntos.CM.PieD, fm);
-Cinematica.PieI.V_lineal = Derivada_Vector(Puntos.CM.PieI, fm);
 
-% Aceleraciones angulares
 
-Cinematica.MusloD.A_lineal = Derivada_Vector(Cinematica.MusloD.V_lineal, fm);
-Cinematica.MusloI.A_lineal = Derivada_Vector(Cinematica.MusloI.V_lineal, fm);
 
-Cinematica.PiernaD.A_lineal = Derivada_Vector(Cinematica.PantorrillaD.V_lineal, fm);
-Cinematica.PiernaI.A_lineal = Derivada_Vector(Cinematica.PantorrillaI.V_lineal, fm);
 
-Cinematica.PieD.A_lineal = Derivada_Vector(Cinematica.PieD.V_lineal, fm);
-Cinematica.PieI.A_lineal = Derivada_Vector(Cinematica.PieI.V_lineal, fm);
 
-plot(Cinematica.MusloD.V_lineal(FrameRHS:FrameRHS2,1)); grid on; hold on;
 
-plot(Cinematica.MusloD.A_lineal(FrameRHS:FrameRHS2,1)/5); grid on; hold on;
 
 
 
