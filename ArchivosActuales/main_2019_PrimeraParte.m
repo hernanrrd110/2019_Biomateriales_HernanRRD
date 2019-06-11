@@ -642,6 +642,8 @@ end
 
 %%
 
+% FrameEventos.PrimerFrame = PrimerFrame;
+% FrameEventos.UltimoFrame = UltimoFrame;
 % FrameEventos.FrameRHS = FrameRHS;
 % FrameEventos.FrameRHS2 = FrameRHS2;
 % FrameEventos.FrameRTO = FrameRTO;

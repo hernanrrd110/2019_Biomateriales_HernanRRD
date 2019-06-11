@@ -2,16 +2,17 @@
 %% -------------------------- Carga de datos -----------------------------
 clear all; close all; clc;
 
-[Puntos,Angulos,Vectores,Datos,FramesEventos,...
+[Puntos,Angulos,Vectores,Datos,FrameEventos,...
     Inercia,Antropometria,Cinematica,Matrices]  = Inicializacion_SegundaParte();
+PrimerFrame = FrameEventos.PrimerFrame ;
+UltimoFrame = FrameEventos.UltimoFrame ;
+FrameRHS = FrameEventos.FrameRHS;
+FrameRHS2 = FrameEventos.FrameRHS2;
+FrameRTO = FrameEventos.FrameRTO;
 
-FrameRHS = FramesEventos.FrameRHS;
-FrameRHS2 = FramesEventos.FrameRHS2;
-FrameRTO = FramesEventos.FrameRTO;
-
-FrameLHS = FramesEventos.FrameLHS;
-FrameLHS2 = FramesEventos.FrameLHS2;
-FrameLTO = FramesEventos.FrameLTO;
+FrameLHS = FrameEventos.FrameLHS;
+FrameLHS2 = FrameEventos.FrameLHS2;
+FrameLTO = FrameEventos.FrameLTO;
 
 fm = Datos.info.Cinematica.frequency;
 
@@ -110,10 +111,10 @@ for i=1:length(Vectores.LN_MusloD)
     % Gammas
     
     Angulos.GammaPieD(i) = asind(dot(cross(Vectores.LN_PieD(i,:),Vectores.I_PieD(i,:)),...
-        Vectores.K_PieD(i,:)));
+        -Vectores.K_PieD(i,:)));
     
     Angulos.GammaPieI(i)  = asind(dot(cross(Vectores.LN_PieI(i,:),Vectores.I_PieI(i,:)),...
-        Vectores.K_PieI(i,:)));
+        -Vectores.K_PieI(i,:)));
 end
 
 % ........... Derivadas Primera y Segunda de Angulos de Euler .............
@@ -246,9 +247,9 @@ plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
 plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
 plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
 subplot(1,2,2)
-plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
-plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
-plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
+plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
+plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
+plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
 
 Matrices.Rotacion.MusloD = zeros(size(Matrices.Alfa_MusloD));
 for i = 1:length(Matrices.Rotacion.MusloD)
@@ -308,8 +309,8 @@ for i = 1:length(Angulos.AlfaPiernaD_Derivada)
     
     Matrices.Gamma_PiernaD(1,1,i) = cosd(Angulos.GammaPiernaD(i));
     Matrices.Gamma_PiernaD(2,2,i) = cosd(Angulos.GammaPiernaD(i));
-    Matrices.Gamma_PiernaD(1,2,i) = - sind(Angulos.GammaPiernaD(i));
-    Matrices.Gamma_PiernaD(2,1,i) = sind(Angulos.GammaPiernaD(i));
+    Matrices.Gamma_PiernaD(1,2,i) = sind(Angulos.GammaPiernaD(i));
+    Matrices.Gamma_PiernaD(2,1,i) = - sind(Angulos.GammaPiernaD(i));
     Matrices.Gamma_PiernaD(3,3,i) = 1;
     
     Matrices.Gamma_PiernaI(1,1,i) = cosd(Angulos.GammaPiernaI(i));
@@ -335,7 +336,7 @@ for i = 1:length(Angulos.AlfaPiernaD_Derivada)
     VectorBeta = ( Matrices.Gamma_PiernaD(:,:,i) *(VectorBeta') )';
     
     Cinematica.PiernaD.V_angular(i,:) = VectorAlfa + VectorBeta + VectorGamma;
-    
+  
 end
 
 for i = 1:length(Angulos.AlfaPiernaI_Derivada)
@@ -390,9 +391,7 @@ Matrices.Beta_PieI = zeros(3,3,length(Angulos.BetaPieI_Derivada));
 Matrices.Gamma_PieI = zeros(3,3,length(Angulos.GammaPieI_Derivada));
 
 for i = 1:length(Angulos.AlfaPieD_Derivada)
-    
     %Alfa
-    
     Matrices.Alfa_PieD(1,1,i) = cosd(Angulos.AlfaPieD(i));
     Matrices.Alfa_PieD(2,2,i) = cosd(Angulos.AlfaPieD(i));
     Matrices.Alfa_PieD(1,2,i) = sind(Angulos.AlfaPieD(i));
@@ -423,8 +422,8 @@ for i = 1:length(Angulos.AlfaPieD_Derivada)
     
     Matrices.Gamma_PieD(1,1,i) = cosd(Angulos.GammaPieD(i));
     Matrices.Gamma_PieD(2,2,i) = cosd(Angulos.GammaPieD(i));
-    Matrices.Gamma_PieD(1,2,i) = - sind(Angulos.GammaPieD(i));
-    Matrices.Gamma_PieD(2,1,i) = sind(Angulos.GammaPieD(i));
+    Matrices.Gamma_PieD(1,2,i) = sind(Angulos.GammaPieD(i));
+    Matrices.Gamma_PieD(2,1,i) = - sind(Angulos.GammaPieD(i));
     Matrices.Gamma_PieD(3,3,i) = 1;
     
     Matrices.Gamma_PieI(1,1,i) = cosd(Angulos.GammaPieI(i));
@@ -563,34 +562,56 @@ Dinamica.MusloI.F_neto = Inercia.Masa.Muslo * Cinematica.MusloI.A_lineal;
 Dinamica.PiernaD.F_neto = Inercia.Masa.Pierna * Cinematica.PiernaD.A_lineal;
 Dinamica.PiernaI.F_neto = Inercia.Masa.Pierna * Cinematica.PiernaI.A_lineal;
 
-Dinamica.PieD.F_neto = Inercia.Masa.Pierna * Cinematica.PieD.A_lineal;
-Dinamica.PieI.F_neto = Inercia.Masa.Pierna * Cinematica.PieD.A_lineal;
+Dinamica.PieD.F_neto = Inercia.Masa.Pie * Cinematica.PieD.A_lineal;
+Dinamica.PieI.F_neto = Inercia.Masa.Pie * Cinematica.PieD.A_lineal;
 
 %% Fuerzas y Momentos de Plataformas
 
-Dinamica.F_Plate = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
+Dinamica.F_PlateD = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
+Dinamica.F_PlateI = zeros(length(Datos.Pasada.Plataformas(2).Crudos.channels.Fx2)/3,3);
+
 j = 1;
-for i = 1:length(Dinamica.F_Plate)
-    
-    Dinamica.F_Plate(i,1) = (Datos.Pasada.Plataformas(1).Crudos.channels.Fx1(j)+...
-        Datos.Pasada.Plataformas(1).Crudos.channels.Fx1(j+1)+...
-        Datos.Pasada.Plataformas(1).Crudos.channels.Fx1(j+2))/3;
-    Dinamica.F_Plate(i,1) = (Datos.Pasada.Plataformas(1).Crudos.channels.Fy1(j)+...
+% Esta invertido las direcciones de X e Y
+for i = 1:length(Dinamica.F_PlateD)
+    Dinamica.F_PlateD(i,1) = (Datos.Pasada.Plataformas(1).Crudos.channels.Fy1(j)+...
         Datos.Pasada.Plataformas(1).Crudos.channels.Fy1(j+1)+...
         Datos.Pasada.Plataformas(1).Crudos.channels.Fy1(j+2))/3;
-    Dinamica.F_Plate(i,1) = (Datos.Pasada.Plataformas(1).Crudos.channels.Fz1(j)+...
+    Dinamica.F_PlateD(i,2) = (Datos.Pasada.Plataformas(1).Crudos.channels.Fx1(j)+...
+        Datos.Pasada.Plataformas(1).Crudos.channels.Fx1(j+1)+...
+        Datos.Pasada.Plataformas(1).Crudos.channels.Fx1(j+2))/3;
+    Dinamica.F_PlateD(i,3) = (Datos.Pasada.Plataformas(1).Crudos.channels.Fz1(j)+...
         Datos.Pasada.Plataformas(1).Crudos.channels.Fz1(j+1)+...
         Datos.Pasada.Plataformas(1).Crudos.channels.Fz1(j+2))/3;
     j = j +3;
-        
 end
 
+j = 1;
+for i = 1:length(Dinamica.F_PlateI)
+    Dinamica.F_PlateI(i,1) = (Datos.Pasada.Plataformas(2).Crudos.channels.Fy2(j)+...
+        Datos.Pasada.Plataformas(2).Crudos.channels.Fy2(j+1)+...
+        Datos.Pasada.Plataformas(2).Crudos.channels.Fy2(j+2))/3;
+    Dinamica.F_PlateI(i,2) = (Datos.Pasada.Plataformas(2).Crudos.channels.Fx2(j)+...
+        Datos.Pasada.Plataformas(2).Crudos.channels.Fx2(j+1)+...
+        Datos.Pasada.Plataformas(2).Crudos.channels.Fx2(j+2))/3;
+    Dinamica.F_PlateI(i,3) = (Datos.Pasada.Plataformas(2).Crudos.channels.Fz2(j)+...
+        Datos.Pasada.Plataformas(2).Crudos.channels.Fz2(j+1)+...
+        Datos.Pasada.Plataformas(2).Crudos.channels.Fz2(j+2))/3;
+    j = j +3;
+end
 
-%% .................. Calculo de Fuerzas y Momentos
+Dinamica.F_PlateD = Dinamica.F_PlateD(round(Datos.eventos.Derecho_RHS(1)*fm)-FrameRHS:...
+    round(Datos.eventos.Derecho_RHS(1)*fm)-FrameRHS+length(Dinamica.PieD.F_neto)-1,:);
+Dinamica.F_PlateI = Dinamica.F_PlateI(round(Datos.eventos.Derecho_RHS(1)*fm)-FrameRHS:...
+    round(Datos.eventos.Derecho_RHS(1)*fm)-FrameRHS+length(Dinamica.PieD.F_neto)-1,:);
+
+%% .............. Calculo de Fuerzas y Momentos Para Pie .................
 
 Dinamica.PieD.F_Tobillo(:,1) = Dinamica.PieD.F_neto(:,1) - Dinamica.F_Plate(:,1); 
 Dinamica.PieD.F_Tobillo(:,2) = Dinamica.PieD.F_neto(:,2) - Dinamica.F_Plate(:,2); 
-Dinamica.PieD.F_Tobillo(:,3) = Dinamica.PieD.F_neto(:,3) - Dinamica.F_Plate(:,3);
+Dinamica.PieD.F_Tobillo(:,3) = Dinamica.PieD.F_neto(:,3) + Inercia.Masa.Pie*9.8 - Dinamica.F_Plate(:,3);
+
+
+
 
 
 
