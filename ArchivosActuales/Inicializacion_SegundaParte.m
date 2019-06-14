@@ -1,4 +1,4 @@
-function [Puntos,Angulos,Vectores,Datos,FramesEventos,Inercia,Antropometria,Cinematica,Matrices]  = Inicializacion_SegundaParte()
+function [Puntos,Angulos,Vectores,Datos,FramesEventos,Inercia,Antropometria,Cinematica,Dinamica,Matrices]  = Inicializacion_SegundaParte()
 
 load('Datos_PrimeraParte.mat');
 Puntos = Datos_PrimeraParte.Puntos;
@@ -96,10 +96,83 @@ Angulos.AlfaPieI = zeros(length(Vectores.LN_PieD),1);
 Angulos.BetaPieI = zeros(length(Vectores.LN_PieD),1);
 Angulos.GammaPieI = zeros(length(Vectores.LN_PieD),1);
 
+%.............................. Matrices ..................................
+
+% ---------- Muslo
+
+Matrices.Alfa_MusloD = zeros(3,3,length(Angulos.AlfaMusloD));
+Matrices.Beta_MusloD = zeros(3,3,length(Angulos.BetaMusloD));
+Matrices.Gamma_MusloD = zeros(3,3,length(Angulos.GammaMusloD));
+
+Matrices.Alfa_MusloI = zeros(3,3,length(Angulos.AlfaMusloI));
+Matrices.Beta_MusloI = zeros(3,3,length(Angulos.BetaMusloI));
+Matrices.Gamma_MusloI = zeros(3,3,length(Angulos.GammaMusloI));
+
+Matrices.Rotacion.MusloD = zeros(size(Matrices.Alfa_MusloD));
+Matrices.Rotacion.MusloI = zeros(size(Matrices.Alfa_MusloI));
+
+% ---------- Pierna
+
+Matrices.Alfa_PiernaD = zeros(3,3,length(Angulos.AlfaPiernaD));
+Matrices.Beta_PiernaD = zeros(3,3,length(Angulos.BetaPiernaD));
+Matrices.Gamma_PiernaD = zeros(3,3,length(Angulos.GammaPiernaD));
+
+Matrices.Alfa_PiernaI = zeros(3,3,length(Angulos.AlfaPiernaI));
+Matrices.Beta_PiernaI = zeros(3,3,length(Angulos.BetaPiernaI));
+Matrices.Gamma_PiernaI = zeros(3,3,length(Angulos.GammaPiernaI));
+
+Matrices.Rotacion.PiernaD = zeros(size(Matrices.Alfa_PiernaD));
+Matrices.Rotacion.PiernaI = zeros(size(Matrices.Alfa_PiernaI));
+
+% ---------- Pie
+
+Matrices.Alfa_PieD = zeros(3,3,length(Angulos.AlfaPieD));
+Matrices.Beta_PieD = zeros(3,3,length(Angulos.BetaPieD));
+Matrices.Gamma_PieD = zeros(3,3,length(Angulos.GammaPieD));
+
+Matrices.Alfa_PieI = zeros(3,3,length(Angulos.AlfaPieI));
+Matrices.Beta_PieI = zeros(3,3,length(Angulos.BetaPieI));
+Matrices.Gamma_PieI = zeros(3,3,length(Angulos.GammaPieI));
+
+Matrices.Rotacion.PieD = zeros(size(Matrices.Alfa_PieD));
+Matrices.Rotacion.PieI = zeros(size(Matrices.Alfa_PieI));
+
 %............................. Cinematica .................................
+
+% ---------- Muslo
+Cinematica.MusloD.V_angular = zeros(length(Angulos.AlfaMusloD),3);
+Cinematica.MusloI.V_angular = zeros(length(Angulos.AlfaMusloI),3);
 
 Cinematica.MusloD.V_lineal = zeros(size(Puntos.CM.MusloD));
 Cinematica.MusloI.V_lineal = zeros(size(Puntos.CM.MusloI));
 
+% ---------- Pierna
+
+Cinematica.PiernaD.V_angular = zeros(length(Angulos.AlfaPiernaD),3);
+Cinematica.PiernaI.V_angular = zeros(length(Angulos.AlfaPiernaI),3);
+
+% ---------- Pie
+Cinematica.PieD.V_angular = zeros(length(Angulos.AlfaPieD),3);
+Cinematica.PieI.V_angular = zeros(length(Angulos.AlfaPieI),3);
+
+%............................. Dinamica .................................
+
+% ---------- Muslo
+
+Dinamica.MusloD.H = zeros(size(Cinematica.MusloD.V_angular));
+Dinamica.MusloI.H = zeros(size(Cinematica.MusloI.V_angular));
+
+% ---------- Pierna
+Dinamica.PiernaD.H = zeros(size(Cinematica.PiernaD.V_angular));
+Dinamica.PiernaI.H = zeros(size(Cinematica.PiernaI.V_angular));
+
+% ---------- Pie
+Dinamica.PieD.H = zeros(size(Cinematica.PieD.V_angular));
+Dinamica.PieI.H = zeros(size(Cinematica.PieI.V_angular));
+
+Dinamica.F_PlateD = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
+Dinamica.F_PlateI = zeros(length(Datos.Pasada.Plataformas(2).Crudos.channels.Fx2)/3,3);
+Dinamica.M_PlateD = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
+Dinamica.M_PlateI = zeros(length(Datos.Pasada.Plataformas(2).Crudos.channels.Fx2)/3,3);
 
 end
