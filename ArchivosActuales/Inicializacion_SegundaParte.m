@@ -170,9 +170,5 @@ Dinamica.PiernaI.H = zeros(size(Cinematica.PiernaI.V_angular));
 Dinamica.PieD.H = zeros(size(Cinematica.PieD.V_angular));
 Dinamica.PieI.H = zeros(size(Cinematica.PieI.V_angular));
 
-Dinamica.F_PlateD = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
-Dinamica.F_PlateI = zeros(length(Datos.Pasada.Plataformas(2).Crudos.channels.Fx2)/3,3);
-Dinamica.M_PlateD = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
-Dinamica.M_PlateI = zeros(length(Datos.Pasada.Plataformas(2).Crudos.channels.Fx2)/3,3);
 
 end

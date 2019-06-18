@@ -1,4 +1,3 @@
-
 %% -------------------------- Carga de datos -----------------------------
 clear all; close all; clc;
 
@@ -34,15 +33,15 @@ for i=1:length(Vectores.LN_MusloD)
 %     
 %     [Angulos.AlfaMusloI(i)]  = Angulos_Coseno(Vectores.I_Global,...
 %         Vectores.LN_MusloI(i,:),Vectores.J_Global);
-    
-    [Angulos.AlfaMusloD(i)]  = asind( dot(cross (Vectores.I_Global,Vectores.LN_MusloD(i,:)) ,Vectores.K_Global) );
+    % Cambiar Angulos
+    [Angulos.AlfaMusloD(i)]  = asind( dot(cross (-Vectores.I_Global,Vectores.LN_MusloD(i,:)) ,Vectores.K_Global) );
 
-    [Angulos.AlfaMusloI(i)]  = asind( dot(cross (Vectores.I_Global,Vectores.LN_MusloI(i,:)) ,Vectores.K_Global) );
+    [Angulos.AlfaMusloI(i)]  = asind( dot(cross (-Vectores.I_Global,Vectores.LN_MusloI(i,:)) ,Vectores.K_Global) );
     
     % Betas
     
-    Angulos.BetaMusloD(i) = - acosd(dot(Vectores.K_Global,Vectores.K_MusloD(i,:)));
-    Angulos.BetaMusloI(i) = - acosd(dot(Vectores.K_Global,Vectores.K_MusloI(i,:)));
+    Angulos.BetaMusloD(i) = acosd(dot(Vectores.K_Global,Vectores.K_MusloD(i,:)));
+    Angulos.BetaMusloI(i) = acosd(dot(Vectores.K_Global,Vectores.K_MusloI(i,:)));
     
     % Gammas
     
@@ -66,14 +65,14 @@ for i=1:length(Vectores.LN_MusloD)
 %     
 %     [Angulos.AlfaPiernaI(i)]  = Angulos_Coseno(Vectores.I_Global,...
 %         Vectores.LN_PiernaI(i,:),Vectores.J_Global);
-    
-      [Angulos.AlfaPiernaD(i)]  = asind( dot(cross (Vectores.I_Global,Vectores.LN_PiernaD(i,:)) ,Vectores.K_Global) );
-      [Angulos.AlfaPiernaI(i)]  = asind( dot(cross (Vectores.I_Global,Vectores.LN_PiernaI(i,:)) ,Vectores.K_Global) );
+    % Cambiado de polaridad
+      [Angulos.AlfaPiernaD(i)]  = asind( dot(cross (-Vectores.I_Global,Vectores.LN_PiernaD(i,:)) ,Vectores.K_Global) );
+      [Angulos.AlfaPiernaI(i)]  = asind( dot(cross (-Vectores.I_Global,Vectores.LN_PiernaI(i,:)) ,Vectores.K_Global) );
     
     % Betas
     
-    Angulos.BetaPiernaD(i) = - acosd(dot(Vectores.K_Global,Vectores.K_PiernaD(i,:)));
-    Angulos.BetaPiernaI(i) = - acosd(dot(Vectores.K_Global,Vectores.K_PiernaI(i,:)));
+    Angulos.BetaPiernaD(i) = acosd(dot(Vectores.K_Global,Vectores.K_PiernaD(i,:)));
+    Angulos.BetaPiernaI(i) = acosd(dot(Vectores.K_Global,Vectores.K_PiernaI(i,:)));
     
     % Gammas
     
@@ -98,22 +97,22 @@ for i=1:length(Vectores.LN_MusloD)
 %     [Angulos.AlfaPieI(i)]  = Angulos_Coseno(Vectores.I_Global,...
 %         Vectores.LN_PieI(i,:),Vectores.J_Global);
 
-    [Angulos.AlfaPieD(i)]  = asind( dot(cross (Vectores.I_Global,Vectores.LN_PieD(i,:)) ,Vectores.K_Global) );
-    [Angulos.AlfaPieI(i)]  = asind( dot(cross (Vectores.I_Global,Vectores.LN_PieI(i,:)) ,Vectores.K_Global) );
-
+% cambiado
+    [Angulos.AlfaPieD(i)]  = asind( dot(cross (-Vectores.I_Global,Vectores.LN_PieD(i,:)) ,Vectores.K_Global) );
+    [Angulos.AlfaPieI(i)]  = asind( dot(cross (-Vectores.I_Global,Vectores.LN_PieI(i,:)) ,Vectores.K_Global) );
     
     % Betas
     
-    Angulos.BetaPieD(i) = - acosd(dot(Vectores.K_Global,Vectores.K_PieD(i,:)));
-    Angulos.BetaPieI(i) = - acosd(dot(Vectores.K_Global,Vectores.K_PieI(i,:)));
+    Angulos.BetaPieD(i) = acosd(dot(Vectores.K_Global,Vectores.K_PieD(i,:)));
+    Angulos.BetaPieI(i) = acosd(dot(Vectores.K_Global,Vectores.K_PieI(i,:)));
     
     % Gammas
-    
+    % Hay que cambiar la polaridad
     Angulos.GammaPieD(i) = asind(dot(cross(Vectores.LN_PieD(i,:),Vectores.I_PieD(i,:)),...
-        -Vectores.K_PieD(i,:)));
+        Vectores.K_PieD(i,:)));
     
     Angulos.GammaPieI(i)  = asind(dot(cross(Vectores.LN_PieI(i,:),Vectores.I_PieI(i,:)),...
-        -Vectores.K_PieI(i,:)));
+        Vectores.K_PieI(i,:)));
 end
 
 % ........... Derivadas Primera y Segunda de Angulos de Euler .............
@@ -160,7 +159,6 @@ subplot(3,1,1);
 plot(Angulos.AlfaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
 plot(Angulos.AlfaMusloI(FrameLHS:FrameLHS2)); hold on;
 title('Angulo Alfa/fi Muslo');
-
 
 subplot(3,1,2);
 plot(Angulos.BetaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
@@ -211,7 +209,6 @@ title('Angulo Gamma/psi Pie');
 % Muslo
 
 for i = 1:length(Angulos.AlfaMusloD_Derivada)
-    
     %Alfa
     
     Matrices.Alfa_MusloD(1,1,i) = cosd(Angulos.AlfaMusloD(i));
@@ -302,13 +299,15 @@ for i = 1:length(Matrices.Rotacion.MusloI)
 end
 
 subplot(1,2,1)
-plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
-plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
-plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
-subplot(1,2,2)
 plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
 plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
 plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
+title('Muslo izquierdo')
+subplot(1,2,2)
+plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
+plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
+plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
+title('Muslo derecho')
 
 %% ..................... Calculos Matrices Pierna .........................
 
@@ -402,13 +401,15 @@ end
 
 figure();
 subplot(1,2,1)
-plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
-plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
-plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3)),'b'; grid on;
-subplot(1,2,2)
 plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
 plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
 plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
+title('Pierna izquierda')
+subplot(1,2,2)
+plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
+plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
+plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
+title('Pierna derecha')
 
 %% ..................... Calculos Matrices Pie ............................
 
@@ -504,12 +505,12 @@ subplot(1,2,1)
 plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on;  hold on;
 plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
 plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
-title('izquierda')
+title('Pie izquierda')
 subplot(1,2,2)
 plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on;  hold on;
 plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
 plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
-title('derecha')
+title('Pie derecha')
 
 %% ........................ Momentos Angulares ............................
 
@@ -577,6 +578,11 @@ Dinamica.PieI.F_neto = Inercia.Masa.Pie * Cinematica.PieD.A_lineal;
 
 %% Fuerzas Momentos y Puntos de Presion de Plataformas
 
+Dinamica.F_PlateD = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
+Dinamica.F_PlateI = zeros(length(Datos.Pasada.Plataformas(2).Crudos.channels.Fx2)/3,3);
+Dinamica.M_PlateD = zeros(length(Datos.Pasada.Plataformas(1).Crudos.channels.Fx1)/3,3);
+Dinamica.M_PlateI = zeros(length(Datos.Pasada.Plataformas(2).Crudos.channels.Fx2)/3,3);
+
 j = 1;
 % Esta invertido las direcciones de X e Y
 for i = 1:length(Dinamica.F_PlateD)
@@ -626,6 +632,9 @@ for i = 1:length(Dinamica.M_PlateI)
     j = j +3;
 end
 
+Dinamica.M_PlateD = Dinamica.M_PlateI/1000;
+Dinamica.M_PlateI = Dinamica.M_PlateI/1000;
+
 Dinamica.M_PlateD = Dinamica.M_PlateD(PrimerFrame:UltimoFrame,:);
 Dinamica.M_PlateI = Dinamica.M_PlateI(PrimerFrame:UltimoFrame,:);
 Dinamica.F_PlateD = Dinamica.F_PlateD(PrimerFrame:UltimoFrame,:);
@@ -636,9 +645,6 @@ Puntos.PlateD = Datos.Pasada.Marcadores.Crudos.rGr(PrimerFrame:UltimoFrame,:);
 Puntos.PlateD(:,3) = 0; 
 Puntos.PlateI = Datos.Pasada.Marcadores.Crudos.lGr(PrimerFrame:UltimoFrame,:);
 Puntos.PlateI(:,3) = 0; 
-
-
-
 
 %% .............. Calculo de Fuerzas y Momentos Para Pie .................
 
@@ -720,6 +726,29 @@ for i=1:length(Dinamica.PieD.M_Tobillo)
     Dinamica.PieI.M_TobilloMedLat(i) = dot(Dinamica.PieI.M_Tobillo(i,:),Vectores.K_PiernaI(i,:));
     Dinamica.PieI.M_TobilloAntPos(i) = dot(Dinamica.PieI.M_Tobillo(i,:),Vectores.L_AJC_I(i,:));
 end
+
+figure();
+subplot(2,1,1);
+plot(Dinamica.PieI.M_TobilloProxDist(FrameLHS:FrameLHS2)); hold on;
+plot(Dinamica.PieI.M_TobilloMedLat(FrameLHS:FrameLHS2)); hold on;
+plot(Dinamica.PieI.M_TobilloAntPos(FrameLHS:FrameLHS2)); 
+title('Momentos ProxDist, MedLat, AntPos, Pie Izquierdo');
+subplot(2,1,2);
+plot(Dinamica.PieD.M_TobilloProxDist(FrameRHS:FrameRHS2)); hold on;
+plot(Dinamica.PieD.M_TobilloMedLat(FrameRHS:FrameRHS2)); hold on;
+plot(Dinamica.PieD.M_TobilloAntPos(FrameRHS:FrameRHS2)); 
+title('Momentos ProxDist, MedLat, AntPos, Pie Derecho');
+
+%% ............. Calculo de Fuerzas y Momentos Para Pierna ................
+
+Dinamica.PiernaD.F_Rodilla(:,1) = Dinamica.PiernaD.F_neto(:,1) + Dinamica.PieD.F_Tobillo(:,1);
+Dinamica.PiernaD.F_Rodilla(:,2) = Dinamica.PiernaD.F_neto(:,2) + Dinamica.PieD.F_Tobillo(:,2);
+Dinamica.PiernaD.F_Rodilla(:,3) = Dinamica.PiernaD.F_neto(:,2)+ Inercia.Masa.Pierna*9.8 + Dinamica.PieD.F_Tobillo(:,2);
+
+Dinamica.PiernaI.F_Rodilla(:,1) = Dinamica.PiernaI.F_neto(:,1) + Dinamica.PieI.F_Tobillo(:,1);
+Dinamica.PiernaI.F_Rodilla(:,2) = Dinamica.PiernaI.F_neto(:,2) + Dinamica.PieI.F_Tobillo(:,2);
+Dinamica.PiernaI.F_Rodilla(:,3) = Dinamica.PiernaI.F_neto(:,3)+ Inercia.Masa.Pierna*9.8 + Dinamica.PieI.F_Tobillo(:,3);
+
 
 
 
