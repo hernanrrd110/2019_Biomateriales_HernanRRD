@@ -345,18 +345,20 @@ for i = 1:length(Matrices.Rotacion.MusloD)
     
 end
 
-figure()
+figure('Name','Prueba Vel Angulares Muslos','NumberTitle','off')
 subplot(1,2,2)
 plot(Prueba(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
 plot(Prueba(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
 plot(Prueba(FrameRHS:FrameRHS2,3),'b'); grid on;
+title('Prueba w Muslo izquierdo')
 subplot(1,2,1)
 plot(Prueba2(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
 plot(Prueba2(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
 plot(Prueba2(FrameLHS:FrameLHS2,3),'b'); grid on;
+title('Prueba w Muslo derecho')
 
 % ---- Graficas
-figure()
+figure('Name','Vel Angulares Muslos','NumberTitle','off')
 subplot(1,2,1)
 plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
 plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
@@ -459,19 +461,19 @@ for i = 1:length(Matrices.Rotacion.PiernaD)
 end
 
 % ---------- Graficas
-figure();
-subplot(1,2,1)
-plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
-plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
-plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
-title('Pierna izquierda')
-legend('Eje i','Eje j','Eje k')
-subplot(1,2,2)
-plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
-plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
-plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
-title('Pierna derecha')
-legend('Eje i','Eje j','Eje k')
+% figure('Name','Vel Angulares Piernas','NumberTitle','off');
+% subplot(1,2,1)
+% plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
+% plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
+% plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
+% title('Pierna izquierda')
+% legend('Eje i','Eje j','Eje k')
+% subplot(1,2,2)
+% plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
+% plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
+% plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
+% title('Pierna derecha')
+% legend('Eje i','Eje j','Eje k')
 
 %% ..................... Calculos Matrices Pie ............................
 
@@ -561,20 +563,20 @@ for i = 1:length(Matrices.Rotacion.PieD)
     
 end
 
-
 % -------- Graficas
-figure();
+
+figure('Name','Vel Angulares Pies','NumberTitle','off');
 subplot(1,2,1)
 plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on;  hold on;
 plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
 plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
-title('Pie izquierda')
+title('Pie izquierdo')
 legend('Eje i','Eje j','Eje k')
 subplot(1,2,2)
 plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on;  hold on;
 plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
 plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
-title('Pie derecha')
+title('Pie derecho')
 legend('Eje i','Eje j','Eje k')
 
 
@@ -640,7 +642,7 @@ Dinamica.PiernaD.F_neto = Inercia.Masa.Pierna * Cinematica.PiernaD.A_lineal;
 Dinamica.PiernaI.F_neto = Inercia.Masa.Pierna * Cinematica.PiernaI.A_lineal;
 
 Dinamica.PieD.F_neto = Inercia.Masa.Pie * Cinematica.PieD.A_lineal;
-Dinamica.PieI.F_neto = Inercia.Masa.Pie * Cinematica.PieD.A_lineal;
+Dinamica.PieI.F_neto = Inercia.Masa.Pie * Cinematica.PieI.A_lineal;
 
 %% Fuerzas Momentos y Puntos de Presion de Plataformas
 
@@ -712,15 +714,24 @@ Puntos.PlateD(:,3) = 0;
 Puntos.PlateI = Datos.Pasada.Marcadores.Crudos.lGr(PrimerFrame:UltimoFrame,:);
 Puntos.PlateI(:,3) = 0; 
 
+for i=1:length(Puntos.PlateD)
+    if((isnan(Puntos.PlateD(i,1))) == true)
+        Puntos.PlateD(i,:) = [0 0 0];
+    end
+    if((isnan(Puntos.PlateI(i,1))) == true)
+        Puntos.PlateI(i,:) = [0 0 0];
+    end
+end
+
 %% .............. Calculo de Fuerzas y Momentos Para Pie .................
 
 Dinamica.PieD.F_Tobillo(:,1) = Dinamica.PieD.F_neto(:,1) - Dinamica.F_PlateD(:,1); 
 Dinamica.PieD.F_Tobillo(:,2) = Dinamica.PieD.F_neto(:,2) - Dinamica.F_PlateD(:,2); 
 Dinamica.PieD.F_Tobillo(:,3) = Dinamica.PieD.F_neto(:,3) + Inercia.Masa.Pie*9.8 - Dinamica.F_PlateD(:,3);
 
-Dinamica.PieI.F_Tobillo(:,1) = Dinamica.PieD.F_neto(:,1) - Dinamica.F_PlateD(:,1); 
-Dinamica.PieI.F_Tobillo(:,2) = Dinamica.PieD.F_neto(:,2) - Dinamica.F_PlateI(:,2); 
-Dinamica.PieI.F_Tobillo(:,3) = Dinamica.PieD.F_neto(:,3) + Inercia.Masa.Pie*9.8 - Dinamica.F_PlateD(:,3);
+Dinamica.PieI.F_Tobillo(:,1) = Dinamica.PieI.F_neto(:,1) - Dinamica.F_PlateI(:,1); 
+Dinamica.PieI.F_Tobillo(:,2) = Dinamica.PieI.F_neto(:,2) - Dinamica.F_PlateI(:,2); 
+Dinamica.PieI.F_Tobillo(:,3) = Dinamica.PieI.F_neto(:,3) + Inercia.Masa.Pie*9.8 - Dinamica.F_PlateI(:,3);
 
 % Brazos de Momento
 
@@ -751,6 +762,7 @@ for i=1:length(Dinamica.PieD.M_Residual)
     Dinamica.PieI.M_Tobillo(i,:) = Dinamica.PieI.M_neto(i,:) - ( Matrices.Rotacion.PieI(:,:,i)*(Dinamica.PieI.M_Residual(i,:))')';
     
     %Pasaje de Local a Global
+    
     Dinamica.PieD.M_Tobillo(i,:) = ( (Matrices.Rotacion.PieD(:,:,i))' * (Dinamica.PieD.M_Tobillo(i,:))' )';
     Dinamica.PieI.M_Tobillo(i,:) = ( (Matrices.Rotacion.PieI(:,:,i))' * (Dinamica.PieI.M_Tobillo(i,:))' )';
 
@@ -768,11 +780,11 @@ Dinamica.PieI.F_TobilloAntPos = zeros(length(Dinamica.PieI.F_Tobillo),1);
 
 for i=1:length(Dinamica.PieD.F_Tobillo)
     
-    Dinamica.PieD.F_TobilloProxDist(i) = dot(Dinamica.PieD.F_Tobillo(i,:),Vectores.I_PieD(i,:));
+    Dinamica.PieD.F_TobilloPrxDis(i) = dot(Dinamica.PieD.F_Tobillo(i,:),Vectores.I_PieD(i,:));
     Dinamica.PieD.F_TobilloMedLat(i) = dot(Dinamica.PieD.F_Tobillo(i,:),Vectores.K_PiernaD(i,:));
     Dinamica.PieD.F_TobilloAntPos(i) = dot(Dinamica.PieD.F_Tobillo(i,:),Vectores.L_AJC_D(i,:));
 
-    Dinamica.PieI.F_TobilloProxDist(i) = dot(Dinamica.PieI.F_Tobillo(i,:),Vectores.I_PieI(i,:));
+    Dinamica.PieI.F_TobilloPrxDis(i) = dot(Dinamica.PieI.F_Tobillo(i,:),Vectores.I_PieI(i,:));
     Dinamica.PieI.F_TobilloMedLat(i) = - dot(Dinamica.PieI.F_Tobillo(i,:),Vectores.K_PiernaI(i,:));
     Dinamica.PieI.F_TobilloAntPos(i) = dot(Dinamica.PieI.F_Tobillo(i,:),Vectores.L_AJC_I(i,:));
 
@@ -812,7 +824,7 @@ title('Momentos Pie Izq');
 legend('Inversión-Eversión', 'Flex Plantar-Dorsal', 'Varo-Valgo');
 subplot(2,1,2);
 plot(Dinamica.PieD.M_TobilloInvEve(FrameRHS:FrameRHS2),'r'); hold on;
-plot(Dinamica.PieD.M_TobilloPlaDor(FrameRHS:FrameRHS2),'b'); hold on;
+plot(Dinamica.PieD.M_TobilloPlaDor(FrameRHS:FrameRHS2),'g'); hold on;
 plot(Dinamica.PieD.M_TobilloVarVal(FrameRHS:FrameRHS2),'b'); 
 title('Momentos Pie Der');
 legend('Inversión-Eversión', 'Flex Plantar-Dorsal', 'Varo-Valgo');
@@ -837,7 +849,7 @@ legend('Proximal-Distal', 'Medial-Lateral', 'Anterior-Posterior');
 
 Dinamica.PiernaD.F_Rodilla(:,1) = Dinamica.PiernaD.F_neto(:,1) + Dinamica.PieD.F_Tobillo(:,1);
 Dinamica.PiernaD.F_Rodilla(:,2) = Dinamica.PiernaD.F_neto(:,2) + Dinamica.PieD.F_Tobillo(:,2);
-Dinamica.PiernaD.F_Rodilla(:,3) = Dinamica.PiernaD.F_neto(:,2) + Inercia.Masa.Pierna*9.8 + Dinamica.PieD.F_Tobillo(:,2);
+Dinamica.PiernaD.F_Rodilla(:,3) = Dinamica.PiernaD.F_neto(:,3) + Inercia.Masa.Pierna*9.8 + Dinamica.PieD.F_Tobillo(:,3);
 
 Dinamica.PiernaI.F_Rodilla(:,1) = Dinamica.PiernaI.F_neto(:,1) + Dinamica.PieI.F_Tobillo(:,1);
 Dinamica.PiernaI.F_Rodilla(:,2) = Dinamica.PiernaI.F_neto(:,2) + Dinamica.PieI.F_Tobillo(:,2);
@@ -892,11 +904,11 @@ Dinamica.PiernaI.F_RodillaAntPos = zeros(length(Dinamica.PiernaI.F_Rodilla),1);
 
 for i=1:length(Dinamica.PiernaD.F_Rodilla)
     
-    Dinamica.PiernaD.F_RodillaProxDist(i) = dot(Dinamica.PiernaD.F_Rodilla(i,:),Vectores.I_PiernaD(i,:));
+    Dinamica.PiernaD.F_RodillaPrxDis(i) = dot(Dinamica.PiernaD.F_Rodilla(i,:),Vectores.I_PiernaD(i,:));
     Dinamica.PiernaD.F_RodillaMedLat(i) = dot(Dinamica.PiernaD.F_Rodilla(i,:),Vectores.K_MusloD(i,:));
     Dinamica.PiernaD.F_RodillaAntPos(i) = dot(Dinamica.PiernaD.F_Rodilla(i,:),Vectores.L_KJC_D(i,:));
 
-    Dinamica.PiernaI.F_RodillaProxDist(i) = dot(Dinamica.PiernaI.F_Rodilla(i,:),Vectores.I_PiernaI(i,:));
+    Dinamica.PiernaI.F_RodillaPrxDis(i) = dot(Dinamica.PiernaI.F_Rodilla(i,:),Vectores.I_PiernaI(i,:));
     Dinamica.PiernaI.F_RodillaMedLat(i) = - dot(Dinamica.PiernaI.F_Rodilla(i,:),Vectores.K_MusloI(i,:));
     Dinamica.PiernaI.F_RodillaAntPos(i) = dot(Dinamica.PiernaI.F_Rodilla(i,:),Vectores.L_KJC_I(i,:));
 
@@ -936,7 +948,7 @@ title('Momentos Pierna Izq');
 legend('Rot Interna-Externa', 'Flexión-Extensión', 'Abducción-Aducción');
 subplot(2,1,2);
 plot(Dinamica.PiernaD.M_RodillaIntExt(FrameRHS:FrameRHS2),'r'); hold on;
-plot(Dinamica.PiernaD.M_RodillaFlxExt(FrameRHS:FrameRHS2),'b'); hold on;
+plot(Dinamica.PiernaD.M_RodillaFlxExt(FrameRHS:FrameRHS2),'g'); hold on;
 plot(Dinamica.PiernaD.M_RodillaAbdAdd(FrameRHS:FrameRHS2),'b'); 
 title('Momentos Pierna Der');
 legend('Rot Interna-Externa', 'Flexión-Extensión', 'Abducción-Aducción');
