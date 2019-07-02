@@ -1097,8 +1097,10 @@ for i=1:length(Dinamica.PieD.F_Tobillo)
     Velocidad_PiernaD(i,:) = ((Matrices.Rotacion.PiernaD(:,:,i))'*(Cinematica.PiernaD.V_angular(i,:))')';
     Velocidad_PiernaD(i,:) = Velocidad_PiernaD(i,:)*pi/180;
     Polaridad(i) = dot(Velocidad_PieD(i,:),Velocidad_PiernaD(i,:));
-    Polaridad(i) = Polaridad(i)/abs(Polaridad(i));
-
+    if(Polaridad(i)~= 0)
+        Polaridad(i) = Polaridad(i)/abs(Polaridad(i));
+    end
+    
     if(Polaridad(i)==1)
         Dinamica.PieD.P_Trf_angular_Tobillo(i) = dot(Dinamica.PieD.M_Tobillo(i,:),Velocidad_PieD(i,:));
     else
@@ -1117,8 +1119,8 @@ grid on;
 title('Potencia Transferida');
 ylabel('Potencia [W]')
 xlabel('Frames')     
-        
-[Muestra, ciclo] = MostrarCiclos( Dinamica.PieD.P_Gen_angular_Tobillo(FrameRHS:FrameRHS2));
+
+[Muestra, ciclo] = MostrarCiclos( Dinamica.PieD.P_Gen_angular_Tobillo(FrameRHS:FrameRHS2)/MasaTotal);
 figure();
 plot(ciclo,Muestra,'b'); grid on;
 title('Potencia Generada');
