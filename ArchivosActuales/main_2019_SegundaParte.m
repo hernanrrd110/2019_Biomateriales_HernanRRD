@@ -158,62 +158,74 @@ Angulos.GammaPieD_Derivada = Derivada_Vector(Angulos.GammaPieD,fm);
 Angulos.GammaPieI_Derivada = Derivada_Vector(Angulos.GammaPieI,fm);
 
 %% .......................... GRAFICAS EULER 
-% %................ Graficas Muslo
-% subplot(3,1,1);
-% plot(Angulos.AlfaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.AlfaMusloI(FrameLHS:FrameLHS2)); hold on;
-% title('Angulo Alfa/fi Muslo');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% subplot(3,1,2);
-% plot(Angulos.BetaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.BetaMusloI(FrameLHS:FrameLHS2)); hold on;
-% title('Angulo Beta/tita Muslo ');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% subplot(3,1,3);
-% plot(Angulos.GammaMusloD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.GammaMusloI(FrameLHS:FrameLHS2)); 
-% title('Angulo Gamma/psi Muslo ');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% 
-% % ................ Graficas Euler Pierna
-% 
-% figure()
-% subplot(3,1,1);
-% plot(Angulos.AlfaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.AlfaPiernaI(FrameLHS:FrameLHS2)); hold on;
-% title('Angulo Alfa/fi Pierna');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% subplot(3,1,2);
-% plot(Angulos.BetaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.BetaPiernaI(FrameLHS:FrameLHS2)); hold on;
-% title('Angulo Beta/tita Pierna');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% subplot(3,1,3);
-% plot(Angulos.GammaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.GammaPiernaI(FrameLHS:FrameLHS2)); 
-% title('Angulo Gamma/psi Pierna');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% 
-% % ................ Graficas Euler Pie
-% 
-% figure()
-% subplot(3,1,1);
-% plot(Angulos.AlfaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.AlfaPieI(FrameLHS:FrameLHS2)); hold on;
-% title('Angulo Alfa/fi Pie');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% 
-% subplot(3,1,2);
-% plot(Angulos.BetaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.BetaPieI(FrameLHS:FrameLHS2)); hold on;
-% title('Angulo Beta/tita Pie');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
-% 
-% subplot(3,1,3);
-% plot(Angulos.GammaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
-% plot(Angulos.GammaPieI(FrameLHS:FrameLHS2));
-% title('Angulo Gamma/psi Pie');
-% legend('Ciclo Derecho','Ciclo Izquierdo')
+
+%................ Graficas Muslo
+subplot(3,1,1);
+[Muestra, ciclo] = MostrarCiclos(Angulos.AlfaMusloD(FrameRHS:FrameRHS2));
+plot(ciclo,Muestra); grid on; hold on;
+[Muestra, ciclo] = MostrarCiclos(Angulos.AlfaMusloI(FrameLHS:FrameLHS2));
+plot(ciclo,Muestra); 
+title('Angulo Alfa/fi Muslo');
+ylabel('Angulo [º]')
+xlabel('Ciclo[%]')
+
+subplot(3,1,2);
+[Muestra, ciclo] = MostrarCiclos(Angulos.BetaMusloD(FrameRHS:FrameRHS2));
+plot(ciclo,Muestra); grid on; hold on;
+[Muestra, ciclo] = MostrarCiclos(Angulos.BetaMusloI(FrameLHS:FrameLHS2));
+plot(ciclo,Muestra); 
+title('Angulo Beta/tita Muslo ');
+ylabel('Angulo [º]')
+xlabel('Ciclo[%]')
+
+subplot(3,1,3);
+[Muestra, ciclo] = MostrarCiclos(Angulos.GammaMusloD(FrameRHS:FrameRHS2));
+plot(ciclo,Muestra); grid on; hold on;
+[Muestra, ciclo] = MostrarCiclos(Angulos.GammaMusloI(FrameLHS:FrameLHS2));
+plot(ciclo,Muestra);
+title('Angulo Gamma/psi Muslo ');
+ylabel('Angulo [º]')
+xlabel('Ciclo[%]')
+
+% ................ Graficas Euler Pierna
+
+figure()
+subplot(3,1,1);
+plot(Angulos.AlfaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.AlfaPiernaI(FrameLHS:FrameLHS2)); hold on;
+title('Angulo Alfa/fi Pierna');
+legend('Ciclo Derecho','Ciclo Izquierdo')
+subplot(3,1,2);
+plot(Angulos.BetaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.BetaPiernaI(FrameLHS:FrameLHS2)); hold on;
+title('Angulo Beta/tita Pierna');
+legend('Ciclo Derecho','Ciclo Izquierdo')
+subplot(3,1,3);
+plot(Angulos.GammaPiernaD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.GammaPiernaI(FrameLHS:FrameLHS2)); 
+title('Angulo Gamma/psi Pierna');
+legend('Ciclo Derecho','Ciclo Izquierdo')
+
+% ................ Graficas Euler Pie
+
+figure()
+subplot(3,1,1);
+plot(Angulos.AlfaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.AlfaPieI(FrameLHS:FrameLHS2)); hold on;
+title('Angulo Alfa/fi Pie');
+legend('Ciclo Derecho','Ciclo Izquierdo')
+
+subplot(3,1,2);
+plot(Angulos.BetaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.BetaPieI(FrameLHS:FrameLHS2)); hold on;
+title('Angulo Beta/tita Pie');
+legend('Ciclo Derecho','Ciclo Izquierdo')
+
+subplot(3,1,3);
+plot(Angulos.GammaPieD(FrameRHS:FrameRHS2)); grid on; hold on;
+plot(Angulos.GammaPieI(FrameLHS:FrameLHS2));
+title('Angulo Gamma/psi Pie');
+legend('Ciclo Derecho','Ciclo Izquierdo')
 
 %% ................... Calculos Velocidades Angulares .....................
 % Muslo
@@ -276,19 +288,31 @@ for i = 1:length(Angulos.AlfaMusloI_Derivada)
 end
 
 % ---- Graficas
-% figure('Name','Vel Ang Muslos','NumberTitle','off')
-% subplot(1,2,1)
-% plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
-% plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
-% plot(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
-% title('Vel Ang Muslo izquierdo')
-% legend('Eje i','Eje j','Eje k')
-% subplot(1,2,2)
-% plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
-% plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
-% plot(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
-% title('Vel Ang Muslo derecho')
-% legend('Eje i','Eje j','Eje k')
+
+figure('Name','Vel Ang Muslos','NumberTitle','off')
+subplot(1,2,1)
+[Muestra, ciclo] = MostrarCiclos(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,1));
+plot(ciclo,Muestra,'r'); grid on; hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.MusloI.V_angular(FrameLHS:FrameLHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
+title('Vel Ang Muslo izquierdo')
+legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Velocidad angular [º/s]')
+
+subplot(1,2,2)
+[Muestra, ciclo] = MostrarCiclos(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,1));
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.MusloD.V_angular(FrameRHS:FrameRHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
+title('Vel Ang Muslo derecho')
+legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Velocidad angular [º/s]')
 
 %% ..................... Calculos Matrices Pierna .........................
 
@@ -350,19 +374,31 @@ for i = 1:length(Angulos.AlfaPiernaI_Derivada)
 end
 
 %---------- Graficas
-% figure('Name','Vel Angulares Piernas','NumberTitle','off');
-% subplot(1,2,1)
-% plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on; hold on;
-% plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
-% plot(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
-% title('Pierna izquierda')
-% legend('Eje i','Eje j','Eje k')
-% subplot(1,2,2)
-% plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on; hold on;
-% plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
-% plot(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
-% title('Pierna derecha')
-% legend('Eje i','Eje j','Eje k')
+
+figure('Name','Vel Angulares Piernas','NumberTitle','off');
+subplot(1,2,1)
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,1));
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PiernaI.V_angular(FrameLHS:FrameLHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
+title('Pierna izquierda')
+legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Velocidad angular [º/s]')
+
+subplot(1,2,2)
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,1));
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PiernaD.V_angular(FrameRHS:FrameRHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
+title('Pierna derecha')
+legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Velocidad angular [º/s]')
 
 %% ..................... Calculos Matrices Pie ............................
 
@@ -429,17 +465,27 @@ end
 
 figure('Name','Vel Angulares Pies','NumberTitle','off');
 subplot(1,2,1)
-plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,1),'r'); grid on;  hold on;
-plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,2),'g'); grid on; hold on;
-plot(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,3),'b'); grid on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,1));
+plot(ciclo,Muestra,'r'); grid on;  hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,2));
+plot(ciclo,Muestra,'g'); grid on; hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PieI.V_angular(FrameLHS:FrameLHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
 title('Pie izquierdo')
 legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Velocidad angular [º/s]')
 subplot(1,2,2)
-plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,1),'r'); grid on;  hold on;
-plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,2),'g'); grid on; hold on;
-plot(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,3),'b'); grid on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,1));
+plot(ciclo,Muestra,'r'); grid on;  hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,2));
+plot(ciclo,Muestra,'g'); grid on; hold on;
+[Muestra, ciclo] = MostrarCiclos(Cinematica.PieD.V_angular(FrameRHS:FrameRHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
 title('Pie derecho')
 legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Velocidad angular [º/s]')
 
 
 %% ........................ Momentos Angulares ............................
@@ -468,6 +514,34 @@ Dinamica.PiernaI.M_neto = Derivada_Vector(Dinamica.PiernaI.H, fm);
 Dinamica.PieD.M_neto = Derivada_Vector(Dinamica.PieD.H, fm);
 Dinamica.PieI.M_neto = Derivada_Vector(Dinamica.PieI.H, fm);
 
+% Graficación para MUSLO
+
+figure('Name','Momento Neto Muslos','NumberTitle','off')
+subplot(1,2,1)
+[Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.M_neto(FrameLHS:FrameLHS2,1));
+plot(ciclo,Muestra,'r'); grid on; hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.M_neto(FrameLHS:FrameLHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.M_neto(FrameLHS:FrameLHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
+title('Momento Muslo izquierdo')
+legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Momento [Nm]')
+
+subplot(1,2,2)
+[Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.M_neto(FrameRHS:FrameRHS2,1));
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.M_neto(FrameRHS:FrameRHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.M_neto(FrameRHS:FrameRHS2,3));
+plot(ciclo,Muestra,'b'); grid on;
+title('Momento Muslo derecho')
+legend('Eje i','Eje j','Eje k')
+xlabel('Ciclos [%]');
+ylabel('Momento [Nm]')
+
+
 
 %% .................. Calculo de Velocidades y Aceleraciones lineales
 
@@ -492,8 +566,8 @@ Cinematica.PiernaI.A_lineal = Derivada_Vector(Cinematica.PiernaI.V_lineal, fm);
 Cinematica.PieD.A_lineal = Derivada_Vector(Cinematica.PieD.V_lineal, fm);
 Cinematica.PieI.A_lineal = Derivada_Vector(Cinematica.PieI.V_lineal, fm);
 
-% plot(Cinematica.MusloD.V_lineal(FrameRHS:FrameRHS2,1)); grid on; hold on;
-% plot(Cinematica.MusloD.A_lineal(FrameRHS:FrameRHS2,1)/5); grid on; hold on;
+plot(Cinematica.MusloD.V_lineal(FrameRHS:FrameRHS2,1)); grid on; hold on;
+plot(Cinematica.MusloD.A_lineal(FrameRHS:FrameRHS2,1)/5); grid on; hold on;
 
 % Calculos de fuerzas netas
 
@@ -594,17 +668,28 @@ end
 
 figure('Name','Reaccion de Placas');
 subplot(1,2,1)
-plot(Dinamica.F_PlateI(FrameLHS:FrameLHS2,1),'r'); hold on;
-plot(Dinamica.F_PlateI(FrameLHS:FrameLHS2,2),'g'); hold on;
-plot(Dinamica.F_PlateI(FrameLHS:FrameLHS2,3),'b'); 
+[Muestra, ciclo] = MostrarCiclos(Dinamica.F_PlateI(FrameLHS:FrameLHS2,1));
+plot(ciclo,Muestra,'r'); hold on; grid on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.F_PlateI(FrameLHS:FrameLHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.F_PlateI(FrameLHS:FrameLHS2,3));
+plot(ciclo,Muestra,'b');
 legend('x','y','z');
 title('Reaccion izquierdo');
+ylabel('Fuerza [N]');
+xlabel('Ciclo [%]');
+
 subplot(1,2,2)
-plot(Dinamica.F_PlateD(FrameRHS:FrameRHS2,1),'r'); hold on;
-plot(Dinamica.F_PlateD(FrameRHS:FrameRHS2,2),'g'); hold on;
-plot(Dinamica.F_PlateD(FrameRHS:FrameRHS2,3),'b'); 
+[Muestra, ciclo] = MostrarCiclos(Dinamica.F_PlateD(FrameRHS:FrameRHS2,1));
+plot(ciclo,Muestra,'r'); hold on; grid on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.F_PlateD(FrameRHS:FrameRHS2,2));
+plot(ciclo,Muestra,'g'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.F_PlateD(FrameRHS:FrameRHS2,3));
+plot(ciclo,Muestra,'b');
 legend('x','y','z');
 title('Reaccion derecho');
+ylabel('Fuerza [N]');
+xlabel('Ciclo [%]');
 
 %% .............. Calculo de Fuerzas y Momentos Para Pie .................
 
@@ -679,94 +764,27 @@ end
 
 Dinamica.PieD.M_TobilloInvEve = zeros(length(Dinamica.PieD.M_Tobillo),1);
 Dinamica.PieD.M_TobilloPlaDor = zeros(length(Dinamica.PieD.M_Tobillo),1);
-Dinamica.PieD.M_TobilloVarVal = zeros(length(Dinamica.PieD.M_Tobillo),1);
+Dinamica.PieD.M_TobilloIntExt = zeros(length(Dinamica.PieD.M_Tobillo),1);
 
 Dinamica.PieI.M_TobilloInvEve = zeros(length(Dinamica.PieI.M_Tobillo),1);
 Dinamica.PieI.M_TobilloPlaDor = zeros(length(Dinamica.PieI.M_Tobillo),1);
-Dinamica.PieI.M_TobilloVarVal = zeros(length(Dinamica.PieI.M_Tobillo),1);
+Dinamica.PieI.M_TobilloIntExt = zeros(length(Dinamica.PieI.M_Tobillo),1);
+
+% resión Interna, Progresion externa = Varo Valgo
 
 for i=1:length(Dinamica.PieD.M_Tobillo)
 
     Dinamica.PieD.M_TobilloInvEve(i) = dot(Dinamica.PieD.M_Tobillo(i,:),Vectores.I_PieD(i,:));
     Dinamica.PieD.M_TobilloPlaDor(i) = dot(Dinamica.PieD.M_Tobillo(i,:),Vectores.K_PiernaD(i,:));
-    Dinamica.PieD.M_TobilloVarVal(i) = - dot(Dinamica.PieD.M_Tobillo(i,:),Vectores.L_AJC_D(i,:));
+    Dinamica.PieD.M_TobilloIntExt(i) = - dot(Dinamica.PieD.M_Tobillo(i,:),Vectores.L_AJC_D(i,:));
 
     Dinamica.PieI.M_TobilloInvEve(i) = - dot(Dinamica.PieI.M_Tobillo(i,:),Vectores.I_PieI(i,:));
     Dinamica.PieI.M_TobilloPlaDor(i) = dot(Dinamica.PieI.M_Tobillo(i,:),Vectores.K_PiernaI(i,:));
-    Dinamica.PieI.M_TobilloVarVal(i) = dot(Dinamica.PieI.M_Tobillo(i,:),Vectores.L_AJC_I(i,:));
+    Dinamica.PieI.M_TobilloIntExt(i) = dot(Dinamica.PieI.M_Tobillo(i,:),Vectores.L_AJC_I(i,:));
     
 end
 
-PorcentajeRTO = round((FrameRTO-FrameRHS)*100/(FrameRHS2-FrameRHS));
-PorcentajeLTO = round((FrameLTO-FrameLHS)*100/(FrameLHS2-FrameLHS));
 
-% ---------- Graficacion
-
-% - Momentos
-figure('Name','Momentos Pies en Tobillo','NumberTitle','off');
-subplot(1,3,1);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.M_TobilloPlaDor(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.M_TobilloPlaDor(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-legend('Izquierda', 'Derecha');
-title('M Tobillo Plant/Dorsal');
-ylabel('Momento [Nm/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,2);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.M_TobilloInvEve(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.M_TobilloInvEve(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('M Tobillo Inv/Eve');
-legend('Izquierda', 'Derecha');
-ylabel('Momento [Nm/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,3);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.M_TobilloVarVal(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.M_TobilloVarVal(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('M Tobillo Varo/Valgo');
-legend('Izquierda', 'Derecha');
-ylabel('Momento [Nm/Kg]')
-xlabel('Ciclo [%]')
-
-% - Fuerzas
-figure('Name','Fuerzas Pies en Tobillo','NumberTitle','off');
-subplot(1,3,1);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.F_TobilloPrxDis(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.F_TobilloPrxDis(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('F Tobillo Prx/Dis');
-legend('Izquierda', 'Derecha');
-ylabel('Fuerzas [N/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,2);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.F_TobilloMedLat(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.F_TobilloMedLat(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('F Tobillo Med/Lat');
-legend('Izquierda', 'Derecha');
-ylabel('Fuerzas [N/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,3);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.F_TobilloAntPos(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.F_TobilloAntPos(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('F Tobillo Ant/Pos');
-legend('Izquierda', 'Derecha');
-ylabel('Fuerzas [N/Kg]')
-xlabel('Ciclo [%]')
-
-% Progresión Interna, Progresion externa = Varo Valgo
 
 %% ............. Calculo de Fuerzas y Momentos Para Pierna ................
 
@@ -859,71 +877,6 @@ for i=1:length(Dinamica.PiernaD.M_Rodilla)
     
 end
 
-% ---------- Graficacion
-
-% - Momentos
-figure('Name','Momentos Rodilla','NumberTitle','off');
-subplot(1,3,1);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.M_RodillaFlxExt(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.M_RodillaFlxExt(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('M Rodilla Flex(+)/Ext(-)');
-legend('Izquierda','Derecha');
-ylabel('Momento [Nm/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,2);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.M_RodillaAbdAdd(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.M_RodillaAbdAdd(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('M Rodilla Abd(+)/Add(-)');
-legend('Izquierda','Derecha');
-ylabel('Momento [Nm/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,3);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.M_RodillaIntExt(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.M_RodillaIntExt(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on; 
-title('M Rodilla Int(+)/Ext(-)');
-legend('Izquierda','Derecha');
-ylabel('Momento [Nm/Kg]')
-xlabel('Ciclo [%]')
-
-% - Fuerzas
-figure('Name','Fuerzas Rodilla','NumberTitle','off');
-subplot(1,3,1);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.F_RodillaPrxDis(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.F_RodillaPrxDis(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('F Rodilla Prox(+)/Dist(-)');
-legend('Izquierda','Derecha');
-ylabel('Fuerzas [N/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,2);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.F_RodillaMedLat(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.F_RodillaMedLat(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('F Rodilla Med(+)/Lat(-)');
-legend('Izquierda','Derecha');
-ylabel('Fuerzas [N/Kg]')
-xlabel('Ciclo [%]')
-
-subplot(1,3,3);
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.F_RodillaAntPos(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
-[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.F_RodillaAntPos(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
-title('F Rodilla Ant(+)/Pos(-)');
-legend('Izquierda','Derecha');
-ylabel('Fuerzas [N/Kg]')
-xlabel('Ciclo [%]')
 
 %% ............. Calculo de Fuerzas y Momentos Para Muslo ................
 
@@ -1015,72 +968,188 @@ for i=1:length(Dinamica.MusloD.M_Cadera)
     
 end
 
-% -------------- Graficacion 
-% - Momentos
+%% ................. Graficacion Momentos Clinicos .......................
 
-figure('Name','Momentos Cadera','NumberTitle','off');
-subplot(1,3,1);
+% ----------------- Momentos Cadera
+
+figure('Name','Momentos Clinicos','NumberTitle','off');
+subplot(3,3,1);
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.M_CaderaFlxExt(FrameLHS:FrameLHS2)/MasaTotal);
 plot(ciclo,Muestra,'r'); hold on;
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.M_CaderaFlxExt(FrameRHS:FrameRHS2)/MasaTotal);
 plot(ciclo,Muestra,'b'); grid on;
 title('M Cadera Flex(+)/Ext(-)');
-legend('Izquierda','Derecha');
 ylabel('Momento [Nm/Kg]')
 xlabel('Ciclo [%]')
 
-subplot(1,3,2);
+subplot(3,3,2);
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.M_CaderaAbdAdd(FrameLHS:FrameLHS2)/MasaTotal);
 plot(ciclo,Muestra,'r'); hold on;
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.M_CaderaAbdAdd(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
+plot(ciclo,Muestra,'b'); grid on; 
 title('M Cadera Abd(+)/Add(-)');
-legend('Izquierda','Derecha');
 ylabel('Momento [Nm/Kg]')
 xlabel('Ciclo [%]')
 
-subplot(1,3,3);
+subplot(3,3,3);
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.M_CaderaIntExt(FrameLHS:FrameLHS2)/MasaTotal);
 plot(ciclo,Muestra,'r'); hold on;
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.M_CaderaIntExt(FrameRHS:FrameRHS2)/MasaTotal);
 plot(ciclo,Muestra,'b'); grid on;
 title('M Cadera Int(+)/Ext(-)');
-legend('Izquierda','Derecha');
 ylabel('Momento [Nm/Kg]')
 xlabel('Ciclo [%]')
 
-% - Fuerzas
-figure('Name','Fuerzas CADERA','NumberTitle','off');
-subplot(1,3,1);
+
+% ----------------- Momentos Rodilla
+
+subplot(3,3,4);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.M_RodillaFlxExt(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on; 
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.M_RodillaFlxExt(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on;
+title('M Rodilla Flex(+)/Ext(-)');
+ylabel('Momento [Nm/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,5);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.M_RodillaAbdAdd(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.M_RodillaAbdAdd(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b');  grid on;
+title('M Rodilla Abd(+)/Add(-)');
+ylabel('Momento [Nm/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,6);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.M_RodillaIntExt(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.M_RodillaIntExt(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on;
+title('M Rodilla Int(+)/Ext(-)');
+ylabel('Momento [Nm/Kg]')
+xlabel('Ciclo [%]')
+
+% ----------------- Momentos Tobillo
+
+subplot(3,3,7);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.M_TobilloPlaDor(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.M_TobilloPlaDor(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b');grid on;
+title('M Tobillo Plant(+)/Dorsal(-)');
+ylabel('Momento [Nm/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,8);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.M_TobilloIntExt(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.M_TobilloIntExt(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); hold on; grid on; plot(t_porcentaje,Porcentaje,'b');
+title('M Tobillo Prog Int(+)/Ext(-)');
+ylabel('Momento [Nm/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,9);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.M_TobilloInvEve(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.M_TobilloInvEve(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on;
+title('M Tobillo Inv(+)/Eve(-)');
+ylabel('Momento [Nm/Kg]')
+xlabel('Ciclo [%]')
+
+
+
+%% ................... Graficacion Fuerzas Clinicas .......................
+
+% ----------------- Fuerzas Cadera
+
+figure('Name','Fuerzas Clinicas','NumberTitle','off');
+subplot(3,3,1);
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.F_CaderaPrxDis(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
+plot(ciclo,Muestra,'r'); hold on; 
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.F_CaderaPrxDis(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
+plot(ciclo,Muestra,'b'); grid on; 
 title('F Cadera Prox(+)/Dist(-)');
-legend('Izquierda','Derecha');
 ylabel('Fuerzas [N/Kg]')
 xlabel('Ciclo [%]')
 
-subplot(1,3,2);
+subplot(3,3,2);
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.F_CaderaMedLat(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
+plot(ciclo,Muestra,'r'); hold on; 
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.F_CaderaMedLat(FrameRHS:FrameRHS2)/MasaTotal);
-plot(ciclo,Muestra,'b'); grid on;
+plot(ciclo,Muestra,'b'); grid on; 
 title('F Cadera Med(+)/Lat(-)');
-legend('Izquierda','Derecha');
 ylabel('Fuerzas [N/Kg]')
 xlabel('Ciclo [%]')
 
-subplot(1,3,3);
+subplot(3,3,3);
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloI.F_CaderaAntPos(FrameLHS:FrameLHS2)/MasaTotal);
-plot(ciclo,Muestra,'r'); hold on;
+plot(ciclo,Muestra,'r'); hold on; 
 [Muestra, ciclo] = MostrarCiclos(Dinamica.MusloD.F_CaderaAntPos(FrameRHS:FrameRHS2)/MasaTotal);
 plot(ciclo,Muestra,'b'); grid on;
 title('F Cadera Ant(+)/Post(-)');
-legend('Izquierda','Derecha');
 ylabel('Fuerzas [N/Kg]')
 xlabel('Ciclo [%]')
 
+% ----------------- Fuerzas Rodilla
+
+subplot(3,3,4);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.F_RodillaPrxDis(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on; 
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.F_RodillaPrxDis(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on; 
+title('F Rodilla Prox(+)/Dist(-)');
+ylabel('Fuerzas [N/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,5);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.F_RodillaMedLat(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on; 
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.F_RodillaMedLat(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on; 
+title('F Rodilla Med(+)/Lat(-)');
+ylabel('Fuerzas [N/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,6);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaI.F_RodillaAntPos(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on; 
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PiernaD.F_RodillaAntPos(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on; 
+title('F Rodilla Ant(+)/Pos(-)');
+ylabel('Fuerzas [N/Kg]')
+xlabel('Ciclo [%]')
+
+% ----------------- Fuerzas Tobillo
+
+subplot(3,3,7);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.F_TobilloPrxDis(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.F_TobilloPrxDis(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on;
+title('F Tobillo Prx(+)/Dis(-)');
+ylabel('Fuerzas [N/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,8);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.F_TobilloMedLat(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on; 
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.F_TobilloMedLat(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on;
+title('F Tobillo Med(+)/Lat(-)');
+ylabel('Fuerzas [N/Kg]')
+xlabel('Ciclo [%]')
+
+subplot(3,3,9);
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieI.F_TobilloAntPos(FrameLHS:FrameLHS2)/MasaTotal);
+plot(ciclo,Muestra,'r'); hold on;
+[Muestra, ciclo] = MostrarCiclos(Dinamica.PieD.F_TobilloAntPos(FrameRHS:FrameRHS2)/MasaTotal);
+plot(ciclo,Muestra,'b'); grid on;
+title('F Tobillo Ant(+)/Pos(-)');
+ylabel('Fuerzas [N/Kg]');
+xlabel('Ciclo [%]')
 
 %% ............. Calculo de Potencia para tobillo ................
 
@@ -1102,7 +1171,11 @@ for i=1:length(Dinamica.PieD.F_Tobillo)
     end
     
     if(Polaridad(i)==1)
-        Dinamica.PieD.P_Trf_angular_Tobillo(i) = dot(Dinamica.PieD.M_Tobillo(i,:),Velocidad_PieD(i,:));
+        if (norm(Velocidad_PieD(i,:))<norm(Velocidad_PiernaD(i,:)))
+            Dinamica.PieD.P_Trf_angular_Tobillo(i) = dot(Dinamica.PieD.M_Tobillo(i,:),Velocidad_PieD(i,:));
+        else
+            Dinamica.PieD.P_Trf_angular_Tobillo(i) = dot(Dinamica.PieD.M_Tobillo(i,:),Velocidad_PiernaD(i,:));
+        end
     else
         Dinamica.PieD.P_Trf_angular_Tobillo(i) = 0;
     end
@@ -1116,15 +1189,15 @@ end
 figure();
 plot(Dinamica.PieD.P_Trf_angular_Tobillo(FrameRHS:FrameRHS2),'r'); hold on;
 grid on;
-title('Potencia Transferida');
-ylabel('Potencia [W]')
-xlabel('Frames')     
+title('Potencia Transferida'); 
+ylabel('Potencia [W/Kg]')
+xlabel('Frames')      
 
 [Muestra, ciclo] = MostrarCiclos( Dinamica.PieD.P_Gen_angular_Tobillo(FrameRHS:FrameRHS2)/MasaTotal);
 figure();
 plot(ciclo,Muestra,'b'); grid on;
 title('Potencia Generada');
-ylabel('Potencia [W]')
+ylabel('Potencia [W/Kg]')
 xlabel('Ciclo [%]')     
         
         
